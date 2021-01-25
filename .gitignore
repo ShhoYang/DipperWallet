@@ -1,0 +1,17 @@
+*.iml
+*/.DS_Store
+
+.gradle
+.DS_Store
+.externalNativeBuild
+.hprof
+
+/local.properties
+/build
+/captures
+/.idea/
+/gradle/
+
+key.properties
+haoshi.jks
+

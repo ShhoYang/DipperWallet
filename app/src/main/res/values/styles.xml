@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+
+
+    <style name="WelcomeTheme" parent="GStatusBarTransparentTheme">
+        <!--        <item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="ThemeColorBgTheme" parent="GAppTheme">
+        <item name="colorPrimaryDark">@color/themeColor</item>
+        <item name="android:windowBackground">@color/themeColor</item>
+    </style>
+
+    <style name="mnemonic">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/mnemonic_bg</item>
+        <item name="android:digits">@string/digits2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/text_link</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="InputViewName">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="InputViewContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textColorHint">@color/text_desc</item>
+        <item name="android:textCursorDrawable">@drawable/input_cursor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="InputViewTip">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textColor">@color/text_subtitle</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

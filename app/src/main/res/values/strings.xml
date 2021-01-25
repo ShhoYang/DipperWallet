@@ -1,0 +1,15 @@
+<resources>
+    <string name="wallet_app_name">DipperWallet</string>
+
+
+    <!--    <string name="str_loanable_amount"><![CDATA[Loanable : ]]></string>-->
+    <!--    <string name="str_max_depositable_amount"><![CDATA[Max Depositable : ]]></string>-->
+    <!--    <string name="str_max_withdrawable_amount"><![CDATA[Max Withdrawable : ]]></string>-->
+
+
+    <string name="tab_capital">资产</string>
+    <string name="tab_staking">委托</string>
+    <string name="tab_proposal">投票</string>
+    <string name="tab_me">我的</string>
+
+</resources>

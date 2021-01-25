@@ -1,0 +1,72 @@
+package com.highstreet.wallet.ui.vm
+
+import androidx.lifecycle.MutableLiveData
+import com.highstreet.lib.viewmodel.BaseViewModel
+import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.http.ApiService
+import com.highstreet.wallet.http.subscribeBy
+import com.highstreet.wallet.model.req.RequestBroadCast
+import com.highstreet.wallet.model.res.AccountInfo
+import com.highstreet.wallet.utils.AmountUtils
+import com.highstreet.wallet.crypto.KeyUtils
+import com.highstreet.wallet.utils.MsgGeneratorUtils
+
+/**
+ * @author Yang Shihao
+ * @Date 2020/10/15
+ */
+
+class ReceiveRewardVM : BaseViewModel() {
+
+    val resultLD = MutableLiveData<Pair<Boolean, String>>()
+
+    fun receiveReward(validatorAddress: String, delegatorAddress: String) {
+        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+            val coins = it.result?.value?.coins
+            if (null != coins && coins.isNotEmpty()) {
+                generateParams(it.result!!, validatorAddress, delegatorAddress)
+            }
+        }, {
+            resultLD.value = Pair(false, "领取失败")
+        }).add()
+    }
+
+    private fun generateParams(
+        accountInfo: AccountInfo,
+        validatorAddress: String,
+        delegatorAddress: String
+    ) {
+        val account = AccountManager.instance().account!!
+        account.accountNumber = accountInfo.getAccountNumber()
+        account.sequenceNumber = accountInfo.getSequence()
+        val deterministicKey =
+            KeyUtils.getDeterministicKey(account.chain, account.getEntropyAsHex(), account.path)
+        val msg = MsgGeneratorUtils.receiveRewardMsg(
+            validatorAddress,
+            delegatorAddress,
+            account.chain
+        )
+        doReceiveReward(
+            MsgGeneratorUtils.getBroadCast(
+                account,
+                msg,
+                AmountUtils.generateFee(),
+                "",
+                deterministicKey
+            )
+        )
+    }
+
+    private fun doReceiveReward(reqBroadCast: RequestBroadCast) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
+            if (it.success()) {
+                resultLD.value = Pair(true, "领取成功")
+            } else {
+                resultLD.value = Pair(false, "领取失败")
+            }
+
+        }, {
+            resultLD.value = Pair(false, it)
+        }).add()
+    }
+}

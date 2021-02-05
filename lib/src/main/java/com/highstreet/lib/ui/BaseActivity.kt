@@ -108,6 +108,10 @@ abstract class BaseActivity : AppCompatActivity(), FingerprintCallback {
         toolbar?.title = title
     }
 
+    override fun setTitle(titleId: Int) {
+        toolbar?.title = getString(titleId)
+    }
+
     /**
      * 设置透明状态栏，耗时5ms
      * 只在主题设置，某些机型会是半透明的

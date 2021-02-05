@@ -25,7 +25,7 @@ class ReceiveActivity : BaseActivity() {
 
     override fun initView() {
         super.initView()
-        title = "收款"
+        setTitle(R.string.QRCode)
         tvChainName.text = AccountManager.instance().account?.getUpperCaseChainName()
         val address = AccountManager.instance().address
         tvAddress.text = address

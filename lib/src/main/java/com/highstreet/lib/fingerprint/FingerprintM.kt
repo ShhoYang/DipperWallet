@@ -4,15 +4,19 @@ import android.app.Activity
 import android.os.Handler
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat
 import androidx.core.os.CancellationSignal
+import com.highstreet.lib.R
 import com.highstreet.lib.fingerprint.listener.FingerprintDialogListener
 import com.highstreet.lib.fingerprint.listener.FingerprintCallback
-import com.highstreet.lib.utils.L
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/20
  */
-class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerprint, FingerprintDialogListener {
+class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerprint,
+    FingerprintDialogListener {
+
+    private var verifySucceed = ""
+    private var verifyFailed = ""
 
     private val handler = Handler()
 
@@ -31,10 +35,17 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
 
     private var cancellationSignal: CancellationSignal? = null
 
-    override fun init(context: Activity?, useFingerprint: Boolean, fingerprintCallback: FingerprintCallback?, dialogParams: DialogParams) {
+    override fun init(
+        context: Activity?,
+        useFingerprint: Boolean,
+        fingerprintCallback: FingerprintCallback?,
+        dialogParams: DialogParams
+    ) {
         if (null == context) {
             return
         }
+        verifySucceed = context.getString(R.string.authenticateSucceed)
+        verifyFailed = context.getString(R.string.authenticateFailed)
         this.fingerprintCallback = fingerprintCallback
         this.useFingerprint = useFingerprint
         fingerprintManagerCompat = FingerprintManagerCompat.from(context)
@@ -96,7 +107,6 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
      */
     override fun onAuthenticationError(errMsgId: Int, errString: CharSequence) {
         super.onAuthenticationError(errMsgId, errString)
-        L.d("onAuthenticationError", "msgId = ${errMsgId},msg = ${errString}")
         failed(errString?.toString())
     }
 
@@ -112,7 +122,7 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
 
     override fun onAuthenticationFailed() {
         super.onAuthenticationFailed()
-        failed("验证失败")
+        failed(verifyFailed)
     }
 
     private fun failed(msg: String) {
@@ -120,7 +130,7 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
     }
 
     private fun succeed() {
-        fingerprintDialog?.setTip("验证成功", true)
+        fingerprintDialog?.setTip(verifySucceed, true)
         cancellationSignal()
 
         handler.postDelayed({

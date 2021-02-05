@@ -19,12 +19,12 @@ class TransactionRecordActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_viewpager
 
     override fun initView() {
-        title = "交易明细"
+        setTitle(R.string.transactionRecord)
         val fragments = arrayListOf<Pair<String, Fragment>>(
-                Pair("转入", TransactionRecordFragment.instance(true)),
-                Pair("转出", TransactionRecordFragment.instance(false))
+            Pair(getString(R.string.transferIn), TransactionRecordFragment.instance(true)),
+            Pair(getString(R.string.transferOut), TransactionRecordFragment.instance(false))
         )
-        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager,lifecycle, fragments)
+        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager, lifecycle, fragments)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             if (position in 0 until fragments.size) {
                 tab.text = fragments[position].first

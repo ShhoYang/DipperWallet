@@ -17,7 +17,7 @@ class WalletTypeActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_wallet_type
 
     override fun initView() {
-        title = "选择钱包类型"
+        setTitle(R.string.walletType)
         RxView.click(clDip) {
 
             val toDoType = intent.getIntExtra(ExtraKey.INT, InitWalletActivity.TO_DO_TYPE_CREATE)

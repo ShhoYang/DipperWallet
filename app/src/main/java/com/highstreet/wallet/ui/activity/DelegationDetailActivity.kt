@@ -34,8 +34,7 @@ class DelegationDetailActivity : BaseActivity(), View.OnClickListener {
     override fun getLayoutId() = R.layout.g_activity_delegation_detail
 
     override fun initView() {
-        title = "委托详情"
-
+        setTitle(R.string.delegationDetail)
         RxView.click(tvDetail, this)
         RxView.click(ivDetail, this)
         RxView.click(llRedelegate, this)
@@ -72,7 +71,7 @@ class DelegationDetailActivity : BaseActivity(), View.OnClickListener {
             tvAmount.text = StringUtils.pdip2DIP(shares, false)
             tvReward.text = reward
             if (isUndelegate) {
-                tvUnDelegateAmount.text = "${StringUtils.formatDecimal(shares)}解委托中\n（剩余${StringUtils.timeGap(completionTime)}）"
+                tvUnDelegateAmount.text = "${StringUtils.formatDecimal(shares)} ${getString(R.string.unbond)}\n（${getString(R.string.timeRemaining)} ${StringUtils.timeGap(completionTime)}）"
             }
         }
     }
@@ -96,8 +95,7 @@ class DelegationDetailActivity : BaseActivity(), View.OnClickListener {
             }
             llReward -> {
                 if (TextUtils.isEmpty(reward) || "0" == reward || reward.toDouble() == 0.0) {
-                    toast("奖励为0")
-
+                    toast(R.string.notEnough)
                 } else {
                     val validatorAddress = delegationInfo?.validator_address
                     val delegatorAddress = delegationInfo?.delegator_address

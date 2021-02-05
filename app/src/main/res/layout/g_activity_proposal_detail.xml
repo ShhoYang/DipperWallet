@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="提案人"
+                    android:text="@string/proposer"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="提案类型"
+                    android:text="@string/proposalType"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -106,7 +106,7 @@
                     android:id="@+id/tvType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     android:layout_gravity="center_vertical|right"
+                    android:layout_gravity="center_vertical|right"
                     android:layout_marginLeft="64dp"
                     android:ellipsize="middle"
                     android:singleLine="true"
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="同意"
+                    android:text="@string/yes"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="强烈反对"
+                    android:text="@string/noWithVote"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="不同意"
+                    android:text="@string/no"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="弃权"
+                    android:text="@string/abstain"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -256,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="提案发起时间"
+                    android:text="@string/proposalTime"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -280,7 +280,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="投票开始时间"
+                    android:text="@string/voteStartTime"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -304,7 +304,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="投票截止时间"
+                    android:text="@string/voteEndTime"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -328,7 +328,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="我的意见"
+                    android:text="@string/myVote"
                     android:textColor="@color/text_subtitle"
                     android:textSize="14sp" />
 
@@ -337,7 +337,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right"
-                    android:text="未参与"
                     android:textColor="@color/text_dark_blue"
                     android:textSize="14sp" />
 
@@ -383,7 +382,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="同意"
+                android:text="@string/yes"
                 android:textColor="@color/text_dark_blue"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -414,7 +413,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="不同意"
+                android:text="@string/no"
                 android:textColor="@color/text_dark_blue"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -445,7 +444,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="强烈反对"
+                android:text="@string/noWithVote"
                 android:textColor="@color/text_dark_blue"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -476,7 +475,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="弃权"
+                android:text="@string/abstain"
                 android:textColor="@color/text_dark_blue"
                 android:textSize="12sp" />
         </LinearLayout>

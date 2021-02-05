@@ -1,7 +1,6 @@
 package com.highstreet.wallet.ui.activity
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -44,7 +43,6 @@ class ProposalDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun initData() {
-
         viewModel.proposalLD.observe(this, Observer {
             setData(it)
         })
@@ -54,12 +52,16 @@ class ProposalDetailActivity : BaseActivity(), View.OnClickListener {
         })
 
         viewModel.opinionLD.observe(this, Observer {
-            tvOpinion.text = it
+            tvOpinion.text = ProposalOpinion.getOpinion(this, it)
         })
 
         viewModel.voteLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
+            if (it.first) {
+                toast(R.string.succeed)
+            } else {
+                toast(R.string.failed)
+            }
         })
 
         proposal?.apply {
@@ -72,7 +74,7 @@ class ProposalDetailActivity : BaseActivity(), View.OnClickListener {
         proposal?.apply {
             title = "#$id"
             statusPoint.setBackgroundResource(if (isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
-            tvStatus.text = getStatus()
+            tvStatus.text = getStatus(this@ProposalDetailActivity)
             tvTitle.text = content?.value?.title
             tvDesc.text = content?.value?.description
             tvProposer.text = proposer
@@ -110,7 +112,6 @@ class ProposalDetailActivity : BaseActivity(), View.OnClickListener {
                 val noWithVetoRate = noWithVeto.divide(total)
                 val noRate = no.divide(total)
                 val abstainRate = abstain.divide(total)
-//                val df = DecimalFormat("#.####%")
                 val df = NumberFormat.getPercentInstance()
                 df.maximumFractionDigits = 4
                 tvYes.text = df.format(yesRate)
@@ -125,11 +126,6 @@ class ProposalDetailActivity : BaseActivity(), View.OnClickListener {
                 tvAbstain.text = df.format(abstainRate)
                 progressAbstain.progress = abstainRate.multiply(maxProcess).toInt()
             }
-
-//            progressYes.progress = 5000
-//            progressNoWithVeto.progress = 2500
-//            progressNo.progress = 1500
-//            progressAbstain.progress = 1000
         }
     }
 

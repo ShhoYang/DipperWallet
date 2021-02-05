@@ -33,7 +33,7 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
     override fun getLayoutId() = R.layout.g_activity_create_password
 
     override fun initView() {
-        title = "设置密码"
+        setTitle(R.string.createPassword)
 
         etPassword.onFocusChangeListener = this
         etConfirmPassword.onFocusChangeListener = this
@@ -57,10 +57,10 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
         viewModel.createPasswordLD.observe(this, Observer {
             hideLoading()
             if (null == it) {
-                toast("设置密码失败")
+                toast(R.string.failed)
             } else {
                 password = it
-                toast("设置密码成功")
+                toast(R.string.succeed)
                 setFingerprint()
             }
         })
@@ -70,7 +70,7 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
             if (true == it) {
                 back()
             } else {
-                toast("保存指纹失败")
+                toast(R.string.saveFingerprintFailed)
             }
         })
     }
@@ -80,12 +80,12 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
         val confirmPassword = etConfirmPassword.string()
 
         if (!password.isPassword()) {
-            toast("输入的密码无效")
+            toast(R.string.passwordFormatError)
             return
         }
 
         if (password != confirmPassword) {
-            toast("两次密码不一致")
+            toast(R.string.passwordNotEqual)
             return
         }
 
@@ -95,15 +95,19 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
 
     private fun setFingerprint() {
         if (FingerprintUtils.isAvailable(this)) {
-            ConfirmDialog(this).setMsg("是否添加指纹验证").setListener(object : ConfirmDialogListener {
-                override fun confirm() {
-                    getFingerprint(useFingerprint = true, showUserPassword = false)?.authenticate()
-                }
+            ConfirmDialog(this).setMsg(getString(R.string.addFingerprintVerification))
+                .setListener(object : ConfirmDialogListener {
+                    override fun confirm() {
+                        getFingerprint(
+                            useFingerprint = true,
+                            showUserPassword = false
+                        )?.authenticate()
+                    }
 
-                override fun cancel() {
-                    back()
-                }
-            }).show()
+                    override fun cancel() {
+                        back()
+                    }
+                }).show()
 
         } else {
             back()

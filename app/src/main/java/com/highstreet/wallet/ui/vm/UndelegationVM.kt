@@ -26,12 +26,12 @@ class UndelegationVM : BaseViewModel() {
     fun undelegate(amount: String, delegationInfo: DelegationInfo) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
             if (it.result == null) {
-                undelegateLD.value = Pair(false, "解委托失败")
+                undelegateLD.value = Pair(false, "")
             } else {
                 generateParams(it.result!!, amount, delegationInfo)
             }
         }, {
-            undelegateLD.value = Pair(false, "解委托失败")
+            undelegateLD.value = Pair(false, "")
         }).add()
 
     }
@@ -67,9 +67,9 @@ class UndelegationVM : BaseViewModel() {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
                 RxBus.instance().send(RefreshDelegationEvent())
-                undelegateLD.value = Pair(true, "解委托成功")
+                undelegateLD.value = Pair(true, "")
             } else {
-                undelegateLD.value = Pair(false, "解委托失败")
+                undelegateLD.value = Pair(false, "")
             }
 
         }, {

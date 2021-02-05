@@ -39,7 +39,7 @@ class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
     override fun getLayoutId() = R.layout.g_activity_undelegation
 
     override fun initView() {
-        title = "解委托"
+        setTitle(R.string.undelegate)
         etAmount.onFocusChangeListener = this
         etRemarks.onFocusChangeListener = this
 
@@ -62,14 +62,17 @@ class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
         delegationInfo?.apply {
             etAddress.setText(validator_address)
             amount = shares ?: "0"
-            tvMaxAmount.text = "最多可解委托${StringUtils.pdip2DIP(amount)}"
+            tvMaxAmount.text =
+                "${getString(R.string.undelegateMaxAmount)}${StringUtils.pdip2DIP(amount)}"
         }
         viewModel.undelegateLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
-            if (true == it?.first) {
+            if (it.first) {
+                toast(R.string.succeed)
                 AppManager.instance().finishActivity(DelegationDetailActivity::class.java)
                 finish()
+            } else {
+                toast(R.string.failed)
             }
         })
     }
@@ -80,12 +83,12 @@ class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
         }
         val s = etAmount.string()
         if (TextUtils.isEmpty(s) || !s.isAmount()) {
-            toast("解委托数量不合法")
+            toast(R.string.amountFormatError)
             return
         }
 
         if (!AmountUtils.isEnough(amount, s)) {
-            toast("超出最大可解委托数量")
+            toast(R.string.overMaxAmount)
             return
         }
 

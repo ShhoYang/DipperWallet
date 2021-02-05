@@ -13,7 +13,6 @@ import com.highstreet.wallet.model.res.Validator
 
 class ValidatorAdapter : BasePagedAdapter<Validator>(R.layout.g_item_validator) {
 
-
     override fun bindViewHolder(holder: ViewHolder, item: Validator, position: Int) {
         holder.setText(R.id.tvAvatar, item.getFirstLetterName())
                 .setText(R.id.tvName, item.description?.moniker ?: "")

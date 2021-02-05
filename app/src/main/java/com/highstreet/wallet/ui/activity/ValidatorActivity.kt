@@ -18,14 +18,13 @@ class ValidatorActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_viewpager
 
     override fun initView() {
-        title = "验证人"
+        setTitle(R.string.validator)
         val fragments = arrayListOf<Pair<String, Fragment>>(
-                Pair("共识中", ValidatorFragment.instance(ValidatorType.BONDED)),
-//                Pair("候选中", ValidatorFragment.instance(ValidatorType.UN_BONDING)),
-                Pair("待解禁", ValidatorFragment.instance(ValidatorType.JAILED)),
-                Pair("全部", ValidatorFragment.instance(ValidatorType.ALL))
+            Pair(getString(R.string.bonded), ValidatorFragment.instance(ValidatorType.BONDED)),
+            Pair(getString(R.string.jailed), ValidatorFragment.instance(ValidatorType.JAILED)),
+            Pair(getString(R.string.allValidator), ValidatorFragment.instance(ValidatorType.ALL))
         )
-        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager, lifecycle,fragments)
+        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager, lifecycle, fragments)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             if (position in 0 until fragments.size) {
                 tab.text = fragments[position].first

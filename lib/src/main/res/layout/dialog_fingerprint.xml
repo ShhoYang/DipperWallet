@@ -26,9 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:textSize="14sp"
-            tools:text="请验证您的指纹"
-            tools:textColor="@color/text_title" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="match_parent"
@@ -47,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp" />
 
@@ -63,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="密码验证"
+                android:text="@string/passwordVerification"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp" />
 
@@ -84,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="请输入密码"
+            android:text="@string/inputPassword"
             android:textColor="@color/text_black"
             android:textSize="18sp" />
 
@@ -122,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/text_subtitle"
                 android:textSize="16sp" />
 
@@ -137,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="确定"
+                android:text="@string/confirm"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp" />
         </LinearLayout>

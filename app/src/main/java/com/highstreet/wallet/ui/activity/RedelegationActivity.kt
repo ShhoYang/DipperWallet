@@ -44,7 +44,7 @@ class RedelegationActivity : BaseActivity(), View.OnClickListener, View.OnFocusC
     override fun getLayoutId() = R.layout.g_activity_redelegation
 
     override fun initView() {
-        title = "转委托"
+        setTitle(R.string.redelegate)
         etAmount.onFocusChangeListener = this
         etRemarks.onFocusChangeListener = this
 
@@ -61,14 +61,17 @@ class RedelegationActivity : BaseActivity(), View.OnClickListener, View.OnFocusC
         delegationInfo = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as DelegationInfo?
         delegationInfo?.apply {
             amount = shares ?: "0"
-            tvMaxAmount.text = "最多可转委托${StringUtils.pdip2DIP(amount)}"
+            tvMaxAmount.text =
+                "${getString(R.string.redelegateMaxAmount)} ${StringUtils.pdip2DIP(amount)}"
         }
         viewModel.redelegateLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
-            if (true == it?.first) {
+            if (it.first) {
+                toast(R.string.succeed)
                 AppManager.instance().finishActivity(DelegationDetailActivity::class.java)
                 finish()
+            } else {
+                toast(R.string.failed)
             }
         })
     }
@@ -79,21 +82,24 @@ class RedelegationActivity : BaseActivity(), View.OnClickListener, View.OnFocusC
         }
 
         if (etAddress.string().isEmpty()) {
-            toast("请选择验证人")
+            toast(R.string.pleaseSelectvalidator)
             return
         }
 
         val s = etAmount.string()
         if (TextUtils.isEmpty(s) || !s.isAmount()) {
-            toast("转委托数量不合法")
+            toast(R.string.amountFormatError)
             return
         }
         if (!AmountUtils.isEnough(amount, s)) {
-            toast("超出最大可转委托数量")
+            toast(R.string.overMaxAmount)
             return
         }
 
-        getFingerprint(FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint, true)?.authenticate()
+        getFingerprint(
+            FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint,
+            true
+        )?.authenticate()
     }
 
     override fun onClick(v: View?) {
@@ -121,11 +127,12 @@ class RedelegationActivity : BaseActivity(), View.OnClickListener, View.OnFocusC
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ValidatorListActivity.REQUEST_CODE_VALIDATOR_CHOOSE
-                && resultCode == Activity.RESULT_OK
-                && data != null) {
+            && resultCode == Activity.RESULT_OK
+            && data != null
+        ) {
             val validator = data.getSerializableExtra(ExtraKey.SERIALIZABLE) as Validator?
             if (delegationInfo != null && delegationInfo!!.validator_address == validator?.operator_address) {
-                toast("不同选择同一个验证人进行转委托")
+                toast(R.string.sameValidator)
             } else {
                 this.validator = validator
                 this.validator?.apply {

@@ -90,6 +90,7 @@ object StringUtils {
         }
     }
 
+    //todo
     fun timeGap(s: String?): String {
         val temp = utc2Date(s)?.time ?: return ""
         val cur = System.currentTimeMillis()

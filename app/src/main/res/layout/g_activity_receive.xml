@@ -49,15 +49,14 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivQr"
-            tools:text="ayuhiauhgaboiugaiuboighaubnouigh" />
+            app:layout_constraintTop_toBottomOf="@id/ivQr" />
 
         <com.highstreet.lib.view.RoundButton
             android:id="@+id/btnCopy"
             android:layout_width="128dp"
             android:layout_height="32dp"
             android:layout_marginTop="32dp"
-            android:text="复制地址"
+            android:text="@string/copyAddress"
             app:btnTextColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,15 +1,167 @@
 <resources>
     <string name="wallet_app_name">DipperWallet</string>
 
+    <string name="tabCapital">资产</string>
+    <string name="tabDelegation">委托</string>
+    <string name="tabProposal">投票</string>
+    <string name="tabProfile">我的</string>
 
-    <!--    <string name="str_loanable_amount"><![CDATA[Loanable : ]]></string>-->
-    <!--    <string name="str_max_depositable_amount"><![CDATA[Max Depositable : ]]></string>-->
-    <!--    <string name="str_max_withdrawable_amount"><![CDATA[Max Withdrawable : ]]></string>-->
+    <string name="availableBalance">可用余额</string>
+    <string name="totalDelegation">委托总额</string>
+    <string name="transaction">转账</string>
+    <string name="AddressTransfer">地址转账</string>
+    <string name="transactionRecord">交易记录</string>
+    <string name="transactionDetail">交易明细</string>
+
+    <string name="QRCode">钱包地址</string>
+    <string name="copyAddress">复制地址</string>
+
+    <string name="createPassword">创建密码</string>
+    <string name="password">密码</string>
+    <string name="setPassword">请先设置密码</string>
+    <string name="inputPassword">请输入密码</string>
+    <string name="inputConfirmPassword">请再次输入密码</string>
+    <string name="passwordFormat">8~16位字符，且为数字和字母的组合</string>
+    <string name="passwordFormatError">密码格式错误</string>
+    <string name="passwordNotEqual">两次密码不一致</string>
+    <string name="addFingerprintVerification">是否添加指纹验证？</string>
+    <string name="saveFingerprintFailed">保存指纹失败</string>
+    <string name="cancelFingerprintVerification">确定取消指纹验证吗？</string>
+    <string name="noFingerprint">没有录入指纹，请先到系统设置录入指纹</string>
+    <string name="fingerprint">指纹验证</string>
+
+    <string name="walletType">请选择钱包类型</string>
+    <string name="walletDip">DIP</string>
+    <string name="createWallet">创建钱包</string>
+    <string name="walletAddress">钱包地址</string>
+    <string name="walletName">钱包名字</string>
+    <string name="inputWalletName">请输入钱包名字</string>
+    <string name="walletNameFormat">1-12个字符</string>
+    <string name="walletNameFormatError">钱包名称格式错误</string>
+    <string name="importWallet">导入钱包</string>
+    <string name="mnemonicNotCompleted">24个助记词未完成</string>
+    <string name="addressAdded">此账户已添加到设备</string>
+    <string name="backupMnemonic">备份助记词</string>
+    <string name="backupTip1">抄写下你的钱包助记词并妥善保管</string>
+    <string name="backupTip2">助记词用于恢复钱包或者重置钱包密码，请将它准确抄写到纸上，务必妥善保管</string>
+    <string name="next">下一步</string>
+    <string name="verifyMnemonic">验证您备份的助记词</string>
+    <string name="clickMnemonic">请按顺序点击助记词，验证你备注的助记词正确无误</string>
+    <string name="invalidMnemonic">助记词无效</string>
+    <string name="walletManager">钱包管理</string>
+    <string name="backup">备份</string>
+    <string name="updateWalletName">修改钱包名字</string>
+    <string name="inputNewWalletName">请输入新的钱包名称</string>
+    <string name="updateSucceed">修改成功</string>
+    <string name="updateFailed">修改失败</string>
+    <string name="confirmDeleteWallet">确认删除钱包</string>
+    <string name="deleteSucceed">删除成功</string>
+    <string name="deleteFailed">删除失败</string>
+
+    <string name="scan">扫码</string>
+
+    <string name="validator">验证人</string>
+    <string name="selectValidator">选择验证人</string>
+    <string name="clickSelectValidator">点击选择验证人</string>
+    <string name="allValidator">全部</string>
+    <string name="shares">受托总数</string>
+
+    <string name="rate">佣金率</string>
+    <string name="bonded">共识中</string>
+    <string name="jailed">待解禁</string>
+
+    <string name="validatorDetail">详情</string>
+    <string name="validatorActivity">活跃度</string>
+    <string name="selfShares">自抵押总数</string>
+    <string name="validatorProfile">简介</string>
+
+    <string name="about">关于</string>
+
+    <string name="proposalDepositPeriod">抵押阶段</string>
+    <string name="proposalVotingPeriod">投票阶段</string>
+    <string name="proposalPassed">通过</string>
+    <string name="proposalRejected">未通过</string>
+    <string name="proposalFailed">未通过</string>
 
 
-    <string name="tab_capital">资产</string>
-    <string name="tab_staking">委托</string>
-    <string name="tab_proposal">投票</string>
-    <string name="tab_me">我的</string>
+
+    <string name="invalidAddress">地址无效</string>
+    <string name="receiveAddress">收款地址</string>
+    <string name="inputToAddress">请输入对方地址</string>
+    <string name="amountDip">数量/DIP</string>
+    <string name="inputAmount">请输入转账数量</string>
+    <string name="notEnoughToTransfer">Not enough balance to transfer</string>
+
+    <string name="delegate">委托</string>
+    <string name="delegation">委托</string>
+    <string name="delegateAmount">委托数量</string>
+    <string name="inputDelegateAmount">请输入委托数量</string>
+    <string name="notEnough">余额不足</string>
+
+    <string name="delegationDetail">委托详情</string>
+    <string name="delegateTotalAmount">已委托总数（DIP）</string>
+    <string name="waitReceiveReward">待领取奖励（DIP）</string>
+    <string name="detail">详情</string>
+
+    <string name="redelegate">转委托</string>
+    <string name="pleaseSelectvalidator">请选择验证人</string>
+    <string name="sameValidator">同一个验证人</string>
+    <string name="redelegateAmount">转委托数量</string>
+    <string name="inputRedelegateAmount">请输入转委托数量</string>
+    <string name="redelegateMaxAmount">最多可转委托</string>
+    <string name="overMaxAmount">超出最大可转委托数量</string>
+
+    <string name="undelegate">解委托</string>
+    <string name="undelegateAmount">解委托数量</string>
+    <string name="remarks">备注</string>
+    <string name="inputUndelegateAmount">请输入解委托数量</string>
+    <string name="undelegateMaxAmount">最多可解委托</string>
+
+    <string name="delegationTransactionRecord">委托交易记录</string>
+    <string name="bond">委托</string>
+    <string name="unbond">待解托</string>
+
+
+    <string name="transferIn">转入</string>
+    <string name="transferOut">转出</string>
+
+    <string name="receiveReward">领取奖励</string>
+    <string name="invalidValidatorAddress">验证人地址无效</string>
+    <string name="invalidReceiveAddress">领取地址无效</string>
+    <string name="estimate">预计领取</string>
+    <string name="receiveRewardTip">预计领取数量为估算结果，领取数量以实际交易为准</string>
+
+    <string name="amount">数量</string>
+    <string name="initAmount">初始数量</string>
+    <string name="amountFormatError">数量格式错误</string>
+    <string name="fee">费用</string>
+    <string name="time">时间</string>
+    <string name="timeRemaining">剩余时间</string>
+    <string name="balance">余额</string>
+
+    <string name="fromAddress">对方地址</string>
+    <string name="validatorAddress">验证人地址</string>
+    <string name="copySuccessful">复制成功</string>
+
+    <string name="proposer">提案人</string>
+    <string name="proposalType">提案类型</string>
+    <string name="yes">同意</string>
+    <string name="noWithVote">强烈反对</string>
+    <string name="no">不同意</string>
+    <string name="abstain">弃权</string>
+    <string name="proposalTime">提案发起时间</string>
+    <string name="voteStartTime">投票开始时间</string>
+    <string name="voteEndTime">投票截止时间</string>
+    <string name="myVote">我的意见</string>
+
+    <string name="succeed">成功</string>
+    <string name="failed">失败</string>
+
+    <string name="delegateTotal">已经委托总额</string>
+    <string name="delegateValidator">已委托验证人</string>
+    <string name="AllReward">全部奖励</string>
+    <string name="withdrawAddress">领取地址</string>
+
+    <string name="all">全部</string>
 
 </resources>

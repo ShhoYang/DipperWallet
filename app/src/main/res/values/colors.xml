@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <color name="colorPrimary">#234794</color>-->
-    <!--    <color name="colorPrimaryDark">#000000</color>-->
-    <!--    <color name="colorAccent">#7A7f88</color>-->
-
     <color name="colorPrimary">@color/themeColor</color>
     <color name="colorPrimaryDark">@color/window_bg</color>
     <color name="colorAccent">@color/themeColor</color>
-
-    <!--<color name="colorPrimary">#5b72c5</color>-->
-    <!--<color name="colorPrimaryDark">#234794</color>-->
-    <!--<color name="colorAccent">#dcb86b</color>-->
-
-
-    <!--<color name="colorCommision1">#3366ff</color>-->
-
 
     <color name="proposal_yes">@color/colorPrimary</color>
     <color name="proposal_no">#FF859B</color>

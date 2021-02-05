@@ -1,9 +1,11 @@
 package com.highstreet.lib.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
+import com.highstreet.lib.BaseApplication
 import com.highstreet.lib.utils.L
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -74,5 +76,9 @@ abstract class BaseViewModel : ViewModel(), LifecycleObserver {
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
+    }
+
+    protected fun getString(@StringRes resId: Int): String {
+        return BaseApplication.instance.getString(resId)
     }
 }

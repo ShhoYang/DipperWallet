@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="抄写下你的钱包助记词并妥善保管"
+            android:text="@string/backupTip1"
             android:textColor="@color/text_black"
             android:textSize="16sp" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="助记词用于恢复钱包或者重置钱包密码，请将它准确抄写到纸上，务必妥善保管。"
+            android:text="@string/backupTip2"
             android:textColor="@color/text_subtitle"
             android:textSize="16sp" />
 
@@ -41,38 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="48dp"
-            android:text="下一步" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_padding"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="立即备份你的钱包"
-            android:textColor="@color/text_black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="我们强烈建议你现在就将助记词准确抄写在纸上，并安全存放，任何人拥有助记词即可自由支配资产。"
-            android:textColor="@color/text_subtitle"
-            android:textSize="16sp" />
-
-        <com.highstreet.lib.view.RoundButton
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="96dp"
-            android:text="立即备份" />
+            android:text="@string/next" />
 
     </LinearLayout>
 

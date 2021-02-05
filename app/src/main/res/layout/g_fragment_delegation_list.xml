@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
-                    android:text="已经委托总额"
+                    android:text="@string/delegateTotal"
                     android:textColor="@color/text_light_blue"
                     android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
-                    android:text="已委托验证人"
+                    android:text="@string/delegateValidator"
                     android:textColor="@color/text_light_blue"
                     android:textSize="12sp" />
 
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
-                    android:text="全部奖励"
+                    android:text="@string/AllReward"
                     android:textColor="@color/text_light_blue"
                     android:textSize="12sp" />
 
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
-                    android:text="领取地址"
+                    android:text="@string/withdrawAddress"
                     android:textColor="@color/text_light_blue"
                     android:textSize="12sp" />
 

@@ -10,7 +10,6 @@ import com.highstreet.lib.ui.BaseListActivity
 import com.highstreet.wallet.R
 import com.highstreet.wallet.ui.adapter.ValidatorAdapter
 import com.highstreet.wallet.ui.adapter.ValidatorChooseAdapter
-import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.constant.SortType
 import com.highstreet.wallet.constant.ValidatorType
@@ -28,7 +27,7 @@ open class ValidatorListActivity : BaseListActivity<Validator, ValidatorVM>(),
     /**
      * 是否是来选择验证人
      */
-    private var isChoose = false
+    private var isSelect = false
 
     private var filterShow = false
     private var filterType = ValidatorType.ALL
@@ -39,14 +38,18 @@ open class ValidatorListActivity : BaseListActivity<Validator, ValidatorVM>(),
     override fun getLayoutId() = R.layout.g_activity_validator_list
 
     override fun prepare(savedInstanceState: Bundle?) {
-        isChoose = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
+        isSelect = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
     }
 
-    override fun createAdapter() = if (isChoose) ValidatorChooseAdapter() else ValidatorAdapter()
+    override fun createAdapter() = if (isSelect) ValidatorChooseAdapter() else ValidatorAdapter()
 
     override fun initView() {
         super.initView()
-        title = if (isChoose) "选择验证人" else "验证人"
+        if (isSelect) {
+            setTitle(R.string.selectValidator)
+        } else {
+            setTitle(R.string.validator)
+        }
         llShares.isSelected = true
         llType.setOnClickListener(this)
         llRate.setOnClickListener(this)
@@ -58,7 +61,7 @@ open class ValidatorListActivity : BaseListActivity<Validator, ValidatorVM>(),
     }
 
     override fun itemClicked(view: View, item: Validator, position: Int) {
-        if (isChoose) {
+        if (isSelect) {
             if (R.id.ivArrow == view.id) {
                 ValidatorDetailActivity.start(this, item, false)
             } else {
@@ -149,9 +152,9 @@ open class ValidatorListActivity : BaseListActivity<Validator, ValidatorVM>(),
 
     companion object {
         const val REQUEST_CODE_VALIDATOR_CHOOSE = 302
-        fun start(context: Activity, isChoose: Boolean = false) {
+        fun start(context: Activity, isSelect: Boolean = false) {
             val intent = Intent(context, ValidatorListActivity::class.java)
-            intent.putExtra(ExtraKey.BOOLEAN, isChoose)
+            intent.putExtra(ExtraKey.BOOLEAN, isSelect)
             context.startActivityForResult(intent, REQUEST_CODE_VALIDATOR_CHOOSE)
         }
     }

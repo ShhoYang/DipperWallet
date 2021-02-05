@@ -67,9 +67,8 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
             baseRefreshLayout.stopRefresh()
         })
         viewModel.delegationAmountLD.observe(this, Observer {
-            val a = it ?: ""
-            if (!TextUtils.isEmpty(a)) {
-                delegationAmount = a!!
+            if (!TextUtils.isEmpty(it)) {
+                delegationAmount = it
                 updateUIStyle(ivEye.isSelected)
             }
             baseRefreshLayout.stopRefresh()
@@ -112,7 +111,7 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
             ivSwitchWallet -> to(WalletManageActivity::class.java)
             ivTip -> {
                 activity?.let {
-                    ConfirmDialog(it).setMsg("1DIP等于1,000,000,000,000pdip")
+                    ConfirmDialog(it).setMsg("1DIP = 1,000,000,000,000pdip")
                         .hideCancel()
                         .show()
                 }
@@ -120,9 +119,5 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
             flTransaction -> to(TransactionActivity::class.java)
             flTransactionRecord -> to(TransactionRecordActivity::class.java)
         }
-    }
-
-    companion object {
-        private const val TAG = "--CapitalFragment--"
     }
 }

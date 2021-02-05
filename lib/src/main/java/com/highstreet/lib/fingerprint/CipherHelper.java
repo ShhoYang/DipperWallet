@@ -18,13 +18,10 @@ import javax.crypto.KeyGenerator;
  */
 @RequiresApi(Build.VERSION_CODES.M)
 public class CipherHelper {
-    // This can be key name you want. Should be unique for the app.
     private static final String KEY_NAME = "com.hailong.fingerprint.CipherHelper";
 
-    // We always use this keystore on Android.
     private static final String KEYSTORE_NAME = "AndroidKeyStore";
 
-    // Should be no need to change these values.
     private static final String KEY_ALGORITHM = KeyProperties.KEY_ALGORITHM_AES;
     private static final String BLOCK_MODE = KeyProperties.BLOCK_MODE_CBC;
     private static final String ENCRYPTION_PADDING = KeyProperties.ENCRYPTION_PADDING_PKCS7;
@@ -77,14 +74,14 @@ public class CipherHelper {
     private Key GetKey() throws Exception {
         Key secretKey;
         if (!_keystore.isKeyEntry(KEY_NAME)) {
-            CreateKey();
+            createKey();
         }
 
         secretKey = _keystore.getKey(KEY_NAME, null);
         return secretKey;
     }
 
-    private void CreateKey() throws Exception {
+    private void createKey() throws Exception {
         KeyGenerator keyGen = KeyGenerator.getInstance(KEY_ALGORITHM, KEYSTORE_NAME);
         KeyGenParameterSpec keyGenSpec =
                 new KeyGenParameterSpec.Builder(KEY_NAME, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)

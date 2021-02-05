@@ -24,7 +24,7 @@ class BackupActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_backup
 
     override fun initView() {
-        title = "立即备份"
+        setTitle(R.string.backupMnemonic)
     }
 
     override fun initData() {

@@ -18,18 +18,18 @@ class DelegationTransactionRecordActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_viewpager
 
     override fun initView() {
-        title = "委托交易记录"
+        setTitle(R.string.delegationTransactionRecord)
         val fragments = arrayListOf<Pair<String, Fragment>>(
             Pair(
-                "委托",
+                getString(R.string.bond),
                 DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_BOND)
             ),
             Pair(
-                "解委托",
+                getString(R.string.unbond),
                 DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_UN_BOND)
             ),
             Pair(
-                "重新委托",
+                getString(R.string.redelegate),
                 DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_REDELEGATE)
             )
         )

@@ -11,13 +11,13 @@ import com.highstreet.wallet.utils.StringUtils
  * @Date 2020/10/24
  */
 
-class DelegationAdapter : BasePagedAdapter<DelegationInfo>(R.layout.g_item_common) {
+class DelegationAdapter  : BasePagedAdapter<DelegationInfo>(R.layout.g_item_common) {
 
     override fun bindViewHolder(holder: ViewHolder, item: DelegationInfo, position: Int) {
         val desc = StringBuilder()
-        desc.append("初始金额：").append(StringUtils.pdip2DIP(item.shares)).append("\n")
-                .append("余额：").append(StringUtils.pdip2DIP(item.balance))
-        holder.setText(R.id.tvTitle, "验证人地址：${item.validator_address}")
-                .setText(R.id.tvDesc, desc)
+        desc.append(getString(R.string.initAmount)).append("：").append(StringUtils.pdip2DIP(item.shares)).append("\n")
+            .append(getString(R.string.balance)).append("：").append(StringUtils.pdip2DIP(item.balance))
+        holder.setText(R.id.tvTitle, "${getString(R.string.validatorAddress)}：${item.validator_address}")
+            .setText(R.id.tvDesc, desc)
     }
 }

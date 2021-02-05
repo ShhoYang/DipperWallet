@@ -11,7 +11,6 @@ import com.king.zxing.CaptureHelper
 import com.king.zxing.OnCaptureCallback
 import kotlinx.android.synthetic.main.g_activity_scan.*
 
-
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
@@ -29,7 +28,7 @@ class ScanActivity : BaseActivity(), OnCaptureCallback {
 
         getToolbar()?.apply {
             iconTintColor = Color.WHITE
-            title = "扫码"
+            setTitle(R.string.scan)
         }
 //        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -85,7 +84,10 @@ class ScanActivity : BaseActivity(), OnCaptureCallback {
         const val REQUEST_CODE_SCAN = 102
 
         fun start(context: Activity) {
-            context.startActivityForResult(Intent(context, ScanActivity::class.java), REQUEST_CODE_SCAN)
+            context.startActivityForResult(
+                Intent(context, ScanActivity::class.java),
+                REQUEST_CODE_SCAN
+            )
         }
     }
 }

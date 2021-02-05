@@ -13,7 +13,6 @@ import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
-import com.highstreet.wallet.crypto.RSA
 import com.highstreet.wallet.extensions.isAddress
 import com.highstreet.wallet.ui.vm.ReceiveRewardVM
 import kotlinx.android.synthetic.main.g_activity_receive_reward.*
@@ -34,7 +33,7 @@ class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
     override fun getLayoutId() = R.layout.g_activity_receive_reward
 
     override fun initView() {
-        title = "领取奖励"
+        setTitle(R.string.receiveReward)
         etReceiveAddress.onFocusChangeListener = this
         RxView.textChanges(etReceiveAddress) {
             btnConfirm.isEnabled = etReceiveAddress.string().isNotEmpty()
@@ -47,16 +46,19 @@ class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
     private fun receive() {
         val validatorAddress = etValidatorAddress.string()
         if (!validatorAddress.isAddress()) {
-            toast("验证人地址无效")
+            toast(R.string.invalidValidatorAddress)
             return
         }
         val receiveAddress = etReceiveAddress.string()
         if (!receiveAddress.isAddress()) {
-            toast("领取地址无效")
+            toast(R.string.invalidReceiveAddress)
             return
         }
 
-        getFingerprint(FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint, true)?.authenticate()
+        getFingerprint(
+            FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint,
+            true
+        )?.authenticate()
     }
 
     private fun updateLineStyle(view: View, hasFocus: Boolean) {
@@ -72,9 +74,12 @@ class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
         }
         viewModel.resultLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
-            if (true == it?.first) {
+
+            if (it.first) {
+                toast(R.string.succeed)
                 to(MainActivity::class.java)
+            } else {
+                toast(R.string.failed)
             }
         })
     }
@@ -99,9 +104,17 @@ class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
     }
 
     companion object {
-        fun start(context: Context, validatorAddress: String, delegatorAddress: String, reword: String) {
+        fun start(
+            context: Context,
+            validatorAddress: String,
+            delegatorAddress: String,
+            reword: String
+        ) {
             val intent = Intent(context, ReceiveRewardActivity::class.java)
-            intent.putExtra(ExtraKey.SERIALIZABLE, arrayListOf(validatorAddress, delegatorAddress, reword))
+            intent.putExtra(
+                ExtraKey.SERIALIZABLE,
+                arrayListOf(validatorAddress, delegatorAddress, reword)
+            )
             context.startActivity(intent)
         }
     }

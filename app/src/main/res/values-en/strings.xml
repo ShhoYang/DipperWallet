@@ -1,0 +1,163 @@
+<resources>
+    <string name="wallet_app_name">DipperWallet</string>
+
+    <string name="tabCapital">Capital</string>
+    <string name="tabDelegation">Delegation</string>
+    <string name="tabProposal">Proposal</string>
+    <string name="tabProfile">Profile</string>
+
+    <string name="createPassword">Create password</string>
+    <string name="password">Password</string>
+    <string name="inputPassword">Please input password</string>
+    <string name="inputConfirmPassword">Please input confirm password</string>
+    <string name="passwordFormat">8~16 character</string>
+    <string name="passwordFormatError">Password format error</string>
+    <string name="passwordNotEqual">Passwords not equal</string>
+    <string name="addFingerprintVerification">Add fingerprint verification?</string>
+    <string name="saveFingerprintFailed">Save fingerprint failed</string>
+
+    <string name="walletType">Please select wallet type</string>
+    <string name="walletDip">DIP</string>
+
+    <string name="createWallet">Create Wallet</string>
+    <string name="walletAddress">Wallet address</string>
+    <string name="setPassword">please set password</string>
+    <string name="walletNameFormatError">Wall name format error</string>
+
+    <string name="importWallet">Import Wallet</string>
+    <string name="walletName">Wallet name</string>
+    <string name="walletNameFormat">1-12 character</string>
+    <string name="inputWalletName">Please wallet name</string>
+    <string name="mnemonicNotCompleted">24 mnemonic not completed</string>
+    <string name="addressAdded">This address has been added</string>
+
+    <string name="backupMnemonic">Backup mnemonic</string>
+    <string name="backupTip1">Remember the mnemonics of your wallet and keep them safe</string>
+    <string name="backupTip2">Mnemonics are used to restore the wallet or reset the password of the wallet. Please copy them accurately on the paper and keep them properly</string>
+    <string name="next">Next</string>
+    <string name="verifyMnemonic">Verify your mnemonics</string>
+    <string name="clickMnemonic">Please click the mnemonics in order to verify that the mnemonics in your notes are correct</string>
+    <string name="invalidMnemonic">Invalid mnemonic</string>
+
+    <string name="QRCode">Wallet QR Code</string>
+    <string name="copyAddress">Copy Address</string>
+
+    <string name="walletManager">Wallet Manager</string>
+    <string name="backup">Backup</string>
+    <string name="updateWalletName">Update wallet name</string>
+    <string name="inputNewWalletName">Please input new wallet name</string>
+    <string name="updateSucceed">Update succeed</string>
+    <string name="updateFailed">Update failed</string>
+    <string name="confirmDeleteWallet">Confirm delete wallet </string>
+    <string name="deleteSucceed">Delete succeed</string>
+    <string name="deleteFailed">Delete failed</string>
+
+    <string name="validator">Validator</string>
+    <string name="selectValidator">Select validator</string>
+    <string name="clickSelectValidator">Click select validator</string>
+    <string name="allValidator">All</string>
+    <string name="shares">Shares</string>
+    <string name="rate">Rate</string>
+    <string name="bonded">Bonded</string>
+    <string name="jailed">To be released</string>
+
+    <string name="validatorDetail">Detail</string>
+    <string name="validatorActivity">Activity</string>
+    <string name="selfShares">Self Shares</string>
+    <string name="validatorProfile">Profile</string>
+    <string name="delegate">Delegate</string>
+
+    <string name="about">About</string>
+    <string name="scan">Scan</string>
+
+    <string name="cancelFingerprintVerification">Cancel fingerprint verification?</string>
+    <string name="noFingerprint">No fingerprint is entered. Please enter fingerprint in system settings</string>
+
+    <string name="proposalDepositPeriod">Deposit period</string>
+    <string name="proposalVotingPeriod">Voting period</string>
+    <string name="proposalPassed">Passed</string>
+    <string name="proposalRejected">Rejected</string>
+    <string name="proposalFailed">Failed</string>
+    <string name="proposer">Proposer</string>
+    <string name="proposalType">Proposal Type</string>
+    <string name="yes">Yes</string>ß
+    <string name="noWithVote">No With Vote</string>
+    <string name="no">No</string>
+    <string name="abstain">Abstain</string>
+    <string name="proposalTime">Proposal Time</string>
+    <string name="voteStartTime">Vote Start Time</string>
+    <string name="voteEndTime">Vote End Time</string>
+    <string name="myVote">My Vote</string>
+
+    <string name="transaction">Transaction</string>
+    <string name="invalidAddress">Invalid address</string>
+    <string name="receiveAddress">To address</string>
+    <string name="inputToAddress">Input to address</string>
+    <string name="amountDip">Amount/DIP</string>
+    <string name="inputAmount">Input amount</string>
+    <string name="notEnoughToTransfer">Not enough balance to transfer</string>
+
+    <string name="delegation">Delegation</string>
+    <string name="delegateAmount">Delegate amount</string>
+    <string name="inputDelegateAmount">Input delegate amount</string>
+    <string name="notEnough">Not enough balance</string>
+    <string name="bond">Bond</string>
+    <string name="unbond">Unbond</string>
+
+    <string name="delegationDetail">Delegation detail</string>
+    <string name="delegateTotalAmount">Total delegation</string>
+    <string name="waitReceiveReward">Reward</string>
+    <string name="detail">Detail</string>
+
+    <string name="redelegate">Redelegate</string>
+    <string name="pleaseSelectvalidator">Please select validator</string>
+    <string name="sameValidator">Same validator</string>
+    <string name="redelegateAmount">Redelegate amount</string>
+    <string name="inputRedelegateAmount">Input redelegate amount</string>
+    <string name="redelegateMaxAmount">Redelegate max amount</string>
+    <string name="overMaxAmount">Over max amount</string>
+
+    <string name="undelegate">Undelegate</string>
+    <string name="undelegateAmount">Undelegate amount</string>
+
+    <string name="inputUndelegateAmount">Input undelegate amount</string>
+    <string name="undelegateMaxAmount">Undelegate max amount</string>
+
+    <string name="delegationTransactionRecord">Delegation transaction record</string>
+    <string name="AddressTransfer">Address Transfer</string>
+    <string name="transactionRecord">Transaction Record</string>
+    <string name="transactionDetail">Transaction Detail</string>
+    <string name="transferIn">Transfer In</string>
+    <string name="transferOut">Transfer Out</string>
+
+    <string name="receiveReward">Reward</string>
+    <string name="invalidValidatorAddress">Invalid validator address</string>
+    <string name="invalidReceiveAddress">Invalid receive address</string>
+    <string name="estimate">Estimate</string>
+    <string name="receiveRewardTip">The estimated quantity is the estimated result, and the actual transaction shall prevail</string>
+
+    <string name="amount">Amount</string>
+    <string name="initAmount">Initial amount</string>
+    <string name="amountFormatError">Amount format error</string>
+    <string name="fee">Fee</string>
+    <string name="time">Time</string>
+    <string name="timeRemaining">Time Remaining</string>
+    <string name="balance">Balance</string>
+    <string name="availableBalance">Available Balance</string>
+    <string name="fromAddress">From address</string>
+    <string name="validatorAddress">Validator address</string>
+    <string name="copySuccessful">Copy succeed</string>
+
+    <string name="all">All</string>
+    <string name="remarks">Remarks</string>
+
+    <string name="succeed">Succeed</string>
+    <string name="failed">Failed</string>
+    <string name="totalDelegation">Total Delegation</string>
+    <string name="delegateTotal">Delegate Total</string>
+    <string name="delegateValidator">Delegate Validator</string>
+    <string name="AllReward">All Reward</string>
+    <string name="withdrawAddress">Withdraw Address</string>
+    <string name="fingerprint">Fingerprint</string>
+
+</resources>

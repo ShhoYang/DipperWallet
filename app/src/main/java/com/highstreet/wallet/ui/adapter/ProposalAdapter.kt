@@ -15,9 +15,10 @@ class ProposalAdapter : BasePagedAdapter<Proposal>(R.layout.g_item_proposal) {
 
     override fun bindViewHolder(holder: ViewHolder, item: Proposal, position: Int) {
         holder.setText(R.id.tvId, "#" + item.id)
-                .setText(R.id.tvTitle, item.content?.value?.title ?: "")
-                .setText(R.id.tvStatus, item.getStatus())
+            .setText(R.id.tvTitle, item.content?.value?.title ?: "")
+            .setText(R.id.tvStatus, item.getStatus(holder.context))
 
-        holder.getView<View>(R.id.statusPoint).setBackgroundResource(if (item.isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
+        holder.getView<View>(R.id.statusPoint)
+            .setBackgroundResource(if (item.isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
     }
 }

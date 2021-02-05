@@ -35,7 +35,7 @@ class CreateWalletVM : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it) {
-//                    test()
+                    test()
                 } else {
                     resultLD.value = false
                 }

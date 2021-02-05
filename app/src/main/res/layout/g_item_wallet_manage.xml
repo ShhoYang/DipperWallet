@@ -26,8 +26,7 @@
             android:textColor="@color/text_title"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="hao" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvBackup"
@@ -35,12 +34,11 @@
             android:layout_height="24dp"
             android:gravity="center"
             android:singleLine="true"
-            android:text="备份"
+            android:text="@string/backup"
             android:textColor="@color/text_orange"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvWalletName"
-            tools:text="hao" />
+            app:layout_constraintTop_toTopOf="@id/tvWalletName" />
 
         <TextView
             android:id="@+id/tvWalletAddress"
@@ -54,8 +52,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvWalletName"
-            app:layout_constraintWidth_percent="0.4"
-            tools:text="anioagoannioungaiohaonhgnoai" />
+            app:layout_constraintWidth_percent="0.4" />
 
         <ImageView
             android:id="@+id/ivCopy"

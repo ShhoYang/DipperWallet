@@ -52,7 +52,7 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
 
     override fun initView() {
         super.initView()
-        title = "钱包管理"
+        setTitle(R.string.walletManager)
         RxView.click(ivAdd) {
             InitWalletActivity.start(this, true)
         }
@@ -71,20 +71,18 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
             })
         viewModel.updateNameLD.observe(this, Observer {
             hideLoading()
-            if (true == it) {
-                toast("修改成功")
+            if (it) {
+                toast(R.string.updateSucceed)
             } else {
-
-                toast("修改失败")
+                toast(R.string.updateFailed)
             }
         })
         viewModel.deleteLD.observe(this, Observer {
             hideLoading()
-            if (true == it) {
-                toast("删除成功")
+            if (it) {
+                toast(R.string.deleteSucceed)
             } else {
-
-                toast("删除失败")
+                toast(R.string.deleteFailed)
             }
         })
     }
@@ -99,8 +97,8 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
             }
             R.id.ivEdit -> {
                 InputDialog(this)
-                    .setTitle("修改钱包名称")
-                    .setHint("请输入新的钱包名称")
+                    .setTitle(getString(R.string.updateWalletName))
+                    .setHint(getString(R.string.inputNewWalletName))
                     .setText(item.nickName)
                     .setListener(object : InputDialogListener {
                         override fun confirm(content: String) {
@@ -110,7 +108,7 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
             }
             R.id.ivDelete -> {
                 useAccount = item
-                ConfirmDialog(this).setMsg("确认删除钱包${item.nickName}?")
+                ConfirmDialog(this).setMsg("${getString(R.string.confirmDeleteWallet)}${item.nickName}?")
                     .setListener(object : ConfirmDialogListener {
                         override fun confirm() {
                             type = TYPE_DELETE

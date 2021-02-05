@@ -1,6 +1,8 @@
 package com.highstreet.wallet.model.res
 
+import android.content.Context
 import com.highstreet.lib.adapter.BaseItem
+import com.highstreet.wallet.R
 import com.highstreet.wallet.model.req.Coin
 import java.io.Serializable
 
@@ -21,14 +23,14 @@ class Proposal(
         val voting_start_time: String?
 ) : BaseItem, Serializable {
 
-    fun getStatus(): String {
+    fun getStatus(context: Context): String {
         return when (proposal_status) {
             "Nil" -> ""
-            "DepositPeriod" -> "抵押阶段"
-            "VotingPeriod" -> "投票阶段"
-            "Passed" -> "通过"
-            "Rejected" -> "未通过"
-            "Failed" -> "未通过"
+            "DepositPeriod" -> context.getString(R.string.proposalDepositPeriod)
+            "VotingPeriod" -> context.getString(R.string.proposalVotingPeriod)
+            "Passed" -> context.getString(R.string.proposalPassed)
+            "Rejected" -> context.getString(R.string.proposalRejected)
+            "Failed" -> context.getString(R.string.proposalFailed)
             else -> ""
         }
     }

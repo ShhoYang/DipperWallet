@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="受托总数"
+                android:text="@string/shares"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="自抵押总数"
+                android:text="@string/selfShares"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="佣金率"
+                android:text="@string/rate"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
@@ -177,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="活跃度"
+                android:text="@string/validatorActivity"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
 
@@ -212,7 +212,7 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/activity_padding"
-            android:text="简介"
+            android:text="@string/validatorProfile"
             android:textColor="@color/text_black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -240,7 +240,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:text="委托" />
+                android:text="@string/delegate" />
         </FrameLayout>
 
 

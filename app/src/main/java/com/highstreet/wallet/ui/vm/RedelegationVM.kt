@@ -26,12 +26,12 @@ class RedelegationVM : BaseViewModel() {
     fun redelegate(amount: String, delegationInfo: DelegationInfo, toValidatorAddress: String) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
             if (it.result == null) {
-                redelegateLD.value = Pair(false, "转委托失败")
+                redelegateLD.value = Pair(false, "")
             } else {
                 generateParams(it.result!!, amount, delegationInfo, toValidatorAddress)
             }
         }, {
-            redelegateLD.value = Pair(false, "转委托失败")
+            redelegateLD.value = Pair(false, "")
         }).add()
 
     }
@@ -69,9 +69,9 @@ class RedelegationVM : BaseViewModel() {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
                 RxBus.instance().send(RefreshDelegationEvent())
-                redelegateLD.value = Pair(true, "转委托成功")
+                redelegateLD.value = Pair(true, "")
             } else {
-                redelegateLD.value = Pair(false, "转委托失败")
+                redelegateLD.value = Pair(false, "")
             }
 
         }, {

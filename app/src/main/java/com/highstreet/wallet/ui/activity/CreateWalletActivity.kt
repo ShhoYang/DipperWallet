@@ -40,7 +40,7 @@ class CreateWalletActivity : BaseActivity() {
     }
 
     override fun initView() {
-        title = "创建钱包"
+        setTitle(R.string.createWallet)
 
         etName.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus -> nameLine.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
 
@@ -69,14 +69,14 @@ class CreateWalletActivity : BaseActivity() {
                 )
                 finish()
             } else {
-                toast("创建钱包失败")
+                toast(R.string.failed)
             }
         })
     }
 
     private fun createWallet() {
         if (null == AccountManager.instance().password) {
-            toast("请先设置密码")
+            toast(R.string.setPassword)
             CreatePasswordActivity.start(this)
             return
         }
@@ -84,7 +84,7 @@ class CreateWalletActivity : BaseActivity() {
         val name = etName.string()
 
         if (!name.isName()) {
-            toast("输入的钱包名字无效")
+            toast(R.string.walletNameFormatError)
             return
         }
         walletParams.nickName = name

@@ -15,7 +15,7 @@ class AboutActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_about
 
     override fun initView() {
-        title = "关于${getString(R.string.wallet_app_name)}"
+        title = "${getString(R.string.about)} ${getString(R.string.wallet_app_name)}"
         if (BuildConfig.testnet) {
             ivLogo.setImageResource(R.mipmap.ic_launcher_2)
         } else {

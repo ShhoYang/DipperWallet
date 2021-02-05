@@ -27,13 +27,13 @@
         <TextView
             style="@style/InputViewName"
             android:layout_marginTop="16dp"
-            android:text="收款地址" />
+            android:text="@string/receiveAddress" />
 
         <EditText
             android:id="@+id/etToAddress"
             style="@style/InputViewContent"
             android:digits="@string/digits"
-            android:hint="请输入对方地址" />
+            android:hint="@string/inputToAddress" />
 
         <include
             android:id="@+id/toAddressLine"
@@ -42,7 +42,7 @@
         <TextView
             style="@style/InputViewName"
             android:layout_marginTop="32dp"
-            android:text="金额/DIP" />
+            android:text="@string/amountDip" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_weight="1"
                 android:digits="0123456789."
-                android:hint="请输入金额"
+                android:hint="@string/inputAmount"
                 android:inputType="numberDecimal"
                 android:maxLength="19"
                 android:singleLine="true" />
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
-                android:text="全部"
+                android:text="@string/all"
                 android:textColor="@color/text_primary"
                 android:textSize="14sp" />
 
@@ -84,7 +84,7 @@
             android:id="@+id/etRemarks"
             style="@style/InputViewContent"
             android:layout_marginTop="32dp"
-            android:hint="备注"
+            android:hint="@string/remarks"
             android:inputType="text"
             android:maxLength="100" />
 
@@ -92,17 +92,13 @@
             android:id="@+id/remarksLine"
             layout="@layout/g_include_input_line" />
 
-        <TextView
-            style="@style/InputViewTip"
-            android:text="最多可输入100个字符（选填）" />
-
         <com.highstreet.lib.view.RoundButton
             android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="48dp"
             android:enabled="false"
-            android:text="确定" />
+            android:text="@string/confirm" />
 
     </LinearLayout>
 

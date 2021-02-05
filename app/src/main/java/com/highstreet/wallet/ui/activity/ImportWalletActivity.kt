@@ -48,7 +48,7 @@ class ImportWalletActivity : BaseActivity() {
     }
 
     override fun initView() {
-        title = "导入钱包"
+        setTitle(R.string.importWallet)
 
         etName.onFocusChangeListener =
             View.OnFocusChangeListener { _, hasFocus -> nameLine.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
@@ -79,13 +79,7 @@ class ImportWalletActivity : BaseActivity() {
         editTexts.add(etMnemonic23)
         editTexts.add(etMnemonic24)
 
-        val s =
-            "identify,because,peace,area,before,buzz,range,style,sock,game,ability,century,memory,obey,jewel,explain,giggle,truly,frame,error,day,liar,example,extend"
-
-        val list = s.split(",")
-
         editTexts.forEachIndexed() { i, editText ->
-            editText.setText(list[i])
             editText.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     focusPosition = i
@@ -108,21 +102,21 @@ class ImportWalletActivity : BaseActivity() {
                 }
                 finish()
             } else {
-                toast("导入钱包失败")
+                toast(R.string.failed)
             }
         })
     }
 
     private fun importWallet() {
         if (null == AccountManager.instance().password) {
-            toast("请先设置密码")
+            toast(R.string.setPassword)
             CreatePasswordActivity.start(this)
             return
         }
 
         editTexts.forEach {
             if (TextUtils.isEmpty(it.string())) {
-                toast("24个助记词未完善")
+                toast(R.string.mnemonicNotCompleted)
                 return
             }
         }
@@ -130,7 +124,7 @@ class ImportWalletActivity : BaseActivity() {
         val mnemonic = editTexts.map { it.string() } as ArrayList
 
         if (!isValidMnemonic(mnemonic)) {
-            toast("无效的助记词")
+            toast(R.string.invalidMnemonic)
             return
         }
 
@@ -138,7 +132,7 @@ class ImportWalletActivity : BaseActivity() {
         val accounts = AccountManager.instance().accounts
         accounts.forEach { account ->
             if (account.address == walletParams.address) {
-                toast("设备已添加此账户")
+                toast(R.string.addressAdded)
                 return
             }
         }
@@ -146,7 +140,7 @@ class ImportWalletActivity : BaseActivity() {
         val name = etName.string()
 
         if (!name.isName()) {
-            toast("输入的钱包名字无效")
+            toast(R.string.walletNameFormatError)
             return
         }
         walletParams.nickName = name

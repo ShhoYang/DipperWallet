@@ -10,7 +10,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="@dimen/activity_padding"
-        android:text="验证人地址" />
+        android:text="@string/validatorAddress" />
 
     <EditText
         android:id="@+id/etValidatorAddress"
@@ -22,7 +22,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="预计领取" />
+        android:text="@string/estimate" />
 
     <EditText
         android:id="@+id/etAmount"
@@ -35,12 +35,12 @@
 
     <TextView
         style="@style/InputViewTip"
-        android:text="预计领取数量为估算结果，领取数量以实际交易为准" />
+        android:text="@string/receiveRewardTip" />
 
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="领取地址" />
+        android:text="@string/receiveAddress" />
 
     <EditText
         android:id="@+id/etReceiveAddress"
@@ -56,6 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
-        android:text="确定" />
+        android:text="@string/confirm" />
 
 </LinearLayout>

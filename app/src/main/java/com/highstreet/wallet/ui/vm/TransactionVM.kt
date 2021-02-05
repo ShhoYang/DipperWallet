@@ -2,6 +2,8 @@ package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
@@ -47,12 +49,13 @@ class TransactionVM : BalanceVM() {
                             remarks
                         )
                     } else {
-                        resultLD.value = Pair(false, "金额不足")
+                        resultLD.value =
+                            Pair(false, getString(R.string.notEnoughToTransfer))
                     }
                 }
             }
         }, {
-            resultLD.value = Pair(false, "交易失败")
+            resultLD.value = Pair(false, getString(R.string.failed))
         }).add()
     }
 
@@ -89,9 +92,9 @@ class TransactionVM : BalanceVM() {
     private fun doTransact(reqBroadCast: RequestBroadCast) {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
-                resultLD.value = Pair(true, "交易成功")
+                resultLD.value = Pair(false, getString(R.string.succeed))
             } else {
-                resultLD.value = Pair(false, "交易失败")
+                resultLD.value = Pair(false, getString(R.string.failed))
             }
 
         }, {

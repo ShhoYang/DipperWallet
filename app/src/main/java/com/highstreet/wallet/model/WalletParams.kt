@@ -5,7 +5,6 @@ import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.HexUtils
 import com.highstreet.wallet.crypto.KeyUtils
-import org.bitcoinj.crypto.DeterministicKey
 import java.util.*
 import kotlin.collections.ArrayList
 

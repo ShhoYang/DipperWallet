@@ -48,9 +48,15 @@ class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
         if (isFingerprint) {
             menuList.add(0, Menu.wide())
         }
-        menuList.add(Menu("钱包管理", R.mipmap.my_wallet, WalletManageActivity::class.java))
+        menuList.add(
+            Menu(
+                getString(R.string.walletManager),
+                R.mipmap.my_wallet,
+                WalletManageActivity::class.java
+            )
+        )
         menuList.add(Menu.wide())
-        menuList.add(Menu("关于我们", R.mipmap.my_friend, AboutActivity::class.java))
+        menuList.add(Menu(getString(R.string.about), R.mipmap.my_friend, AboutActivity::class.java))
 
         val menuAdapter = MenuAdapter(menuList)
         menuAdapter.itemClickListener = object : OnItemClickListener<Menu> {
@@ -66,12 +72,13 @@ class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
         RxView.click(ivSwitch) {
             if (setFingerprint) {
                 activity?.let {
-                    ConfirmDialog(it).setMsg("确定取消指纹验证？").setListener(this).show()
+                    ConfirmDialog(it).setMsg(getString(R.string.cancelFingerprintVerification))
+                        .setListener(this).show()
                 }
             } else if (FingerprintUtils.hasEnrolledFingerprints(context)) {
                 getFingerprint()?.authenticate()
             } else {
-                toast("没有录入指纹，请先到系统设置录入指纹")
+                toast(R.string.noFingerprint)
             }
         }
     }
@@ -121,6 +128,7 @@ class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
         setFingerprint = !setFingerprint
         AccountManager.instance().password?.let {
             CoroutineUtils.io {
+                it.fingerprint = setFingerprint
                 AccountManager.instance().updatePassword(it)
             }
         }

@@ -26,7 +26,7 @@ class ValidatorDetailActivity : BaseActivity(), View.OnClickListener {
     override fun getLayoutId() = R.layout.g_activity_validator_detail
 
     override fun initView() {
-        title = "详情"
+        setTitle(R.string.validatorDetail)
         RxView.click(tvAddress, this)
         RxView.click(ivCopy, this)
         RxView.click(btnDelegate, this)

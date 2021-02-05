@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="验证你的钱包助记词"
+        android:text="@string/verifyMnemonic"
         android:textColor="@color/text_black"
         android:textSize="16sp" />
 
@@ -19,17 +19,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="请按顺序点击助记词，验证你备注的助记词正确无误。"
+        android:text="@string/clickMnemonic"
         android:textColor="@color/text_subtitle"
         android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTop"
-        android:minHeight="84dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/mnemonic_border"
+        android:minHeight="84dp"
         android:overScrollMode="never"
         android:padding="4dp" />
 
@@ -47,6 +47,6 @@
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
         android:enabled="false"
-        android:text="确认" />
+        android:text="@string/confirm" />
 
 </LinearLayout>

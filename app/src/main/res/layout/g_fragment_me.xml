@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/activity_padding"
         android:layout_marginRight="@dimen/activity_padding"
         android:gravity="center_vertical"
-        android:text="我的"
+        android:text="@string/tabProfile"
         android:textColor="@color/text_dark_blue"
         android:textSize="24dp"
         android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="指纹验证"
+            android:text="@string/fingerprint"
             android:textColor="@color/text_black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"

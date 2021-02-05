@@ -41,7 +41,7 @@ class TransactionActivity : BaseActivity(), View.OnClickListener, View.OnFocusCh
     override fun getLayoutId() = R.layout.g_activity_transaction
 
     override fun initView() {
-        title = "转账"
+        setTitle(R.string.transaction)
         etToAddress.onFocusChangeListener = this
         etAmount.onFocusChangeListener = this
         etRemarks.onFocusChangeListener = this
@@ -58,12 +58,12 @@ class TransactionActivity : BaseActivity(), View.OnClickListener, View.OnFocusCh
 
         val address = etToAddress.string()
         if (!address.isAddress()) {
-            toast("地址无效")
+            toast(R.string.invalidAddress)
             return
         }
         val s = etAmount.string()
         if (TextUtils.isEmpty(s) || !s.isAmount()) {
-            toast("金额不合法")
+            toast(R.string.amountFormatError)
             return
         }
 
@@ -83,13 +83,13 @@ class TransactionActivity : BaseActivity(), View.OnClickListener, View.OnFocusCh
                 longAmount = getLongAmount()
                 val dip = StringUtils.pdip2DIP(getAmount())
                 amount = dip.substring(0, dip.length - 3)
-                tvBalance.text = "可用余额${amount}DIP"
+                tvBalance.text = "${getString(R.string.balance)} ${amount}DIP"
             }
         })
         viewModel.resultLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
-            if (true == it?.first) {
+            toast(it.second)
+            if (it.first) {
                 finish()
             }
         })
@@ -105,7 +105,7 @@ class TransactionActivity : BaseActivity(), View.OnClickListener, View.OnFocusCh
                 if (address.isAddress()) {
                     etToAddress.setText(address)
                 } else {
-                    toast("无效的地址")
+                    toast(R.string.invalidAddress)
                 }
             }
         }

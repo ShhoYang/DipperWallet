@@ -27,7 +27,7 @@ class ReceiveRewardVM : BaseViewModel() {
                 generateParams(it.result!!, validatorAddress, delegatorAddress)
             }
         }, {
-            resultLD.value = Pair(false, "领取失败")
+            resultLD.value = Pair(false, "")
         }).add()
     }
 
@@ -60,9 +60,9 @@ class ReceiveRewardVM : BaseViewModel() {
     private fun doReceiveReward(reqBroadCast: RequestBroadCast) {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
-                resultLD.value = Pair(true, "领取成功")
+                resultLD.value = Pair(true, "")
             } else {
-                resultLD.value = Pair(false, "领取失败")
+                resultLD.value = Pair(false, "")
             }
 
         }, {

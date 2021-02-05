@@ -2,6 +2,7 @@ package com.highstreet.wallet.http
 
 import com.highstreet.lib.utils.T
 import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,7 +23,7 @@ fun <D> Observable<D>.subscribeBy(
                     onFailure(it.message!!)
                 }
                 if (toast) {
-                    T.short(App.instance, "网络不给力")
+                    T.short(App.instance, R.string.emptyNetworkUnavailable)
                 }
             })
 }

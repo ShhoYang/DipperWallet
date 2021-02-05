@@ -15,7 +15,6 @@ import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
-import com.highstreet.wallet.crypto.RSA
 import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.utils.StringUtils
@@ -39,10 +38,9 @@ class DelegationActivity : BaseActivity(), View.OnFocusChangeListener {
     override fun getLayoutId() = R.layout.g_activity_delegation
 
     override fun initView() {
-        title = "委托"
+        setTitle(R.string.delegation)
         etAmount.onFocusChangeListener = this
         etRemarks.onFocusChangeListener = this
-        etFee.onFocusChangeListener = this
 
         RxView.textChanges(etAmount) {
             btnConfirm.isEnabled = etAmount.string().isNotEmpty()
@@ -56,13 +54,13 @@ class DelegationActivity : BaseActivity(), View.OnFocusChangeListener {
     private fun delegate() {
         val s = etAmount.string()
         if (TextUtils.isEmpty(s) || !s.isAmount()) {
-            toast("委托数量不合法")
+            toast(R.string.amountFormatError)
             return
         }
 
         val l = s.toLong()
         if (l > amount) {
-            toast("余额不足")
+            toast(R.string.notEnough)
             return
         }
 
@@ -85,13 +83,14 @@ class DelegationActivity : BaseActivity(), View.OnFocusChangeListener {
         viewModel.amountLD.observe(this, Observer {
             it?.apply {
                 amount = getLongAmount()
-                tvBalance.text = "可用余额${StringUtils.pdip2DIP(getAmount())}"
+                tvBalance.text =
+                    "${getString(R.string.availableBalance)}${StringUtils.pdip2DIP(getAmount())}"
             }
         })
         viewModel.resultLD.observe(this, Observer {
             hideLoading()
-            toast(it?.second)
-            if (true == it?.first) {
+            toast(it.second)
+            if (it.first) {
                 AppManager.instance().finishActivity(DelegationDetailActivity::class.java)
                 finish()
             }
@@ -103,7 +102,6 @@ class DelegationActivity : BaseActivity(), View.OnFocusChangeListener {
         when (v) {
             etAmount -> updateLineStyle(amountLine, hasFocus)
             etRemarks -> updateLineStyle(remarksLine, hasFocus)
-            etFee -> updateLineStyle(feeLine, hasFocus)
         }
     }
 

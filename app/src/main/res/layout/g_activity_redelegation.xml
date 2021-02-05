@@ -16,7 +16,7 @@
 
         <TextView
             style="@style/InputViewName"
-            android:text="点击选择验证人" />
+            android:text="@string/selectValidator" />
 
         <EditText
             android:id="@+id/etAddress"
@@ -29,7 +29,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="转委托数量" />
+        android:text="@string/redelegateAmount" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             style="@style/InputViewContent"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:hint="请输入转委托数量"
+            android:hint="@string/inputRedelegateAmount"
             android:inputType="number"
             android:maxLength="19"
             android:singleLine="true" />
@@ -53,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="全部"
+            android:text="@string/all"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -71,7 +71,7 @@
         android:id="@+id/etRemarks"
         style="@style/InputViewContent"
         android:layout_marginTop="32dp"
-        android:hint="备注"
+        android:hint="@string/remarks"
         android:inputType="text"
         android:maxLength="100" />
 
@@ -79,22 +79,12 @@
         android:id="@+id/remarksLine"
         layout="@layout/g_include_input_line" />
 
-    <TextView
-        style="@style/InputViewTip"
-        android:text="最多可输入100个字符（选填）" />
-
-    <TextView
-        style="@style/InputViewName"
-        android:layout_marginTop="32dp"
-        android:text="费用"
-        android:visibility="gone" />
-
     <com.highstreet.lib.view.RoundButton
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
         android:enabled="false"
-        android:text="确定" />
+        android:text="@string/confirm" />
 
 </LinearLayout>

@@ -3,7 +3,6 @@ package com.highstreet.wallet.ui.vm
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.lib.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.constant.ProposalOpinion
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
@@ -52,7 +51,7 @@ class ProposalDetailVM : BaseViewModel() {
     fun proposalOpinion(proposalId: String) {
         ApiService.getDipApi().proposalOpinion(proposalId, AccountManager.instance().address)
             .subscribeBy({
-                opinionLD.value = ProposalOpinion.getOpinion(it.result?.option)
+                opinionLD.value = it.result?.option
             }, {
             }, false).add()
     }
@@ -64,12 +63,12 @@ class ProposalDetailVM : BaseViewModel() {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
             val accountInfo = it.result
             if (null == accountInfo) {
-                voteLD.value = Pair(false, "投票失败")
+                voteLD.value = Pair(false, "")
             } else {
                 generateParams(accountInfo, proposalId, opinion)
             }
         }, {
-            voteLD.value = Pair(false, "投票失败")
+            voteLD.value = Pair(false, "")
         }).add()
     }
 
@@ -102,9 +101,9 @@ class ProposalDetailVM : BaseViewModel() {
                 proposalDetail(proposalId)
                 votingRate(proposalId)
                 proposalOpinion(proposalId)
-                voteLD.value = Pair(true, "投票成功")
+                voteLD.value = Pair(true, "")
             } else {
-                voteLD.value = Pair(false, "投票失败")
+                voteLD.value = Pair(false, "")
             }
 
         }, {

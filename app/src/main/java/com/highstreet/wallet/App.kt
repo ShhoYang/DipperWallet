@@ -1,18 +1,18 @@
 package com.highstreet.wallet
 
-import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.highstreet.lib.BaseApplication
 import com.highstreet.lib.extensions.notNullSingleValue
 import com.highstreet.wallet.ui.activity.CrashActivity
 import com.highstreet.wallet.ui.activity.WelcomeActivity
 import com.tencent.bugly.crashreport.CrashReport
-import io.reactivex.plugins.RxJavaPlugins
 
-class App : Application() {
+class App : BaseApplication() {
+
     override fun onCreate() {
         super.onCreate()
         instance = this
-        if(!BuildConfig.testnet){
+        if (!BuildConfig.testnet) {
             CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
             CaocConfig.Builder
                 .create()
@@ -20,10 +20,9 @@ class App : Application() {
                 .restartActivity(WelcomeActivity::class.java)
                 .apply()
         }
-        RxJavaPlugins.setErrorHandler { it.printStackTrace() }
     }
 
     companion object {
-        var instance by notNullSingleValue<App>()
+        open var instance by notNullSingleValue<BaseApplication>()
     }
 }

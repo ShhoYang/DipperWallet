@@ -24,7 +24,8 @@ import com.highstreet.lib.view.dialog.CommonDialog
  * @author Yang Shihao
  * @Date 2020/10/20
  */
-class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity), View.OnClickListener {
+class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity),
+    View.OnClickListener {
 
     private var ivFingerprint: ImageView? = null
     private var tvMsg: TextView? = null
@@ -42,7 +43,8 @@ class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity),
     private val colorSucceed = 0xFF3B64DB.toInt()
     private val colorTip = 0xFF353535.toInt()
 
-    private var dialogParams: DialogParams = DialogParams(useFingerprint = true, showUserPassword = true)
+    private var dialogParams: DialogParams =
+        DialogParams(useFingerprint = true, showUserPassword = true)
 
     private var fingerprintDialogListener: FingerprintDialogListener? = null
 
@@ -72,7 +74,11 @@ class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity),
         tvConfirm = view.findViewById(R.id.tvConfirm)
         llPassword = view.findViewById(R.id.llPassword)
 
-        val drawable = DrawableUtils.generateRoundRectBorderDrawable(12.0F, DisplayUtils.dp2px(activity, 1), ContextCompat.getColor(activity, R.color.colorPrimary9))
+        val drawable = DrawableUtils.generateRoundRectBorderDrawable(
+            12.0F,
+            DisplayUtils.dp2px(activity, 1),
+            ContextCompat.getColor(activity, R.color.colorPrimary9)
+        )
         etPassword?.background = drawable
 
         tvCancel?.setOnClickListener(this)
@@ -91,7 +97,7 @@ class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity),
     }
 
     private fun reset() {
-        tvMsg?.text = "请验证您的指纹"
+        tvMsg?.setText(R.string.verifyFingerprint)
         tvMsg?.setTextColor(colorTip)
         ivFingerprint?.setImageResource(R.mipmap.fingerprint)
         etPassword?.setText("")
@@ -150,7 +156,7 @@ class FingerprintDialog(activity: Activity) : CommonDialog(activity = activity),
                 if (true == fingerprintDialogListener?.usePassword(etPassword?.string() ?: "")) {
                     dismiss()
                 } else {
-                    etPassword?.error = "密码错误"
+                    etPassword?.error = context.getString(R.string.wrongPassword)
                 }
             }
         }

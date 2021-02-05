@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/empty_loading"
+            android:text="@string/emptyLoading"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/empty_no_data"
+            android:text="@string/emptyNoData"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/empty_load_failed"
+            android:text="@string/emptyLoadFailed"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/empty_network_unavailable"
+            android:text="@string/emptyNetworkUnavailable"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 

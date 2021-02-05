@@ -35,7 +35,7 @@ class BackupVerifyActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.g_activity_backup_verify
 
     override fun initView() {
-        title = "备份助记词"
+        setTitle(R.string.backupMnemonic)
         from = intent.getIntExtra(ExtraKey.INT, BackupActivity.FROM_CREATE)
         account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
         mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
@@ -87,7 +87,7 @@ class BackupVerifyActivity : BaseActivity() {
 
     private fun verify() {
         if (mnemonicS == topList.joinToString()) {
-            toast("验证成功")
+            toast(R.string.succeed)
             CoroutineUtils.io2main({
                 account!!.isBackup = true
                 AccountManager.instance().update(account!!)
@@ -98,7 +98,7 @@ class BackupVerifyActivity : BaseActivity() {
                 finish()
             })
         } else {
-            toast("助记词无效")
+            toast(R.string.invalidMnemonic)
         }
     }
 

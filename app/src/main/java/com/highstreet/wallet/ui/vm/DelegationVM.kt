@@ -3,6 +3,7 @@ package com.highstreet.wallet.ui.vm
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.lib.viewmodel.RxBus
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.R
 import com.highstreet.wallet.event.RefreshDelegationEvent
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
@@ -29,11 +30,12 @@ class DelegationVM : BalanceVM() {
                 if (isEnough(balance, toAmount)) {
                     generateParams(it.result!!, validationAddress, toAmount, remarks)
                 } else {
-                    resultLD.value = Pair(false, "余额不足")
+                    resultLD.value =
+                        Pair(false, getString(R.string.notEnough))
                 }
             }
         }, {
-            resultLD.value = Pair(false, "委托失败")
+            resultLD.value = Pair(false, getString(R.string.failed))
         }).add()
     }
 
@@ -73,9 +75,9 @@ class DelegationVM : BalanceVM() {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
                 RxBus.instance().send(RefreshDelegationEvent())
-                resultLD.value = Pair(true, "委托成功")
+                resultLD.value = Pair(false, getString(R.string.succeed))
             } else {
-                resultLD.value = Pair(false, "委托失败")
+                resultLD.value = Pair(false, getString(R.string.failed))
             }
 
         }, {

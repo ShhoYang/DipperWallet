@@ -21,8 +21,8 @@ class StakingFragment : BaseFragment() {
 
     override fun initView() {
         val fragments = arrayListOf<Pair<String, Fragment>>(
-            Pair("委托中", DelegationListFragment()),
-            Pair("待解除", UndelegationListFragment())
+            Pair(getString(R.string.bond), DelegationListFragment()),
+            Pair(getString(R.string.unbond), UndelegationListFragment())
         )
         viewPager.adapter = FragmentWithTabAdapter(childFragmentManager, lifecycle, fragments)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

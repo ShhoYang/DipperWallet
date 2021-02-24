@@ -2,7 +2,6 @@ package com.highstreet.wallet.ui.vm
 
 import com.highstreet.lib.viewmodel.BaseListViewModel
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.event.RefreshDelegationEvent
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.Coin
@@ -14,11 +13,6 @@ import com.highstreet.wallet.model.res.DelegationInfo
  */
 
 class UndelegationListVM : BaseListViewModel<DelegationInfo>() {
-
-    override fun onCreate() {
-        super.onCreate()
-        registerRxBus(RefreshDelegationEvent::class.java)
-    }
 
     override fun loadData(page: Int, onResponse: (ArrayList<DelegationInfo>?) -> Unit) {
         ApiService.getDipApi().unBondingDelegations(AccountManager.instance().address, page, pageSize()).subscribeBy({

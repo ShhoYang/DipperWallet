@@ -2,7 +2,6 @@ package com.highstreet.wallet.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.RSA
 

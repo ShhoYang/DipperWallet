@@ -2,16 +2,14 @@ package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.lib.viewmodel.BaseViewModel
-import com.highstreet.lib.viewmodel.RxBus
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.event.RefreshDelegationEvent
+import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.utils.AmountUtils
-import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.utils.MsgGeneratorUtils
 
 /**
@@ -66,7 +64,7 @@ class UndelegationVM : BaseViewModel() {
     private fun doUndelegate(reqBroadCast: RequestBroadCast) {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
-                RxBus.instance().send(RefreshDelegationEvent())
+                AccountManager.instance().refresh()
                 undelegateLD.value = Pair(true, "")
             } else {
                 undelegateLD.value = Pair(false, "")

@@ -3,7 +3,6 @@ package com.highstreet.wallet.ui.vm
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.lib.viewmodel.BaseListViewModel
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.event.RefreshDelegationEvent
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.DelegationInfo
@@ -18,11 +17,6 @@ class DelegationListVM : BaseListViewModel<DelegationInfo>() {
 
     val totalLD: MutableLiveData<Pair<String, String>> = MutableLiveData()
     val rewardD: MutableLiveData<String> = MutableLiveData()
-
-    override fun onCreate() {
-        super.onCreate()
-        registerRxBus(RefreshDelegationEvent::class.java)
-    }
 
     override fun loadData(page: Int, onResponse: (ArrayList<DelegationInfo>?) -> Unit) {
         ApiService.getDipApi().delegations(AccountManager.instance().address, page, pageSize()).subscribeBy({

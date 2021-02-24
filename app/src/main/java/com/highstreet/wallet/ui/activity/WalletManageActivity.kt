@@ -90,11 +90,7 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
     override fun itemClicked(view: View, item: Account, position: Int) {
         when (view.id) {
             R.id.tvWalletAddress, R.id.ivCopy -> item.address?.copy(this)
-            R.id.tvBackup -> {
-                type = TYPE_BACKUP
-                useAccount = item
-                getFingerprint(FingerprintUtils.isAvailable(this), true)?.authenticate()
-            }
+            R.id.tvBackup -> fingerprint(TYPE_BACKUP, item)
             R.id.ivEdit -> {
                 InputDialog(this)
                     .setTitle(getString(R.string.updateWalletName))
@@ -107,16 +103,10 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
                     }).show()
             }
             R.id.ivDelete -> {
-                useAccount = item
                 ConfirmDialog(this).setMsg("${getString(R.string.confirmDeleteWallet)}${item.nickName}?")
                     .setListener(object : ConfirmDialogListener {
                         override fun confirm() {
-                            type = TYPE_DELETE
-                            useAccount = item
-                            getFingerprint(
-                                FingerprintUtils.isAvailable(this@WalletManageActivity),
-                                true
-                            )?.authenticate()
+                            fingerprint(TYPE_DELETE, item)
                         }
 
                         override fun cancel() {
@@ -129,6 +119,15 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
                 viewModel.changeLastAccount(item)
             }
         }
+    }
+
+    private fun fingerprint(type: Int, account: Account) {
+        this.type = type
+        useAccount = account
+        getFingerprint(
+            FingerprintUtils.isAvailable(this@WalletManageActivity) && AccountManager.instance().fingerprint,
+            true
+        )?.authenticate()
     }
 
     override fun onFingerprintAuthenticateSucceed() {

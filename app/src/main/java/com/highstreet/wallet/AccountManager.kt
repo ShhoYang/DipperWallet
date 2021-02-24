@@ -1,5 +1,6 @@
 package com.highstreet.wallet
 
+import com.highstreet.lib.utils.SPUtils
 import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.db.Account
@@ -11,6 +12,11 @@ import com.highstreet.wallet.db.Password
  * @Date 2020/10/15
  */
 class AccountManager private constructor() {
+
+    /**
+     * 余额变动
+     */
+    var refresh = 0
 
     var chain = Chain.DIP_MAIN
         private set
@@ -57,6 +63,7 @@ class AccountManager private constructor() {
     fun init(): Account? {
         var isTest = BuildConfig.testnet
         chain = if (isTest) Chain.DIP_TEST else Chain.DIP_MAIN
+        copy13()
         password = Db.instance().passwordDao().queryById(Constant.PASSWORD_DEFAULT_ID)
         getLaseAccount()
         return account
@@ -128,7 +135,95 @@ class AccountManager private constructor() {
         return dao.insert(password) > 0
     }
 
+    /**
+     * 兼容老版本(versionCode<14)，把老数据库的数据库插入到新的数据库
+     */
+    private fun copy13() {
+        copyAccount()
+        copyPassword()
+    }
+
+    private fun copyAccount() {
+        val dao = Db.instance().accountDao()
+        val list = dao.queryByChain(chain)
+        if (list.isNotEmpty()) {
+            return
+        }
+
+        val baseData = App.instance.getOldDB()
+        val oldData = baseData.onSelectAccounts()
+        if (oldData.isEmpty()) {
+            return
+        }
+        val newData = ArrayList<Account>(oldData.size)
+        oldData.forEach {
+            newData.add(
+                Account(
+                    id = it.id,
+                    uuid = it.uuid,
+                    nickName = it.nickName,
+                    isValidator = false,
+                    address = it.address,
+                    chain = it.baseChain,
+                    path = it.path.toInt(),
+                    resource = it.resource,
+                    spec = it.spec,
+                    mnemonicSize = Constant.MNEMONIC_SIZE,
+                    fromMnemonic = it.fromMnemonic,
+                    balance = "",
+                    sequenceNumber = 0,
+                    accountNumber = 0,
+                    hasPrivateKey = true,
+                    isFavorite = false,
+                    isBackup = false,
+                    pushAlarm = false,
+                    fingerprint = false,
+                    isLast = false,
+                    createTime = 0,
+                    importTime = 0,
+                    sort = 0,
+                    extension = ""
+                )
+            )
+        }
+
+        dao.insert(newData)
+        val list2 = dao.query()
+        if (list2.size == oldData.size) {
+            baseData.onDeleteAccount()
+        }
+    }
+
+    private fun copyPassword() {
+        val dao = Db.instance().passwordDao()
+        val password = dao.queryById(Constant.PASSWORD_DEFAULT_ID)
+        if (password != null) {
+            return
+        }
+
+        val baseData = App.instance.getOldDB()
+        val oldPassword = baseData.onSelectPassword() ?: return
+
+        val newPassword = Password(
+            Constant.PASSWORD_DEFAULT_ID,
+            oldPassword.resource,
+            oldPassword.spec ?: "",
+            SPUtils.get(App.instance, KEY_FINGERPRINT, false)
+        );
+
+        dao.insert(newPassword)
+        val p = dao.queryById(Constant.PASSWORD_DEFAULT_ID)
+        if (p != null) {
+            baseData.onDeletePassword()
+        }
+    }
+
+    fun refresh() {
+        refresh++
+    }
+
     companion object {
+        private const val KEY_FINGERPRINT = "KEY_FINGERPRINT"
         private var instance: AccountManager? = null
 
         @Synchronized

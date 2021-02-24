@@ -3,7 +3,6 @@ package com.highstreet.wallet.ui.vm
 import android.os.Handler
 import android.os.Looper
 import com.highstreet.lib.viewmodel.BaseListViewModel
-import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.SortType
 import com.highstreet.wallet.constant.ValidatorType
 import com.highstreet.wallet.http.ApiService

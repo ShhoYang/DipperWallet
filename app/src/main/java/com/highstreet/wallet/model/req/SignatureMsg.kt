@@ -1,7 +1,6 @@
 package com.highstreet.wallet.model.req
 
 import com.google.gson.GsonBuilder
-import java.nio.charset.Charset
 
 data class SignatureMsg(
     var chain_id: String,

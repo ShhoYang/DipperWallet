@@ -126,6 +126,12 @@ object KeyUtils {
         )
     }
 
+    /**
+     * 老版本(11之前)是44/118
+     * 新版本是44/925
+     *
+     * 路径不同，相同的助记词推出的地址也不一样
+     */
     private fun getParentPath(chain: String): List<ChildNumber> {
         return listOf(
             ChildNumber(44, true),

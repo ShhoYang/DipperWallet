@@ -19,7 +19,6 @@ import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.db.Db
-import com.highstreet.wallet.db.Password
 import com.highstreet.wallet.ui.activity.AboutActivity
 import com.highstreet.wallet.ui.activity.WalletManageActivity
 import com.highstreet.wallet.ui.adapter.MenuAdapter

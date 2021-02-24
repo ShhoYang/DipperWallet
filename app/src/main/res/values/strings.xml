@@ -5,6 +5,8 @@
     <string name="tabDelegation">委托</string>
     <string name="tabProposal">投票</string>
     <string name="tabProfile">我的</string>
+    <string name="myDelegation">我的委托</string>
+    <string name="proposalList">提案列表</string>
 
     <string name="availableBalance">可用余额</string>
     <string name="totalDelegation">委托总额</string>

@@ -14,6 +14,7 @@ import com.highstreet.wallet.ui.activity.ValidatorListActivity
 import com.highstreet.wallet.ui.adapter.DelegationAdapter
 import com.highstreet.wallet.ui.vm.DelegationListVM
 import kotlinx.android.synthetic.main.g_fragment_delegation_list.*
+import kotlin.properties.Delegates
 
 /**
  * @author Yang Shihao
@@ -21,6 +22,17 @@ import kotlinx.android.synthetic.main.g_fragment_delegation_list.*
  */
 
 class DelegationListFragment : BaseListFragment<DelegationInfo, DelegationListVM>() {
+
+    private var refresh: Int by Delegates.observable(0) { _, old, new ->
+        if (old != new) {
+            viewModel.invalidate()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh = AccountManager.instance().refresh
+    }
 
     override fun getLayoutId() = R.layout.g_fragment_delegation_list
 
@@ -34,7 +46,6 @@ class DelegationListFragment : BaseListFragment<DelegationInfo, DelegationListVM
     }
 
     override fun initData() {
-        lifecycle.addObserver(viewModel)
         Db.instance().accountDao().queryLastUserAsLiveData(true).observe(this, Observer {
             tvReceiveAddress.text = AccountManager.instance().address
             viewModel.invalidate()

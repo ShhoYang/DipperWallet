@@ -10,7 +10,7 @@
         android:layout_marginLeft="@dimen/activity_padding"
         android:layout_marginRight="@dimen/activity_padding"
         android:gravity="center_vertical"
-        android:text="提案列表"
+        android:text="@string/proposalList"
         android:textColor="@color/text_dark_blue"
         android:textSize="24dp"
         android:textStyle="bold" />

@@ -5,6 +5,8 @@
     <string name="tabDelegation">Delegation</string>
     <string name="tabProposal">Proposal</string>
     <string name="tabProfile">Profile</string>
+    <string name="myDelegation">Delegation</string>
+    <string name="proposalList">Proposal</string>
 
     <string name="createPassword">Create password</string>
     <string name="password">Password</string>

@@ -15,7 +15,7 @@
             android:layout_marginLeft="@dimen/activity_padding"
             android:layout_marginRight="@dimen/activity_padding"
             android:gravity="center_vertical"
-            android:text="我的委托"
+            android:text="@string/myDelegation"
             android:textColor="@color/text_dark_blue"
             android:textSize="24dp"
             android:textStyle="bold" />

@@ -15,7 +15,6 @@ import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
-import com.highstreet.wallet.crypto.RSA
 import com.highstreet.wallet.extensions.isAddress
 import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.ui.vm.TransactionVM

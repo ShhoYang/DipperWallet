@@ -1,6 +1,6 @@
 package com.highstreet.lib
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.highstreet.lib.extensions.notNullSingleValue
 import io.reactivex.plugins.RxJavaPlugins
 
@@ -8,7 +8,7 @@ import io.reactivex.plugins.RxJavaPlugins
  * @author Yang Shihao
  * @Date 2/3/21
  */
-open class BaseApplication : Application() {
+open class BaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

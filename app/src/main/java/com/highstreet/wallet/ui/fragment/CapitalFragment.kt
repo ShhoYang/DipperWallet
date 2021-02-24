@@ -9,6 +9,7 @@ import com.highstreet.lib.extensions.visible
 import com.highstreet.lib.ui.BaseFragment
 import com.highstreet.lib.view.dialog.ConfirmDialog
 import com.highstreet.lib.view.listener.RxView
+import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
@@ -19,6 +20,7 @@ import com.highstreet.wallet.ui.activity.TransactionRecordActivity
 import com.highstreet.wallet.ui.activity.WalletManageActivity
 import com.highstreet.wallet.ui.vm.CapitalVM
 import kotlinx.android.synthetic.main.g_fragment_capital.*
+import kotlin.properties.Delegates
 
 /**
  * @author Yang Shihao
@@ -32,14 +34,24 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
     private var amount = ""
     private var delegationAmount = ""
 
+    private var refresh: Int by Delegates.observable(0) { _, old, new ->
+        if (old != new) {
+            loadData()
+        }
+    }
+
     private val viewModel by lazy {
         ViewModelProvider(this).get(CapitalVM::class.java)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh = AccountManager.instance().refresh
     }
 
     override fun getLayoutId() = R.layout.g_fragment_capital
 
     override fun initView() {
-
         baseRefreshLayout.setOnRefreshListener {
             loadData()
         }

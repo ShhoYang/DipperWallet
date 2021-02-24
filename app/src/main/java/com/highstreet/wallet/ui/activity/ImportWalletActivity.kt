@@ -79,7 +79,7 @@ class ImportWalletActivity : BaseActivity() {
         editTexts.add(etMnemonic23)
         editTexts.add(etMnemonic24)
 
-        editTexts.forEachIndexed() { i, editText ->
+        editTexts.forEachIndexed { i, editText ->
             editText.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     focusPosition = i

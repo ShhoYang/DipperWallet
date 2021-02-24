@@ -7,6 +7,7 @@ import com.highstreet.lib.ui.BaseActivity
 import com.highstreet.lib.utils.CoroutineUtils
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
 import com.highstreet.wallet.db.Account
 import com.tbruyelle.rxpermissions2.RxPermissions
 
@@ -19,6 +20,8 @@ class WelcomeActivity : BaseActivity() {
     override fun initView() {
         AppManager.instance().finishAllActivityExceptAppoint(this)
         CoroutineUtils.io2main({
+            App.instance.getOldDB()
+            Thread.sleep(2000)
             val a = AccountManager.instance().init()
             a
         }, {

@@ -2,7 +2,6 @@ package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.App
 import com.highstreet.wallet.R
 import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.http.ApiService
@@ -92,7 +91,8 @@ class TransactionVM : BalanceVM() {
     private fun doTransact(reqBroadCast: RequestBroadCast) {
         ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
             if (it.success()) {
-                resultLD.value = Pair(false, getString(R.string.succeed))
+                AccountManager.instance().refresh()
+                resultLD.value = Pair(true, getString(R.string.succeed))
             } else {
                 resultLD.value = Pair(false, getString(R.string.failed))
             }

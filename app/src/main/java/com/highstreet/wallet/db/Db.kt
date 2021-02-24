@@ -23,11 +23,8 @@ abstract class Db : RoomDatabase() {
         fun instance(): Db {
             @Synchronized
             if (instance == null) {
-                instance = Room.databaseBuilder(
-                        App.instance,
-                        Db::class.java,
-                        "DipperWallet"
-                ).build()
+                instance = Room.databaseBuilder(App.instance, Db::class.java, "DipperWallet")
+                    .build()
             }
 
             return instance!!

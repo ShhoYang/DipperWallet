@@ -3,6 +3,7 @@ package com.highstreet.wallet
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.highstreet.lib.BaseApplication
 import com.highstreet.lib.extensions.notNullSingleValue
+import com.highstreet.wallet.backup.BaseData
 import com.highstreet.wallet.ui.activity.CrashActivity
 import com.highstreet.wallet.ui.activity.WelcomeActivity
 import com.tencent.bugly.crashreport.CrashReport
@@ -22,7 +23,16 @@ class App : BaseApplication() {
         }
     }
 
+    private var baseData: BaseData? = null
+
+    fun getOldDB(): BaseData {
+        if (baseData == null) {
+            baseData = BaseData(this)
+        }
+        return baseData!!
+    }
+
     companion object {
-        open var instance by notNullSingleValue<BaseApplication>()
+        open var instance by notNullSingleValue<App>()
     }
 }

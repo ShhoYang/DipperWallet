@@ -10,7 +10,6 @@ import com.highstreet.lib.adapter.ViewHolder
 import com.highstreet.lib.utils.DisplayUtils
 import com.highstreet.lib.utils.DrawableUtils
 import com.highstreet.wallet.R
-import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.db.Account
 
 /**

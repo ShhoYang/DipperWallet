@@ -7,5 +7,5 @@ package com.highstreet.wallet.constant
  */
 object Chain {
     const val DIP_TEST = "dip-testnet"
-    const val DIP_MAIN = "dip-dipperhub"
+    const val DIP_MAIN = "dipperhub"
 }

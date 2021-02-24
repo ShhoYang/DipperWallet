@@ -4,14 +4,19 @@
     package="com.highstreet.wallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
 
     <application
         android:name=".App"
@@ -29,8 +34,19 @@
             android:name="android.notch_support"
             android:value="true" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
         <activity
-            android:name="com.highstreet.wallet.ui.activity.WelcomeActivity"
+            android:name=".ui.activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/WelcomeTheme"
             tools:replace="screenOrientation">
@@ -41,145 +57,137 @@
         </activity>
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.AgreementActivity"
+            android:name=".ui.activity.AgreementActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.InitWalletActivity"
+            android:name=".ui.activity.InitWalletActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.WalletTypeActivity"
+            android:name=".ui.activity.WalletTypeActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.CreatePasswordActivity"
+            android:name=".ui.activity.CreatePasswordActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.CreateWalletActivity"
+            android:name=".ui.activity.CreateWalletActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ImportWalletActivity"
+            android:name=".ui.activity.ImportWalletActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.WalletManageActivity"
+            android:name=".ui.activity.WalletManageActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.BackupActivity"
+            android:name=".ui.activity.BackupActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.BackupVerifyActivity"
+            android:name=".ui.activity.BackupVerifyActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ReceiveActivity"
+            android:name=".ui.activity.ReceiveActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.TransactionActivity"
+            android:name=".ui.activity.TransactionActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ScanActivity"
+            android:name=".ui.activity.ScanActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.TransactionRecordActivity"
+            android:name=".ui.activity.TransactionRecordActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.DelegationTransactionRecordActivity"
+            android:name=".ui.activity.DelegationTransactionRecordActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ValidatorActivity"
+            android:name=".ui.activity.ValidatorActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ValidatorListActivity"
+            android:name=".ui.activity.ValidatorListActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ValidatorDetailActivity"
+            android:name=".ui.activity.ValidatorDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeColorBgTheme"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.DelegationActivity"
+            android:name=".ui.activity.DelegationActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.DelegationDetailActivity"
+            android:name=".ui.activity.DelegationDetailActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.UndelegationActivity"
+            android:name=".ui.activity.UndelegationActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.RedelegationActivity"
+            android:name=".ui.activity.RedelegationActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ReceiveRewardActivity"
+            android:name=".ui.activity.ReceiveRewardActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.ProposalDetailActivity"
+            android:name=".ui.activity.ProposalDetailActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.CrashActivity"
+            android:name=".ui.activity.CrashActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name="com.highstreet.wallet.ui.activity.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
     </application>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -5,7 +5,6 @@ import android.view.View
 import com.highstreet.lib.ui.BaseListFragment
 import com.highstreet.wallet.ui.activity.ValidatorDetailActivity
 import com.highstreet.wallet.ui.adapter.ValidatorAdapter
-import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.constant.ValidatorType
 import com.highstreet.wallet.model.res.Validator

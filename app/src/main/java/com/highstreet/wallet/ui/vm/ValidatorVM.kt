@@ -2,11 +2,11 @@ package com.highstreet.wallet.ui.vm
 
 import android.os.Handler
 import android.os.Looper
-import com.highstreet.lib.viewmodel.BaseListViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.viewmodel.BaseListViewModel
 import com.highstreet.wallet.constant.SortType
 import com.highstreet.wallet.constant.ValidatorType
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.Validator
 
 /**
@@ -15,7 +15,7 @@ import com.highstreet.wallet.model.res.Validator
  */
 class ValidatorVM : BaseListViewModel<Validator>() {
 
-    var filterType =ValidatorType.ALL
+    var filterType = ValidatorType.ALL
 
     private var sortType = SortType.SHARES_DESC
 
@@ -27,7 +27,7 @@ class ValidatorVM : BaseListViewModel<Validator>() {
         if (this.filterType != filterType || this.sortType != sortType) {
             this.filterType = filterType
             this.sortType = sortType
-            invalidate()
+            refresh()
         }
     }
 
@@ -38,9 +38,8 @@ class ValidatorVM : BaseListViewModel<Validator>() {
         if (list.isEmpty()) {
             ApiService.getDipApi().validators(page, pageSize()).subscribeBy({
                 list.clear()
-                val data = it.result
-                if (data != null && data.isNotEmpty()) {
-                    list.addAll(data)
+                if (it != null && it.isNotEmpty()) {
+                    list.addAll(it)
                 }
                 filterData(onResponse)
             }, {
@@ -80,7 +79,7 @@ class ValidatorVM : BaseListViewModel<Validator>() {
         ret.sortBy { v ->
             when (sortType) {
                 SortType.RATE_DESC -> (v.commission?.commission_rates?.rate?.toDouble()
-                        ?: 0.0) / (-1.0)
+                    ?: 0.0) / (-1.0)
                 SortType.SHARES_DESC -> (v.delegator_shares?.toDouble() ?: 0.0) / (-1.0)
                 SortType.SHARES_ASC -> v.delegator_shares?.toDouble() ?: 0.0
                 else -> v.commission?.commission_rates?.rate?.toDouble() ?: 0.0

@@ -1,71 +1,70 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.common.AppManager
-import com.highstreet.lib.extensions.string
-import com.highstreet.lib.fingerprint.FingerprintUtils
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
-import com.highstreet.wallet.AccountManager
+import androidx.lifecycle.Observer
+import com.hao.library.AppManager
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityUndelegationBinding
 import com.highstreet.wallet.extensions.isAmount
+import com.highstreet.wallet.extensions.string
+import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.model.res.DelegationInfo
+import com.highstreet.wallet.ui.vm.UndelegationVM
 import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.StringUtils
-import com.highstreet.wallet.ui.vm.UndelegationVM
-import kotlinx.android.synthetic.main.g_activity_undelegation.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/27
  */
-class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
+@AndroidEntryPoint
+class UndelegationActivity : BaseActivity<ActivityUndelegationBinding, UndelegationVM>(),
+    View.OnFocusChangeListener {
 
     private var amount = "0"
 
     private var delegationInfo: DelegationInfo? = null
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(UndelegationVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_undelegation
-
     override fun initView() {
         setTitle(R.string.undelegate)
-        etAmount.onFocusChangeListener = this
-        etRemarks.onFocusChangeListener = this
+        viewBinding {
+            etAmount.onFocusChangeListener = this@UndelegationActivity
+            etRemarks.onFocusChangeListener = this@UndelegationActivity
 
-        RxView.textChanges(etAmount) {
-            btnConfirm.isEnabled = etAmount.string().isNotEmpty()
-        }
+            RxView.textChanges(etAmount) {
+                btnConfirm.isEnabled = etAmount.string().isNotEmpty()
+            }
 
-        RxView.click(tvAll) {
-            etAmount.setText(amount)
-            etAmount.setSelection(etAmount.string().length)
-        }
+            RxView.click(tvAll) {
+                etAmount.setText(amount)
+                etAmount.setSelection(etAmount.string().length)
+            }
 
-        RxView.click(btnConfirm) {
-            unDelegate()
+            RxView.click(btnConfirm) {
+                unDelegate()
+            }
         }
     }
 
     override fun initData() {
         delegationInfo = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as DelegationInfo?
         delegationInfo?.apply {
-            etAddress.setText(validator_address)
-            amount = shares ?: "0"
-            tvMaxAmount.text =
-                "${getString(R.string.undelegateMaxAmount)}${StringUtils.pdip2DIP(amount)}"
+            viewBinding {
+                etAddress.setText(validator_address)
+                amount = shares ?: "0"
+                tvMaxAmount.text =
+                    "${getString(R.string.undelegateMaxAmount)}${StringUtils.pdip2DIP(amount)}"
+            }
         }
-        viewModel.undelegateLD.observe(this, Observer {
+        vm?.undelegateLD?.observe(this, Observer {
             hideLoading()
             if (it.first) {
                 toast(R.string.succeed)
@@ -81,7 +80,7 @@ class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
         if (delegationInfo == null) {
             return
         }
-        val s = etAmount.string()
+        val s = vb?.etAmount?.string() ?: ""
         if (TextUtils.isEmpty(s) || !s.isAmount()) {
             toast(R.string.amountFormatError)
             return
@@ -92,34 +91,28 @@ class UndelegationActivity : BaseActivity(), View.OnFocusChangeListener {
             return
         }
 
-        getFingerprint(
-            FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint,
-            true
-        )?.authenticate()
+        FingerprintUtils.getFingerprint(
+            this,
+            null,
+            true,
+            {
+                showLoading()
+                vm?.undelegate(s, delegationInfo!!)
+            },
+        ).authenticate()
     }
 
     override fun onFocusChange(v: View, hasFocus: Boolean) {
-        when (v) {
-            etAmount -> updateLineStyle(amountLine, hasFocus)
-            etRemarks -> updateLineStyle(remarksLine, hasFocus)
+        viewBinding {
+            when (v) {
+                etAmount -> updateLineStyle(amountLine.line, hasFocus)
+                etRemarks -> updateLineStyle(remarksLine.line, hasFocus)
+            }
         }
     }
 
     private fun updateLineStyle(view: View, hasFocus: Boolean) {
         view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
-    }
-
-    override fun onFingerprintAuthenticateSucceed() {
-        showLoading()
-        viewModel.undelegate(etAmount.string(), delegationInfo!!)
-    }
-
-    override fun usePassword(password: String): Boolean {
-        if (!AccountManager.instance().password!!.verify(password)) {
-            return false
-        }
-        onFingerprintAuthenticateSucceed()
-        return true
     }
 
     companion object {

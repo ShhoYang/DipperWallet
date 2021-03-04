@@ -1,10 +1,10 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.utils.StringUtils
 
@@ -20,7 +20,7 @@ class DelegationDetailVM : BaseViewModel() {
 
     fun getValidator(validatorAddress: String) {
         ApiService.getDipApi().validatorDetail(validatorAddress).subscribeBy({
-            validatorLD.value = it?.result
+            validatorLD.value = it
         }, {
             validatorLD.value = null
         }).add()
@@ -28,12 +28,10 @@ class DelegationDetailVM : BaseViewModel() {
 
     fun getReward(validatorAddress: String) {
         ApiService.getDipApi().rewardsByValidator(AccountManager.instance().address, validatorAddress).subscribeBy({
-            val list = it.result
-            rewardLD.value = if (list == null || list.isEmpty()) {
+            rewardLD.value = if (it == null || it.isEmpty()) {
                 "0"
             } else {
-                val coin = list[0]
-                StringUtils.pdip2DIP(coin, false)
+                StringUtils.pdip2DIP(it[0], false)
             }
         }, {
             rewardLD.value = "0"

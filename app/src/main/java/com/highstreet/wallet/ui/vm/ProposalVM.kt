@@ -1,8 +1,8 @@
 package com.highstreet.wallet.ui.vm
 
-import com.highstreet.lib.viewmodel.BaseListViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.viewmodel.BaseListViewModel
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.Proposal
 
 /**
@@ -15,7 +15,7 @@ class ProposalVM : BaseListViewModel<Proposal>() {
 
     override fun loadData(page: Int, onResponse: (ArrayList<Proposal>?) -> Unit) {
         ApiService.getDipApi().proposals().subscribeBy({
-            onResponse(it.result)
+            onResponse(it)
         }, {
             onResponse(null)
         }).add()

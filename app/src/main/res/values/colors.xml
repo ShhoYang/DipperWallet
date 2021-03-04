@@ -4,6 +4,34 @@
     <color name="colorPrimaryDark">@color/window_bg</color>
     <color name="colorAccent">@color/themeColor</color>
 
+    <color name="transparent">#00000000</color>
+
+    <color name="themeColor">#3B64DB</color>
+    <color name="colorPrimary0">#133149</color>
+    <color name="colorPrimary7">#CAD2E7</color>
+    <color name="colorPrimary8">#D4DAED</color>
+    <color name="colorPrimary9">#D4DAED</color>
+
+    <color name="window_bg">#FAFAFA</color>
+    <color name="window_bg2">#F5F5F5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="app_back">#333333</color>
+
+    <color name="text_primary">@color/colorPrimary</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#333333</color>
+    <color name="text_title">#353535</color>
+    <color name="text_subtitle">#888888</color>
+    <color name="text_desc">#B2B2B2</color>
+    <color name="text_link">#576B95</color>
+    <color name="text_orange">#FF8C00</color>
+    <color name="text_dark_blue">@color/colorPrimary0</color>
+    <color name="text_light_blue">@color/colorPrimary7</color>
+
+    <color name="light_grey">#E0E0E0</color>
+    <color name="line">@color/colorPrimary8</color>
+    <color name="mnemonic_bg">#F0F3FB</color>
+
     <color name="proposal_yes">@color/colorPrimary</color>
     <color name="proposal_no">#FF859B</color>
     <color name="proposal_no_with_veto">#F4425F</color>

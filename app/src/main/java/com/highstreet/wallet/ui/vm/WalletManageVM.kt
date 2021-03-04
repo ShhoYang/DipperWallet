@@ -1,7 +1,7 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.db.Account
 import io.reactivex.Observable

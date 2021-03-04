@@ -1,6 +1,6 @@
 package com.highstreet.wallet.model.res
 
-import com.highstreet.lib.adapter.BaseItem
+import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.model.req.Coin
 import java.io.Serializable
 
@@ -15,11 +15,11 @@ data class DelegationInfo(
         val entries: ArrayList<Entry>?,
         val shares: String?,
         val validator_address: String
-) : BaseItem, Serializable {
+) : PagedAdapterItem, Serializable {
 
     var completionTime = ""
 
-    override fun uniqueKey(): String {
+    override fun getKey(): Any {
         return delegator_address + validator_address + shares
     }
 }

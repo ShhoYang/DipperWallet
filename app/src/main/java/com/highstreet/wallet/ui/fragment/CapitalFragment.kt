@@ -1,25 +1,25 @@
 package com.highstreet.wallet.ui.fragment
 
-import androidx.lifecycle.Observer
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.extensions.gone
-import com.highstreet.lib.extensions.visible
-import com.highstreet.lib.ui.BaseFragment
-import com.highstreet.lib.view.dialog.ConfirmDialog
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.extensions.gone
+import com.hao.library.extensions.visible
+import com.hao.library.ui.BaseFragment
+import com.hao.library.view.dialog.ConfirmDialog
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.R
+import com.highstreet.wallet.databinding.FragmentCapitalBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
-import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.ui.activity.ReceiveActivity
 import com.highstreet.wallet.ui.activity.TransactionActivity
 import com.highstreet.wallet.ui.activity.TransactionRecordActivity
 import com.highstreet.wallet.ui.activity.WalletManageActivity
 import com.highstreet.wallet.ui.vm.CapitalVM
-import kotlinx.android.synthetic.main.g_fragment_capital.*
+import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.view.listener.RxView
 import kotlin.properties.Delegates
 
 /**
@@ -27,7 +27,8 @@ import kotlin.properties.Delegates
  * @Date 2020/10/16
  */
 
-class CapitalFragment : BaseFragment(), View.OnClickListener {
+@AndroidEntryPoint
+class CapitalFragment : BaseFragment<FragmentCapitalBinding, CapitalVM>(), View.OnClickListener {
 
     private var account: Account? = null
 
@@ -49,24 +50,24 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
         refresh = AccountManager.instance().refresh
     }
 
-    override fun getLayoutId() = R.layout.g_fragment_capital
-
     override fun initView() {
-        baseRefreshLayout.setOnRefreshListener {
-            loadData()
+        viewBinding {
+            baseRefreshLayout.setOnRefreshListener {
+                loadData()
+            }
+
+            ivEye.isSelected = false
+            RxView.click(tvWalletAddress, this@CapitalFragment)
+            RxView.click(ivWalletAddress, this@CapitalFragment)
+            RxView.click(ivEye, 300, this@CapitalFragment)
+
+            RxView.click(ivSwitchWallet, this@CapitalFragment)
+            RxView.click(ivTip, this@CapitalFragment)
+            RxView.click(flTransaction, this@CapitalFragment)
+            RxView.click(flTransactionRecord, this@CapitalFragment)
+            RxView.click(ivTip, this@CapitalFragment)
+            baseRefreshLayout.isRefreshing = true
         }
-
-        ivEye.isSelected = false
-        RxView.click(tvWalletAddress, this)
-        RxView.click(ivWalletAddress, this)
-        RxView.click(ivEye, 300, this)
-
-        RxView.click(ivSwitchWallet, this)
-        RxView.click(ivTip, this)
-        RxView.click(flTransaction, this)
-        RxView.click(flTransactionRecord, this)
-        RxView.click(ivTip, this)
-        baseRefreshLayout.isRefreshing = true
     }
 
     override fun initData() {
@@ -74,16 +75,20 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
             val a = it?.getAmount()
             if (!TextUtils.isEmpty(a)) {
                 amount = a!!
-                updateUIStyle(ivEye.isSelected)
+                viewBinding {
+                    updateUIStyle(ivEye.isSelected)
+                }
             }
-            baseRefreshLayout.stopRefresh()
+            vb?.baseRefreshLayout?.stopRefresh()
         })
         viewModel.delegationAmountLD.observe(this, Observer {
             if (!TextUtils.isEmpty(it)) {
                 delegationAmount = it
-                updateUIStyle(ivEye.isSelected)
+                viewBinding {
+                    updateUIStyle(ivEye.isSelected)
+                }
             }
-            baseRefreshLayout.stopRefresh()
+            vb?.baseRefreshLayout?.stopRefresh()
         })
         Db.instance().accountDao().queryLastUserAsLiveData(true).observe(this, Observer {
             account = it
@@ -93,43 +98,49 @@ class CapitalFragment : BaseFragment(), View.OnClickListener {
 
     private fun loadData() {
         account?.let {
-            tvChainName.text = it.getUpperCaseChainName()
+            vb?.tvChainName?.text = it.getUpperCaseChainName()
             viewModel.getAccountInfo(it.address)
             viewModel.getDelegationAmount(it.address)
         }
     }
 
     private fun updateUIStyle(isSelected: Boolean) {
-        tvWalletName.text = account?.nickName
-        tvWalletAddress.text = account?.address
-        ivEye.isSelected = isSelected
-        if (isSelected) {
-            tvAmount.text = "****************"
-            tvAvailableAmount.text = "********"
-            tvDelegationAmount.text = "********"
-            ivTip.gone()
-        } else {
-            tvAmount.text = StringUtils.pdip2DIP(amount)
-            tvAvailableAmount.text = StringUtils.pdip2DIP(amount)
-            tvDelegationAmount.text = StringUtils.pdip2DIP(delegationAmount)
-            ivTip.visible()
+        viewBinding {
+            tvWalletName.text = account?.nickName
+            tvWalletAddress.text = account?.address
+            ivEye.isSelected = isSelected
+            if (isSelected) {
+                tvAmount.text = "****************"
+                tvAvailableAmount.text = "********"
+                tvDelegationAmount.text = "********"
+                ivTip.gone()
+            } else {
+                tvAmount.text = StringUtils.pdip2DIP(amount)
+                tvAvailableAmount.text = StringUtils.pdip2DIP(amount)
+                tvDelegationAmount.text = StringUtils.pdip2DIP(delegationAmount)
+                ivTip.visible()
+            }
         }
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            tvWalletAddress, ivWalletAddress -> to(ReceiveActivity::class.java)
-            ivEye -> updateUIStyle(!ivEye.isSelected)
-            ivSwitchWallet -> to(WalletManageActivity::class.java)
-            ivTip -> {
-                activity?.let {
-                    ConfirmDialog(it).setMsg("1DIP = 1,000,000,000,000pdip")
-                        .hideCancel()
-                        .show()
+        viewBinding {
+            when (v) {
+                tvWalletAddress, ivWalletAddress -> toA(ReceiveActivity::class.java)
+                ivEye -> viewBinding { updateUIStyle(!ivEye.isSelected) }
+                ivSwitchWallet -> toA(WalletManageActivity::class.java)
+                ivTip -> {
+                    activity?.let {
+                        ConfirmDialog.Builder(it)
+                            .setMessage("1DIP = 1,000,000,000,000pdip")
+                            .showCancelBtn(false)
+                            .build()
+                            .show()
+                    }
                 }
+                flTransaction -> toA(TransactionActivity::class.java)
+                flTransactionRecord -> toA(TransactionRecordActivity::class.java)
             }
-            flTransaction -> to(TransactionActivity::class.java)
-            flTransactionRecord -> to(TransactionRecordActivity::class.java)
         }
     }
 }

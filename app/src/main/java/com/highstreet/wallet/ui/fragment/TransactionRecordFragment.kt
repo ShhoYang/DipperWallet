@@ -1,7 +1,10 @@
 package com.highstreet.wallet.ui.fragment
 
 import android.os.Bundle
-import com.highstreet.lib.ui.BaseListFragment
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.databinding.FragmentBaseListBinding
+import com.hao.library.ui.BaseListFragment
+import com.hao.library.ui.UIParams
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.model.res.Tx
 import com.highstreet.wallet.ui.adapter.TransactionRecordAdapter
@@ -13,19 +16,13 @@ import com.highstreet.wallet.ui.vm.TransactionRecordVM
  * @Date 2020/10/20
  */
 
-class TransactionRecordFragment : BaseListFragment<Tx, TransactionRecordVM>() {
+@AndroidEntryPoint
+class TransactionRecordFragment :
+    BaseListFragment<FragmentBaseListBinding, Tx, TransactionRecordVM, TransactionRecordAdapter>() {
 
-    private var isIn = true
-
-    override fun prepare(savedInstanceState: Bundle?) {
-        isIn = arguments?.getBoolean(ExtraKey.BOOLEAN, true) ?: true
-    }
-
-    override fun createAdapter() = TransactionRecordAdapter(isIn)
-
-    override fun initData() {
-        viewModel.isIn = isIn
-        super.initData()
+    override fun prepare(uiParams: UIParams, bundle: Bundle?) {
+        super.prepare(uiParams, bundle)
+        vm?.isIn = bundle?.getBoolean(ExtraKey.BOOLEAN, true) ?: true
     }
 
     companion object {

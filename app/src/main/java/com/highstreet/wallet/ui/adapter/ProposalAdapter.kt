@@ -1,9 +1,11 @@
 package com.highstreet.wallet.ui.adapter
 
-import android.view.View
-import com.highstreet.lib.adapter.BasePagedAdapter
-import com.highstreet.lib.adapter.ViewHolder
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.hao.library.adapter.BasePagedAdapter
+import com.hao.library.adapter.ViewHolder
 import com.highstreet.wallet.R
+import com.highstreet.wallet.databinding.ItemProposalBinding
 import com.highstreet.wallet.model.res.Proposal
 
 /**
@@ -11,14 +13,24 @@ import com.highstreet.wallet.model.res.Proposal
  * @Date 2020/10/24
  */
 
-class ProposalAdapter : BasePagedAdapter<Proposal>(R.layout.g_item_proposal) {
+class ProposalAdapter : BasePagedAdapter<ItemProposalBinding, Proposal>() {
 
-    override fun bindViewHolder(holder: ViewHolder, item: Proposal, position: Int) {
-        holder.setText(R.id.tvId, "#" + item.id)
-            .setText(R.id.tvTitle, item.content?.value?.title ?: "")
-            .setText(R.id.tvStatus, item.getStatus(holder.context))
+    override fun getViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup
+    ) = ItemProposalBinding.inflate(layoutInflater, parent, false)
 
-        holder.getView<View>(R.id.statusPoint)
-            .setBackgroundResource(if (item.isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
+    override fun bindViewHolder(
+        viewHolder: ViewHolder<ItemProposalBinding>,
+        item: Proposal,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        viewHolder.viewBinding {
+            tvId.text = "#" + item.id
+            tvTitle.text = item.content?.value?.title
+            tvStatus.text = item.getStatus(root.context)
+            statusPoint.setBackgroundResource(if (item.isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
+        }
     }
 }

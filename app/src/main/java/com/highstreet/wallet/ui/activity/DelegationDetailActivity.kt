@@ -5,108 +5,134 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.extensions.visibility
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.extensions.visibility
+import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.R
 import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityDelegationDetailBinding
 import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.ui.vm.DelegationDetailVM
-import kotlinx.android.synthetic.main.g_activity_delegation_detail.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/27
  */
-class DelegationDetailActivity : BaseActivity(), View.OnClickListener {
+@AndroidEntryPoint
+class DelegationDetailActivity :
+    BaseActivity<ActivityDelegationDetailBinding, DelegationDetailVM>(), View.OnClickListener {
 
     private var delegationInfo: DelegationInfo? = null
     private var validator: Validator? = null
     private var reward: String = "0"
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(DelegationDetailVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_delegation_detail
-
     override fun initView() {
         setTitle(R.string.delegationDetail)
-        RxView.click(tvDetail, this)
-        RxView.click(ivDetail, this)
-        RxView.click(llRedelegate, this)
-        RxView.click(llUndelegate, this)
-        RxView.click(llReward, this)
-        RxView.click(llDelegate, this)
+        viewBinding {
+            RxView.click(tvDetail, this@DelegationDetailActivity)
+            RxView.click(ivDetail, this@DelegationDetailActivity)
+            RxView.click(llRedelegate, this@DelegationDetailActivity)
+            RxView.click(llUndelegate, this@DelegationDetailActivity)
+            RxView.click(llReward, this@DelegationDetailActivity)
+            RxView.click(llDelegate, this@DelegationDetailActivity)
+        }
     }
 
     override fun initData() {
         val isUndelegate = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
-        llRedelegate.visibility(!isUndelegate)
-        llUndelegate.visibility(!isUndelegate)
-        llReward.visibility(!isUndelegate)
-        llDelegate.visibility(!isUndelegate)
-        tvUnDelegateAmount.visibility(isUndelegate)
-        viewModel.validatorLD.observe(this, Observer {
-            validator = it
-            validator?.apply {
-                tvAvatar.text = getFirstLetterName()
-                tvName.text = description?.moniker
-                tvAddress.text = operator_address
-                tvRate.text = getRate()
-            }
-        })
-        viewModel.rewardLD.observe(this, Observer {
-            reward = it ?: "0"
-            tvReward.text = reward
-        })
+        viewBinding {
+            llRedelegate.visibility(!isUndelegate)
+            llUndelegate.visibility(!isUndelegate)
+            llReward.visibility(!isUndelegate)
+            llDelegate.visibility(!isUndelegate)
+            tvUnDelegateAmount.visibility(isUndelegate)
+        }
+        viewModel {
+            validatorLD.observe(this@DelegationDetailActivity, Observer {
+                validator = it
+                validator?.apply {
+                    viewBinding {
+                        tvAvatar.text = getFirstLetterName()
+                        tvName.text = description?.moniker
+                        tvAddress.text = operator_address
+                        tvRate.text = getRate()
+                    }
+                }
+            })
+            rewardLD.observe(this@DelegationDetailActivity, Observer {
+                reward = it ?: "0"
+                vb!!.tvReward.text = reward
+            })
+        }
 
         delegationInfo = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as DelegationInfo?
         delegationInfo?.apply {
-            viewModel.getValidator(validator_address)
-            viewModel.getReward(validator_address)
-            tvAmount.text = StringUtils.pdip2DIP(shares, false)
-            tvReward.text = reward
-            if (isUndelegate) {
-                tvUnDelegateAmount.text = "${StringUtils.formatDecimal(shares)} ${getString(R.string.unbond)}\n（${getString(R.string.timeRemaining)} ${StringUtils.timeGap(completionTime)}）"
+            viewModel {
+                getValidator(validator_address)
+                getReward(validator_address)
+            }
+            viewBinding {
+                tvAmount.text = StringUtils.pdip2DIP(shares, false)
+                tvReward.text = reward
+                if (isUndelegate) {
+                    tvUnDelegateAmount.text =
+                        "${
+                            StringUtils.pdip2DIP(
+                                StringUtils.formatDecimal(shares),
+                                true
+                            )
+                        } ${getString(R.string.unbond)}\n（${
+                            getString(R.string.timeRemaining)
+                        } ${StringUtils.timeGap(this@DelegationDetailActivity, completionTime)}）"
+                }
             }
         }
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            tvDetail, ivDetail -> {
-                if (null != validator) {
-                    ValidatorDetailActivity.start(this, validator!!)
-                }
-            }
-            llRedelegate -> {
-                if (null != delegationInfo) {
-                    RedelegationActivity.start(this, delegationInfo!!)
-                }
-            }
-            llUndelegate -> {
-                if (null != delegationInfo) {
-                    UndelegationActivity.start(this, delegationInfo!!)
-                }
-            }
-            llReward -> {
-                if (TextUtils.isEmpty(reward) || "0" == reward || reward.toDouble() == 0.0) {
-                    toast(R.string.notEnough)
-                } else {
-                    val validatorAddress = delegationInfo?.validator_address
-                    val delegatorAddress = delegationInfo?.delegator_address
-                    if (!TextUtils.isEmpty(validatorAddress) && !TextUtils.isEmpty(delegatorAddress)) {
-                        ReceiveRewardActivity.start(this, validatorAddress!!, delegatorAddress!!, reward + "DIP")
+        viewBinding {
+            when (v) {
+                tvDetail, ivDetail -> {
+                    if (null != validator) {
+                        ValidatorDetailActivity.start(this@DelegationDetailActivity, validator!!)
                     }
                 }
-            }
-            llDelegate -> {
-                if (null != validator) {
-                    DelegationActivity.start(this, validator!!)
+                llRedelegate -> {
+                    if (null != delegationInfo) {
+                        RedelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
+                    }
+                }
+                llUndelegate -> {
+                    if (null != delegationInfo) {
+                        UndelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
+                    }
+                }
+                llReward -> {
+                    if (TextUtils.isEmpty(reward) || "0" == reward || reward.toDouble() == 0.0) {
+                        toast(R.string.notEnough)
+                    } else {
+                        val validatorAddress = delegationInfo?.validator_address
+                        val delegatorAddress = delegationInfo?.delegator_address
+                        if (!TextUtils.isEmpty(validatorAddress) && !TextUtils.isEmpty(
+                                delegatorAddress
+                            )
+                        ) {
+                            ReceiveRewardActivity.start(
+                                this@DelegationDetailActivity,
+                                validatorAddress!!,
+                                delegatorAddress!!,
+                                reward + "DIP"
+                            )
+                        }
+                    }
+                }
+                llDelegate -> {
+                    if (null != validator) {
+                        DelegationActivity.start(this@DelegationDetailActivity, validator!!)
+                    }
                 }
             }
         }

@@ -2,26 +2,29 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import com.highstreet.lib.extensions.init
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.annotation.Inject
+import com.hao.library.extensions.init
+import com.hao.library.ui.BaseActivity
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityBackupBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.ui.adapter.MnemonicAdapter
-import kotlinx.android.synthetic.main.g_activity_backup.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
-class BackupActivity : BaseActivity() {
+@AndroidEntryPoint(injectViewModel = false)
+class BackupActivity : BaseActivity<ActivityBackupBinding, PlaceholderViewModel>() {
 
     private var from = FROM_CREATE
-    private var account: Account? = null
-    private var mnemonic: ArrayList<String>? = null
 
-    override fun getLayoutId() = R.layout.g_activity_backup
+    @Inject
+    lateinit var adapter: MnemonicAdapter
 
     override fun initView() {
         setTitle(R.string.backupMnemonic)
@@ -29,22 +32,25 @@ class BackupActivity : BaseActivity() {
 
     override fun initData() {
         from = intent.getIntExtra(ExtraKey.INT, FROM_CREATE)
-        account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
-        mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
+        val account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
+        val mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
         if (account == null || mnemonic == null || mnemonic!!.isEmpty()) {
             finish()
             return
         }
-        rv.init(MnemonicAdapter(mnemonic!!), 4)
-        RxView.click(btnNext) {
-            BackupVerifyActivity.start(this, from, account!!, mnemonic!!)
-            finish()
+        viewBinding {
+            rv.init(adapter, 4)
+            adapter.resetData(mnemonic)
+            RxView.click(btnNext) {
+                BackupVerifyActivity.start(this@BackupActivity, from, account!!, mnemonic!!)
+                finish()
+            }
         }
     }
 
     override fun onBackPressed() {
         if (FROM_CREATE == from) {
-            to(MainActivity::class.java, true)
+            toA(MainActivity::class.java, true)
         } else {
             finish()
         }

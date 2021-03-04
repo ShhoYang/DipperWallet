@@ -1,10 +1,11 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseListViewModel
+import androidx.paging.PageKeyedDataSource
+import com.hao.library.http.subscribeBy
+import com.hao.library.viewmodel.BaseListViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.utils.StringUtils
 
@@ -19,13 +20,14 @@ class DelegationListVM : BaseListViewModel<DelegationInfo>() {
     val rewardD: MutableLiveData<String> = MutableLiveData()
 
     override fun loadData(page: Int, onResponse: (ArrayList<DelegationInfo>?) -> Unit) {
-        ApiService.getDipApi().delegations(AccountManager.instance().address, page, pageSize()).subscribeBy({
-            onResponse(it.result)
-            handle(it.result)
-        }, {
-            onResponse(null)
-            handle(null)
-        }).add()
+        ApiService.getDipApi().delegations(AccountManager.instance().address, page, pageSize())
+            .subscribeBy({
+                onResponse(it)
+                handle(it)
+            }, {
+                onResponse(null)
+                handle(null)
+            }).add()
     }
 
     private fun handle(list: ArrayList<DelegationInfo>?) {
@@ -44,17 +46,18 @@ class DelegationListVM : BaseListViewModel<DelegationInfo>() {
         totalLD.value = Pair(amount.toString(), validators.size.toString())
     }
 
-    override fun refresh() {
+    override fun refresh(callback: PageKeyedDataSource.LoadInitialCallback<Int, DelegationInfo>) {
         ApiService.getDipApi().rewards(AccountManager.instance().address).subscribeBy({
-            val total = it?.result?.total
+            val total = it?.total
             rewardD.value = if (total == null || total.isEmpty()) {
                 "0"
             } else {
                 val coin = total[0]
-               StringUtils.formatDecimal( coin.amount)
+                StringUtils.formatDecimal(coin.amount)
             }
         }, {
             rewardD.value = "0"
         }).add()
+        super.refresh(callback)
     }
 }

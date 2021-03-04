@@ -1,7 +1,9 @@
 package com.highstreet.wallet.ui.fragment
 
 import android.view.View
-import com.highstreet.lib.ui.BaseListFragment
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.databinding.FragmentBaseListBinding
+import com.hao.library.ui.BaseListFragment
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.ui.activity.DelegationDetailActivity
@@ -14,11 +16,13 @@ import kotlin.properties.Delegates
  * @Date 2020/10/24
  */
 
-class UndelegationListFragment : BaseListFragment<DelegationInfo, UndelegationListVM>() {
+@AndroidEntryPoint
+class UndelegationListFragment :
+    BaseListFragment<FragmentBaseListBinding, DelegationInfo, UndelegationListVM, UndelegationAdapter>() {
 
     private var refresh: Int by Delegates.observable(0) { _, old, new ->
         if (old != new) {
-            viewModel.invalidate()
+            vm?.refresh()
         }
     }
 
@@ -26,8 +30,6 @@ class UndelegationListFragment : BaseListFragment<DelegationInfo, UndelegationLi
         super.onResume()
         refresh = AccountManager.instance().refresh
     }
-
-    override fun createAdapter() = UndelegationAdapter()
 
     override fun itemClicked(view: View, item: DelegationInfo, position: Int) {
         activity?.let { DelegationDetailActivity.start(it, item, true) }

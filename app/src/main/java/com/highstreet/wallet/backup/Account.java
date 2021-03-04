@@ -1,13 +1,9 @@
 package com.highstreet.wallet.backup;
 
-import com.highstreet.lib.adapter.BaseItem;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Account implements BaseItem {
+public class Account {
     public Long id;
     public String uuid;
     public String nickName;
@@ -79,11 +75,5 @@ public class Account implements BaseItem {
 
     public void setBalances(ArrayList<Balance> balances) {
         this.balances = balances;
-    }
-
-    @NotNull
-    @Override
-    public String uniqueKey() {
-        return address;
     }
 }

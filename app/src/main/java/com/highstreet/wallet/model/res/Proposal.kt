@@ -1,7 +1,7 @@
 package com.highstreet.wallet.model.res
 
 import android.content.Context
-import com.highstreet.lib.adapter.BaseItem
+import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.R
 import com.highstreet.wallet.model.req.Coin
 import java.io.Serializable
@@ -11,17 +11,17 @@ import java.io.Serializable
  * @Date 2020/10/27
  */
 class Proposal(
-        val content: Content?,
-        val deposit_end_time: String?,
-        val final_tally_result: FinalTallyResult?,
-        val id: String,
-        val proposal_status: String,
-        val proposer: String?,
-        val submit_time: String?,
-        val total_deposit: List<Coin>?,
-        val voting_end_time: String?,
-        val voting_start_time: String?
-) : BaseItem, Serializable {
+    val content: Content?,
+    val deposit_end_time: String?,
+    val final_tally_result: FinalTallyResult?,
+    val id: String,
+    val proposal_status: String,
+    val proposer: String?,
+    val submit_time: String?,
+    val total_deposit: List<Coin>?,
+    val voting_end_time: String?,
+    val voting_start_time: String?
+) : PagedAdapterItem, Serializable {
 
     fun getStatus(context: Context): String {
         return when (proposal_status) {
@@ -43,31 +43,31 @@ class Proposal(
         return "VotingPeriod" == proposal_status
     }
 
-    override fun uniqueKey(): String {
-        return "$id"
+    override fun getKey(): Any {
+        return id
     }
 }
 
 data class Content(
-        val type: String?,
-        val value: ProposalValue?
+    val type: String?,
+    val value: ProposalValue?
 ) : Serializable
 
 data class FinalTallyResult(
-        val abstain: String?,
-        val no: String?,
-        val no_with_veto: String?,
-        val yes: String?
+    val abstain: String?,
+    val no: String?,
+    val no_with_veto: String?,
+    val yes: String?
 ) : Serializable
 
 data class ProposalValue(
-        val changes: List<Change>?,
-        val description: String?,
-        val title: String?
+    val changes: List<Change>?,
+    val description: String?,
+    val title: String?
 ) : Serializable
 
 data class Change(
-        val key: String?,
-        val subspace: String?,
-        val value: String?
+    val key: String?,
+    val subspace: String?,
+    val value: String?
 ) : Serializable

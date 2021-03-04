@@ -1,5 +1,21 @@
 <resources>
 
+    <style name="GAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/window_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="GStatusBarTransparentTheme" parent="GAppTheme">
+        <!--        <item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+
     <style name="WelcomeTheme" parent="GStatusBarTransparentTheme">
         <!--        <item name="android:windowFullscreen">true</item>-->
         <item name="android:windowLightStatusBar">false</item>
@@ -9,6 +25,17 @@
     <style name="ThemeColorBgTheme" parent="GAppTheme">
         <item name="colorPrimaryDark">@color/themeColor</item>
         <item name="android:windowBackground">@color/themeColor</item>
+    </style>
+
+    <style name="AppToolbarLayout">
+        <item name="toolbarLayoutId">@layout/app_toolbar</item>
+        <item name="toolbarBackgroundColor">@android:color/transparent</item>
+        <item name="toolbarBackIcon">@drawable/ic_back</item>
+        <item name="toolbarBackIconColor">@color/app_back</item>
+        <item name="toolbarTitleTextSize">@dimen/app_title</item>
+        <item name="toolbarTitleTextColor">@color/text_primary</item>
+        <item name="toolbarShowLine">false</item>
+        <item name="toolbarLineColor">@color/toolbarLineColor</item>
     </style>
 
     <style name="mnemonic">

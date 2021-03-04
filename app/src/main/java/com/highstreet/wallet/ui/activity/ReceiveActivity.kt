@@ -5,36 +5,36 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.utils.DisplayUtils
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.utils.DisplayUtils
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.databinding.ActivityReceiveBinding
 import com.highstreet.wallet.extensions.copy
-import kotlinx.android.synthetic.main.g_activity_receive.*
-
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
  */
-
-class ReceiveActivity : BaseActivity() {
-
-    override fun getLayoutId() = R.layout.g_activity_receive
+@AndroidEntryPoint(injectViewModel = false)
+class ReceiveActivity : BaseActivity<ActivityReceiveBinding, PlaceholderViewModel>() {
 
     override fun initView() {
-        super.initView()
         setTitle(R.string.QRCode)
-        tvChainName.text = AccountManager.instance().account?.getUpperCaseChainName()
-        val address = AccountManager.instance().address
-        tvAddress.text = address
+        viewBinding {
+            tvChainName.text = AccountManager.instance().account?.getUpperCaseChainName()
+            val address = AccountManager.instance().address
+            tvAddress.text = address
 
-        RxView.click(btnCopy) {
-            address.copy(this)
+            RxView.click(btnCopy) {
+                address.copy(this@ReceiveActivity)
+            }
+            val width = DisplayUtils.getScreenWidth(this@ReceiveActivity) / 2
+            ivQr.setImageBitmap(generateQRCode(address, width, width))
         }
-        val width = DisplayUtils.getScreenWidth(this) / 2
-        ivQr.setImageBitmap(generateQRCode(address, width, width))
     }
 
     private fun generateQRCode(content: String, width: Int, height: Int): Bitmap? {
@@ -58,5 +58,8 @@ class ReceiveActivity : BaseActivity() {
             e.printStackTrace()
         }
         return null
+    }
+
+    override fun initData() {
     }
 }

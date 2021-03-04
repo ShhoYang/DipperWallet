@@ -1,10 +1,11 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.utils.AmountUtils
@@ -22,9 +23,9 @@ class ReceiveRewardVM : BaseViewModel() {
 
     fun receiveReward(validatorAddress: String, delegatorAddress: String) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
-            val coins = it.result?.value?.coins
+            val coins = it?.value?.coins
             if (null != coins && coins.isNotEmpty()) {
-                generateParams(it.result!!, validatorAddress, delegatorAddress)
+                generateParams(it, validatorAddress, delegatorAddress)
             }
         }, {
             resultLD.value = Pair(false, "")
@@ -58,15 +59,14 @@ class ReceiveRewardVM : BaseViewModel() {
     }
 
     private fun doReceiveReward(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
-            if (it.success()) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+            if (true == it?.success()) {
                 resultLD.value = Pair(true, "")
             } else {
                 resultLD.value = Pair(false, "")
             }
-
         }, {
-            resultLD.value = Pair(false, it)
+            resultLD.value = Pair(false, it.second)
         }).add()
     }
 }

@@ -1,43 +1,48 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
-import com.highstreet.lib.ui.BaseActivity
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseViewPagerActivity
+import com.hao.library.ui.FragmentCreator
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
-import com.highstreet.wallet.ui.adapter.FragmentWithTabAdapter
+import com.highstreet.wallet.databinding.ActivityViewpagerBinding
 import com.highstreet.wallet.ui.fragment.DelegationTransactionRecordFragment
-import kotlinx.android.synthetic.main.g_activity_viewpager.*
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/24
  */
-
-class DelegationTransactionRecordActivity : BaseActivity() {
-
-    override fun getLayoutId() = R.layout.g_activity_viewpager
+@AndroidEntryPoint(injectViewModel = false)
+class DelegationTransactionRecordActivity :
+    BaseViewPagerActivity<ActivityViewpagerBinding, PlaceholderViewModel>() {
 
     override fun initView() {
         setTitle(R.string.delegationTransactionRecord)
-        val fragments = arrayListOf<Pair<String, Fragment>>(
-            Pair(
-                getString(R.string.bond),
-                DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_BOND)
-            ),
-            Pair(
-                getString(R.string.unbond),
-                DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_UN_BOND)
-            ),
-            Pair(
-                getString(R.string.redelegate),
-                DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_REDELEGATE)
-            )
+        super.initView()
+    }
+
+    override fun getTitles(): List<String> {
+        return arrayListOf(
+            getString(R.string.bond),
+            getString(R.string.unbond),
+            getString(R.string.redelegate)
         )
-        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager, lifecycle, fragments)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            if (position in 0 until fragments.size) {
-                tab.text = fragments[position].first
+    }
+
+    override fun getFragments(): List<FragmentCreator> {
+        return arrayListOf(
+            object : FragmentCreator {
+                override fun createFragment() =
+                    DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_BOND)
+            },
+            object : FragmentCreator {
+                override fun createFragment() =
+                    DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_UN_BOND)
+            },
+            object : FragmentCreator {
+                override fun createFragment() =
+                    DelegationTransactionRecordFragment.instance(DelegationTransactionRecordFragment.TYPE_REDELEGATE)
             }
-        }.attach()
+        )
     }
 }

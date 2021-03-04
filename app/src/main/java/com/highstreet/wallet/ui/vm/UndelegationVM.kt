@@ -1,11 +1,12 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.DelegationInfo
@@ -23,10 +24,10 @@ class UndelegationVM : BaseViewModel() {
 
     fun undelegate(amount: String, delegationInfo: DelegationInfo) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
-            if (it.result == null) {
+            if (it == null) {
                 undelegateLD.value = Pair(false, "")
             } else {
-                generateParams(it.result!!, amount, delegationInfo)
+                generateParams(it, amount, delegationInfo)
             }
         }, {
             undelegateLD.value = Pair(false, "")
@@ -62,8 +63,8 @@ class UndelegationVM : BaseViewModel() {
     }
 
     private fun doUndelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
-            if (it.success()) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+            if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 undelegateLD.value = Pair(true, "")
             } else {
@@ -71,7 +72,7 @@ class UndelegationVM : BaseViewModel() {
             }
 
         }, {
-            undelegateLD.value = Pair(false, it)
+            undelegateLD.value = Pair(false, it.second)
         }).add()
     }
 }

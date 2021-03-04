@@ -1,8 +1,8 @@
 package com.highstreet.wallet.ui.adapter
 
-import com.highstreet.lib.adapter.BasePagedAdapter
-import com.highstreet.lib.adapter.ViewHolder
+import com.hao.library.adapter.ViewHolder
 import com.highstreet.wallet.R
+import com.highstreet.wallet.databinding.ItemCommonBinding
 import com.highstreet.wallet.model.res.Tx
 import com.highstreet.wallet.utils.StringUtils
 
@@ -11,24 +11,32 @@ import com.highstreet.wallet.utils.StringUtils
  * @Date 2020/10/20
  */
 
-class TransactionRecordAdapter(private val isIn: Boolean) :
-    BasePagedAdapter<Tx>(R.layout.g_item_common) {
+class TransactionRecordAdapter : CommonAdapter<Tx>() {
 
-    override fun bindViewHolder(holder: ViewHolder, item: Tx, position: Int) {
-        val desc = StringBuilder()
-        desc.append(getString(R.string.amount)).append("：")
-            .append(StringUtils.pdip2DIP(item.getAmount())).append("\n")
-        if (!isIn) {
+    val isIn: Boolean = true
 
-            desc.append(getString(R.string.fee)).append("：")
-                .append(StringUtils.pdip2DIP(item.getFee())).append("\n")
+    override fun bindViewHolder(
+        viewHolder: ViewHolder<ItemCommonBinding>,
+        item: Tx,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        viewHolder.viewBinding {
+            val context = root.context
+            val desc = StringBuilder()
+            desc.append(context.getString(R.string.amount)).append("：")
+                .append(StringUtils.pdip2DIP(item.getAmount())).append("\n")
+            if (!isIn) {
+
+                desc.append(context.getString(R.string.fee)).append("：")
+                    .append(StringUtils.pdip2DIP(item.getFee())).append("\n")
+            }
+            desc.append(context.getString(R.string.time)).append("：")
+                .append(StringUtils.utc2String(item.timestamp))
+
+            tvTitle.text =
+                "${context.getString(R.string.fromAddress)}：${if (isIn) item.getFromAddress() else item.getToAddress()}"
+            tvDesc.text = desc
         }
-        desc.append(getString(R.string.time)).append("：")
-            .append(StringUtils.utc2String(item.timestamp))
-
-        holder.setText(
-            R.id.tvTitle,
-            "${getString(R.string.fromAddress)}：${if (isIn) item.getFromAddress() else item.getToAddress()}"
-        ).setText(R.id.tvDesc, desc)
     }
 }

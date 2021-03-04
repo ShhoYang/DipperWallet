@@ -6,7 +6,6 @@ import java.security.KeyStore
 import java.security.KeyStoreException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 /**
@@ -30,9 +29,9 @@ object AES {
         return try {
             val keyStore = KeyStoreUtils.loadKeyStore()
             generateKeyIfNecessary(keyStore, keystoreAlias, auth)
-            val secretKey = keyStore.getKey(keystoreAlias, null) as SecretKey
+            val key = keyStore.getKey(keystoreAlias, null)
             val cipher = Cipher.getInstance(TRANSFORMATION)
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+            cipher.init(Cipher.ENCRYPT_MODE, key)
             val end = cipher.doFinal(resource.toByteArray(Charsets.UTF_8))
             Pair(Base64Utils.encodeToString(end), Base64Utils.encodeToString(cipher.iv))
         } catch (e: Exception) {

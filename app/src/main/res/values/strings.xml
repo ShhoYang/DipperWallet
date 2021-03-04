@@ -4,9 +4,15 @@
     <string name="tabCapital">资产</string>
     <string name="tabDelegation">委托</string>
     <string name="tabProposal">投票</string>
+    <string name="tabBrowser">浏览</string>
     <string name="tabProfile">我的</string>
     <string name="myDelegation">我的委托</string>
     <string name="proposalList">提案列表</string>
+    <string name="dapp">DApp</string>
+
+    <string name="dipsyn">合成资产</string>
+    <string name="dipdex">交易所</string>
+    <string name="dipbank">银行</string>
 
     <string name="availableBalance">可用余额</string>
     <string name="totalDelegation">委托总额</string>
@@ -84,7 +90,6 @@
     <string name="proposalPassed">通过</string>
     <string name="proposalRejected">未通过</string>
     <string name="proposalFailed">未通过</string>
-
 
 
     <string name="invalidAddress">地址无效</string>
@@ -165,5 +170,25 @@
     <string name="withdrawAddress">领取地址</string>
 
     <string name="all">全部</string>
+
+    <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+    <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+
+    <string name="emptyLoading">加载中…</string>
+    <string name="emptyNoData">暂无数据</string>
+    <string name="emptyLoadFailed">加载失败</string>
+    <string name="emptyNetworkUnavailable">网络异常</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="passwordVerification">密码验证</string>
+    <string name="wrongPassword">密码错误</string>
+    <string name="verifyFingerprint">请验证指纹</string>
+    <string name="authenticateSucceed">验证成功</string>
+    <string name="authenticateFailed">验证失败</string>
+
+    <string name="day">天</string>
+    <string name="hour">小时</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
 
 </resources>

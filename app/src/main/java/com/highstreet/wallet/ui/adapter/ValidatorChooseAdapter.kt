@@ -1,8 +1,10 @@
 package com.highstreet.wallet.ui.adapter
 
-import com.highstreet.lib.adapter.BasePagedAdapter
-import com.highstreet.lib.adapter.ViewHolder
-import com.highstreet.wallet.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.hao.library.adapter.BasePagedAdapter
+import com.hao.library.adapter.ViewHolder
+import com.highstreet.wallet.databinding.ItemValidatorChooseBinding
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.utils.StringUtils
 
@@ -11,16 +13,28 @@ import com.highstreet.wallet.utils.StringUtils
  * @Date 2020/10/24
  */
 
-class ValidatorChooseAdapter : BasePagedAdapter<Validator>(R.layout.g_item_validator_choose) {
+class ValidatorChooseAdapter : BasePagedAdapter<ItemValidatorChooseBinding, Validator>() {
 
-    override fun bindViewHolder(holder: ViewHolder, item: Validator, position: Int) {
-        holder.setText(R.id.tvAvatar, item.getFirstLetterName())
-                .setText(R.id.tvName, item.description?.moniker ?: "")
-                .setText(R.id.tvShares, StringUtils.formatDecimal(item.delegator_shares))
-                .setText(R.id.tvAddress, item.operator_address ?: "")
-                .setText(R.id.tvRate, item.getRate())
-        holder.setClickListener(R.id.ivArrow) {
-            itemClickListener?.itemClicked(it, item, position)
+    override fun getViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup
+    ) = ItemValidatorChooseBinding.inflate(layoutInflater, parent, false)
+
+    override fun bindViewHolder(
+        viewHolder: ViewHolder<ItemValidatorChooseBinding>,
+        item: Validator,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        viewHolder.viewBinding {
+            tvAvatar.text = item.getFirstLetterName()
+            tvName.text = item.description?.moniker
+            tvShares.text = StringUtils.formatDecimal(item.delegator_shares)
+            tvAddress.text = item.operator_address
+            tvRate.text = item.getRate()
+            ivArrow.setOnClickListener {
+                itemClickListener?.itemClicked(it, item, position)
+            }
         }
     }
 }

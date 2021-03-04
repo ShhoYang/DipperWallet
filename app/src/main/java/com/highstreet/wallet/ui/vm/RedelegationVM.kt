@@ -1,11 +1,12 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.DelegationInfo
@@ -23,10 +24,10 @@ class RedelegationVM : BaseViewModel() {
 
     fun redelegate(amount: String, delegationInfo: DelegationInfo, toValidatorAddress: String) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
-            if (it.result == null) {
+            if (it == null) {
                 redelegateLD.value = Pair(false, "")
             } else {
-                generateParams(it.result!!, amount, delegationInfo, toValidatorAddress)
+                generateParams(it, amount, delegationInfo, toValidatorAddress)
             }
         }, {
             redelegateLD.value = Pair(false, "")
@@ -64,8 +65,8 @@ class RedelegationVM : BaseViewModel() {
     }
 
     private fun doRedelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
-            if (it.success()) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+            if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 redelegateLD.value = Pair(true, "")
             } else {
@@ -73,7 +74,7 @@ class RedelegationVM : BaseViewModel() {
             }
 
         }, {
-            redelegateLD.value = Pair(false, it)
+            redelegateLD.value = Pair(false, it.second)
         }).add()
     }
 }

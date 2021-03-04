@@ -4,7 +4,7 @@ import android.text.TextUtils
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.highstreet.lib.adapter.BaseItem
+import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.AES
 import java.io.Serializable
@@ -44,7 +44,7 @@ data class Account(
     var importTime: Long,
     var sort: Int,
     var extension: String
-) : BaseItem, Serializable {
+) : PagedAdapterItem, Serializable {
 
     @Ignore
     private var entropy: String? = null
@@ -79,7 +79,7 @@ data class Account(
         return upperCaseChain!!
     }
 
-    override fun uniqueKey(): String {
+    override fun getKey(): String {
         return uuid
     }
 

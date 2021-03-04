@@ -3,7 +3,7 @@ package com.highstreet.wallet.extensions
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import com.highstreet.lib.utils.T
+import com.hao.library.utils.T
 import com.highstreet.wallet.R
 
 /**
@@ -38,8 +38,4 @@ fun String.copy(context: Context) {
     val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clipboardManager.setPrimaryClip(ClipData.newPlainText(null, this))
     T.short(context, R.string.copySuccessful)
-}
-
-fun main() {
-
 }

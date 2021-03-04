@@ -6,7 +6,6 @@ keystorePropertiesFile.withReader('UTF-8') { reader ->
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -15,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 14
-        versionName "1.1.1"
+        versionCode 15
+        versionName "1.1.2"
 
         multiDexEnabled true
         flavorDimensions "default"
@@ -87,17 +86,31 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+kapt {
+    arguments {
+        arg("DAGGER_VIEW_BINDING_FEATURE", "databinding")
+        arg("DAGGER_VIEW_MODEL_FEATURE", "vm")
+        arg("DAGGER_ADAPTER_FEATURE", "adapter")
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(path: ':lib')
+    implementation "com.github.haoshiy.android:library:$versions.haolibrary"
     implementation 'org.bitcoinj:bitcoinj-core:0.15.2'
     implementation 'com.king.zxing:zxing-lite:1.1.9'
-    implementation 'com.tencent.bugly:crashreport:latest.release'
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    kapt compilerDependencies
+    kapt "com.github.haoshiy.android:library-compiler:$versions.haolibrary"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    kapt "androidx.room:room-compiler:2.2.5"
+    kapt "com.github.bumptech.glide:compiler:4.11.0"
 }

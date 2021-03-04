@@ -1,14 +1,14 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.BuildConfig
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.AES
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.WalletParams
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -90,7 +90,7 @@ class CreateWalletVM : BaseViewModel() {
 
         ApiService.getDipApi()
             .test("https://faucet.testnet.dippernetwork.com/get_token?" + accountManager.address)
-            .subscribeBy({
+            .subscribeBy2({
                 resultLD.value = true
             }, {
                 resultLD.value = true

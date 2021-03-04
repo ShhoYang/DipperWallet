@@ -1,6 +1,6 @@
 package com.highstreet.wallet
 
-import com.highstreet.lib.utils.SPUtils
+import com.hao.library.utils.SPUtils
 import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.db.Account

@@ -3,7 +3,7 @@ package com.highstreet.wallet.model.res
 import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.highstreet.lib.adapter.BaseItem
+import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.MsgType
 import com.highstreet.wallet.model.req.Coin
@@ -22,7 +22,7 @@ data class Tx(
     val timestamp: String?,
     val txhash: String?,
     val tx: StdTx?
-) : BaseItem {
+) : PagedAdapterItem {
 
     fun success(): Boolean {
         return if (logs == null || logs.isEmpty()) {
@@ -151,7 +151,7 @@ data class Tx(
         return msg?.validator_address ?: msg?.validator_dst_address ?: ""
     }
 
-    override fun uniqueKey(): String {
+    override fun getKey(): Any {
         return "$txhash"
     }
 }

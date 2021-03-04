@@ -2,20 +2,19 @@ package com.highstreet.wallet.ui.activity
 
 import android.Manifest
 import android.os.Bundle
-import com.highstreet.lib.common.AppManager
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.utils.CoroutineUtils
-import com.highstreet.wallet.R
+import com.hao.library.AppManager
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.utils.CoroutineUtils
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.App
+import com.highstreet.wallet.databinding.ActivityWelcomeBinding
 import com.highstreet.wallet.db.Account
 import com.tbruyelle.rxpermissions2.RxPermissions
 
-class WelcomeActivity : BaseActivity() {
-
-    override fun showToolbar() = false
-
-    override fun getLayoutId() = R.layout.g_activity_welcome
+@AndroidEntryPoint(injectViewModel = false)
+class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, PlaceholderViewModel>() {
 
     override fun initView() {
         AppManager.instance().finishAllActivityExceptAppoint(this)
@@ -41,12 +40,15 @@ class WelcomeActivity : BaseActivity() {
                     InitWalletActivity.start(this)
                     finish()
                 } else {
-                    to(MainActivity::class.java, true)
+                    toA(MainActivity::class.java, true)
                 }
             } else {
                 AppManager.instance().exit()
             }
         }
+    }
+
+    override fun initData() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

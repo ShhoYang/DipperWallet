@@ -1,7 +1,7 @@
 package com.highstreet.wallet.model.res
 
 import android.text.TextUtils
-import com.highstreet.lib.adapter.BaseItem
+import com.hao.library.adapter.PagedAdapterItem
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -11,20 +11,20 @@ import java.text.DecimalFormat
  */
 
 data class Validator(
-        val commission: Commission?,
-        val consensus_pubkey: String?,
-        val delegator_shares: String?,
-        val description: Description?,
-        val jailed: Boolean?,
-        val min_self_delegation: String?,
-        val operator_address: String?,
-        val self_delegation: String?,
-        val status: Int?,
-        val tokens: String?,
-        val unbonding_height: String?,
-        val unbonding_time: String?
-) : BaseItem, Serializable {
-    override fun uniqueKey(): String {
+    val commission: Commission?,
+    val consensus_pubkey: String?,
+    val delegator_shares: String?,
+    val description: Description?,
+    val jailed: Boolean?,
+    val min_self_delegation: String?,
+    val operator_address: String?,
+    val self_delegation: String?,
+    val status: Int?,
+    val tokens: String?,
+    val unbonding_height: String?,
+    val unbonding_time: String?
+) : PagedAdapterItem, Serializable {
+    override fun getKey(): Any {
         return operator_address + consensus_pubkey
     }
 
@@ -79,19 +79,19 @@ data class Validator(
 }
 
 data class Commission(
-        val commission_rates: CommissionRates?,
-        val update_time: String?
+    val commission_rates: CommissionRates?,
+    val update_time: String?
 ) : Serializable
 
 data class Description(
-        val details: String?,
-        val identity: String?,
-        val moniker: String?,
-        val website: String?
+    val details: String?,
+    val identity: String?,
+    val moniker: String?,
+    val website: String?
 ) : Serializable
 
 data class CommissionRates(
-        val max_change_rate: String?,
-        val max_rate: String?,
-        val rate: String?
+    val max_change_rate: String?,
+    val max_rate: String?,
+    val rate: String?
 ) : Serializable

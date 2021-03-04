@@ -1,9 +1,9 @@
 package com.highstreet.wallet.ui.vm
 
-import com.highstreet.lib.viewmodel.BaseListViewModel
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseListViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.Tx
 
 /**
@@ -16,17 +16,21 @@ class TransactionRecordVM : BaseListViewModel<Tx>() {
 
     override fun loadData(page: Int, onResponse: (ArrayList<Tx>?) -> Unit) {
         if (isIn) {
-            ApiService.getDipApi().transactionInRecord(AccountManager.instance().address, page, pageSize()).subscribeBy({
-                onResponse(it.txs)
-            }, {
-                onResponse(null)
-            }).add()
+            ApiService.getDipApi()
+                .transactionInRecord(AccountManager.instance().address, page, pageSize())
+                .subscribeBy2({
+                    onResponse(it?.txs)
+                }, {
+                    onResponse(null)
+                }).add()
         } else {
-            ApiService.getDipApi().transactionOutRecord(AccountManager.instance().address, page, pageSize()).subscribeBy({
-                onResponse(it.txs)
-            }, {
-                onResponse(null)
-            }).add()
+            ApiService.getDipApi()
+                .transactionOutRecord(AccountManager.instance().address, page, pageSize())
+                .subscribeBy2({
+                    onResponse(it?.txs)
+                }, {
+                    onResponse(null)
+                }).add()
         }
     }
 }

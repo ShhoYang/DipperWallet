@@ -1,6 +1,8 @@
 package com.highstreet.wallet.utils
 
+import android.content.Context
 import android.text.TextUtils
+import com.highstreet.wallet.R
 import com.highstreet.wallet.model.req.Coin
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -90,13 +92,19 @@ object StringUtils {
         }
     }
 
-    //todo
-    fun timeGap(s: String?): String {
+    fun timeGap(context: Context, s: String?): String {
+
         val temp = utc2Date(s)?.time ?: return ""
+
+        val dayS: String = context.getString(R.string.day)
+        val hourS: String = context.getString(R.string.hour)
+        val minuteS: String = context.getString(R.string.minute)
+        val secondS: String = context.getString(R.string.second)
+
         val cur = System.currentTimeMillis()
         val gap = temp - cur
         if (gap <= SECOND) {
-            return "0秒"
+            return "0$secondS"
         }
 
         val day = gap / DAY
@@ -104,20 +112,23 @@ object StringUtils {
         val minute = (gap % HOUR) / MINUTE
         val second = (gap % MINUTE) / SECOND
 
-        return when {
-            gap > day -> {
-                "${day}天${hour}小时${minute}分${second}秒"
-            }
-            gap > hour -> {
-                "${hour}小时${minute}分${second}秒"
-            }
-            gap > minute -> {
-                "${minute}分${second}秒"
-            }
-            else -> {
-                "${second}秒"
-            }
+        val sb = StringBuffer()
+
+        if (gap > day) {
+            sb.append(day).append(dayS)
         }
+
+        if (gap > hour) {
+            sb.append(hour).append(hourS)
+        }
+
+        if (gap > minute) {
+            sb.append(minute).append(minuteS)
+        }
+
+        sb.append(second).append(secondS)
+
+        return sb.toString()
     }
 
     private fun utc2Date(s: String?): Date? {

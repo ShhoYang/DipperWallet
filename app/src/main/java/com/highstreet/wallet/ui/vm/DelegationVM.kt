@@ -1,11 +1,13 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
 import com.highstreet.wallet.R
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.utils.AmountUtils
@@ -22,18 +24,18 @@ class DelegationVM : BalanceVM() {
 
     fun delegate(validationAddress: String, toAmount: String, remarks: String) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
-            val coins = it.result?.value?.coins
+            val coins = it?.value?.coins
             if (null != coins && coins.isNotEmpty()) {
                 val balance = coins[0].amount ?: "0"
                 if (isEnough(balance, toAmount)) {
-                    generateParams(it.result!!, validationAddress, toAmount, remarks)
+                    generateParams(it, validationAddress, toAmount, remarks)
                 } else {
                     resultLD.value =
-                        Pair(false, getString(R.string.notEnough))
+                        Pair(false, App.instance.getString(R.string.notEnough))
                 }
             }
         }, {
-            resultLD.value = Pair(false, getString(R.string.failed))
+            resultLD.value = Pair(false, App.instance.getString(R.string.failed))
         }).add()
     }
 
@@ -70,16 +72,16 @@ class DelegationVM : BalanceVM() {
     }
 
     private fun doDelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
-            if (it.success()) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+            if (true == it?.success()) {
                 AccountManager.instance().refresh()
-                resultLD.value = Pair(true, getString(R.string.succeed))
+                resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
             } else {
-                resultLD.value = Pair(false, getString(R.string.failed))
+                resultLD.value = Pair(false, App.instance.getString(R.string.failed))
             }
 
         }, {
-            resultLD.value = Pair(false, it)
+            resultLD.value = Pair(false, it.second)
         }).add()
     }
 }

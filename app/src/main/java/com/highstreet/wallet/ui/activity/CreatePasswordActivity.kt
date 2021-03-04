@@ -4,48 +4,43 @@ import android.app.Activity
 import androidx.lifecycle.Observer
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.extensions.string
-import com.highstreet.lib.fingerprint.FingerprintUtils
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.dialog.ConfirmDialog
-import com.highstreet.lib.view.dialog.ConfirmDialogListener
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.view.dialog.ConfirmDialog
+import com.hao.library.view.dialog.ConfirmDialogListener
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
+import com.highstreet.wallet.databinding.ActivityCreatePasswordBinding
 import com.highstreet.wallet.db.Password
 import com.highstreet.wallet.extensions.isPassword
+import com.highstreet.wallet.extensions.string
+import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.CreatePasswordVM
-import kotlinx.android.synthetic.main.g_activity_create_password.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/22
  */
-class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
+@AndroidEntryPoint
+class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, CreatePasswordVM>(),
+    View.OnFocusChangeListener {
 
     private var password: Password? = null
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(CreatePasswordVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_create_password
-
     override fun initView() {
         setTitle(R.string.createPassword)
+        viewBinding {
+            etPassword.onFocusChangeListener = this@CreatePasswordActivity
+            etConfirmPassword.onFocusChangeListener = this@CreatePasswordActivity
+            RxView.textChanges(etPassword, etConfirmPassword) {
+                btnCreate.isEnabled = etPassword.string().isNotEmpty()
+                        && etConfirmPassword.string().isNotEmpty()
+            }
 
-        etPassword.onFocusChangeListener = this
-        etConfirmPassword.onFocusChangeListener = this
-
-
-        RxView.textChanges(etPassword, etConfirmPassword) {
-            btnCreate.isEnabled = etPassword.string().isNotEmpty()
-                    && etConfirmPassword.string().isNotEmpty()
-        }
-
-        RxView.click(btnCreate) {
-            createPassword()
+            RxView.click(btnCreate) {
+                createPassword()
+            }
         }
     }
 
@@ -54,30 +49,32 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
     }
 
     override fun initData() {
-        viewModel.createPasswordLD.observe(this, Observer {
-            hideLoading()
-            if (null == it) {
-                toast(R.string.failed)
-            } else {
-                password = it
-                toast(R.string.succeed)
-                setFingerprint()
-            }
-        })
+        viewModel {
+            createPasswordLD.observe(this@CreatePasswordActivity, Observer {
+                hideLoading()
+                if (null == it) {
+                    toast(R.string.failed)
+                } else {
+                    password = it
+                    toast(R.string.succeed)
+                    setFingerprint()
+                }
+            })
 
-        viewModel.fingerprintLD.observe(this, Observer {
-            hideLoading()
-            if (true == it) {
-                back()
-            } else {
-                toast(R.string.saveFingerprintFailed)
-            }
-        })
+            fingerprintLD.observe(this@CreatePasswordActivity, Observer {
+                hideLoading()
+                if (true == it) {
+                    back()
+                } else {
+                    toast(R.string.saveFingerprintFailed)
+                }
+            })
+        }
     }
 
     private fun createPassword() {
-        val password = etPassword.string()
-        val confirmPassword = etConfirmPassword.string()
+        val password = vb!!.etPassword.string()
+        val confirmPassword = vb!!.etConfirmPassword.string()
 
         if (!password.isPassword()) {
             toast(R.string.passwordFormatError)
@@ -88,38 +85,39 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
             toast(R.string.passwordNotEqual)
             return
         }
-
         showLoading()
-        viewModel.createPassword(password)
+        vm!!.createPassword(password)
     }
 
     private fun setFingerprint() {
         if (FingerprintUtils.isAvailable(this)) {
-            ConfirmDialog(this).setMsg(getString(R.string.addFingerprintVerification))
+            ConfirmDialog.Builder(this)
+                .setMessage(getString(R.string.addFingerprintVerification))
                 .setListener(object : ConfirmDialogListener {
                     override fun confirm() {
-                        getFingerprint(
-                            useFingerprint = true,
-                            showUserPassword = false
-                        )?.authenticate()
+                        authenticateFingerprint()
                     }
 
                     override fun cancel() {
                         back()
                     }
-                }).show()
 
+                }).build().show()
         } else {
             back()
         }
     }
 
-    override fun onFingerprintAuthenticateSucceed() {
-        viewModel.setFingerprint(password!!)
-    }
-
-    override fun onFingerprintCancel() {
-        back()
+    private fun authenticateFingerprint() {
+        FingerprintUtils.getFingerprint(
+            this,
+            useFingerprint = true,
+            showUserPassword = false, {
+                vm!!.setFingerprint(password!!)
+            }, {
+                back()
+            }
+        ).authenticate()
     }
 
     private fun back() {
@@ -128,9 +126,11 @@ class CreatePasswordActivity : BaseActivity(), View.OnFocusChangeListener {
     }
 
     override fun onFocusChange(v: View, hasFocus: Boolean) {
-        when (v) {
-            etPassword -> updateLineStyle(passwordLine, hasFocus)
-            etConfirmPassword -> updateLineStyle(confirmPasswordLine, hasFocus)
+        viewBinding {
+            when (v) {
+                etPassword -> updateLineStyle(passwordLine.line, hasFocus)
+                etConfirmPassword -> updateLineStyle(confirmPasswordLine.line, hasFocus)
+            }
         }
     }
 

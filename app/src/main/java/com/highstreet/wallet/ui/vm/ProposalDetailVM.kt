@@ -1,10 +1,11 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.FinalTallyResult
@@ -30,7 +31,7 @@ class ProposalDetailVM : BaseViewModel() {
      */
     private fun proposalDetail(proposalId: String) {
         ApiService.getDipApi().proposalDetail(proposalId).subscribeBy({
-            proposalLD.value = it.result
+            proposalLD.value = it
         }, {
         }, false).add()
     }
@@ -40,7 +41,7 @@ class ProposalDetailVM : BaseViewModel() {
      */
     fun votingRate(proposalId: String) {
         ApiService.getDipApi().votingRate(proposalId).subscribeBy({
-            rateLD.value = it.result
+            rateLD.value = it
         }, {
         }, false).add()
     }
@@ -51,7 +52,7 @@ class ProposalDetailVM : BaseViewModel() {
     fun proposalOpinion(proposalId: String) {
         ApiService.getDipApi().proposalOpinion(proposalId, AccountManager.instance().address)
             .subscribeBy({
-                opinionLD.value = it.result?.option
+                opinionLD.value = it?.option
             }, {
             }, false).add()
     }
@@ -61,11 +62,10 @@ class ProposalDetailVM : BaseViewModel() {
      */
     fun vote(proposalId: String, opinion: String) {
         ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
-            val accountInfo = it.result
-            if (null == accountInfo) {
+            if (null == it) {
                 voteLD.value = Pair(false, "")
             } else {
-                generateParams(accountInfo, proposalId, opinion)
+                generateParams(it, proposalId, opinion)
             }
         }, {
             voteLD.value = Pair(false, "")
@@ -96,8 +96,8 @@ class ProposalDetailVM : BaseViewModel() {
     }
 
     private fun doVote(reqBroadCast: RequestBroadCast, proposalId: String) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy({
-            if (it.success()) {
+        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+            if (true == it?.success()) {
                 proposalDetail(proposalId)
                 votingRate(proposalId)
                 proposalOpinion(proposalId)
@@ -107,7 +107,7 @@ class ProposalDetailVM : BaseViewModel() {
             }
 
         }, {
-            voteLD.value = Pair(false, it)
+            voteLD.value = Pair(false, it.second)
         }).add()
     }
 }

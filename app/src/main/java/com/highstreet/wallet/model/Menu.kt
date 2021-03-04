@@ -7,10 +7,12 @@ import android.app.Activity
  * @Date 2020/10/20
  */
 data class Menu(
-        val text: String,
-        val icon: Int = 0,
-        val cls: Class<out Activity>? = null,
-        val type: Int = TYPE_NORMAL
+    val title: String = "",
+    val desc: String? = null,
+    val icon: Any? = null,
+    val action: Class<out Activity>? = null,
+    val data: String? = null,
+    val type: Int = TYPE_NORMAL,
 ) {
 
     companion object {
@@ -18,7 +20,7 @@ data class Menu(
         const val TYPE_WIDE_LINE = 1
         const val TYPE_NARROW_LINE = 2
 
-        fun wide() = Menu("", 0, null, TYPE_WIDE_LINE)
-        fun narrow() = Menu("", 0, null, TYPE_NARROW_LINE)
+        fun wide() = Menu(type = TYPE_WIDE_LINE)
+        fun narrow() = Menu(type = TYPE_NARROW_LINE)
     }
 }

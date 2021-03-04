@@ -15,7 +15,7 @@ import java.security.Signature
  */
 object RSA {
 
-    private const val SIGNATURE_SHA256withRSA = "SHA256withRSA"
+    private const val ALGORITHM = "SHA256withRSA"
 
     /**
      * 签名
@@ -27,7 +27,7 @@ object RSA {
             val entry =
                 (keyStore.getEntry(keystoreAlias, null) ?: return null) as? KeyStore.PrivateKeyEntry
                     ?: return null
-            val signature = Signature.getInstance(SIGNATURE_SHA256withRSA)
+            val signature = Signature.getInstance(ALGORITHM)
             signature.initSign(entry.privateKey)
             signature.update(data.toByteArray())
             Base64Utils.encodeToString(signature.sign())
@@ -42,7 +42,7 @@ object RSA {
     fun verify(input: String, signatureData: String, keystoreAlias: String): Boolean {
         return try {
             val keyStore = KeyStoreUtils.loadKeyStore()
-            val signature = Signature.getInstance(SIGNATURE_SHA256withRSA)
+            val signature = Signature.getInstance(ALGORITHM)
             signature.initVerify(keyStore.getCertificate(keystoreAlias))
             signature.update(input.toByteArray())
             signature.verify(Base64Utils.decode(signatureData))

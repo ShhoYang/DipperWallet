@@ -2,41 +2,43 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import com.highstreet.lib.common.AppManager
-import com.highstreet.lib.extensions.visibility
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
-import com.highstreet.wallet.R
+import com.hao.library.AppManager
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.extensions.visibility
+import com.hao.library.ui.BaseActivity
+import com.hao.library.ui.UIParams
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.ExtraKey
-import kotlinx.android.synthetic.main.g_activity_init_wallet.*
-
+import com.highstreet.wallet.databinding.ActivityInitWalletBinding
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
-class InitWalletActivity : BaseActivity() {
+@AndroidEntryPoint(injectViewModel = false)
+class InitWalletActivity : BaseActivity<ActivityInitWalletBinding, PlaceholderViewModel>() {
 
     private var isAdd = false
 
-    override fun prepare(savedInstanceState: Bundle?) {
-        isAdd = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
+    override fun prepare(uiParams: UIParams, intent: Intent?) {
+        super.prepare(uiParams, intent)
+        isAdd = intent?.getBooleanExtra(ExtraKey.BOOLEAN, false) ?: false
     }
 
-    override fun showToolbar() = false
-
-    override fun getLayoutId() = R.layout.g_activity_init_wallet
-
     override fun initView() {
-        getToolbar()?.visibility(isAdd)
-        RxView.click(btnCreate) {
-            CreateWalletActivity.start(this, "", isAdd)
+        toolbarLayout {
+            visibility(isAdd)
         }
+        viewBinding {
+            RxView.click(btnCreate) {
+                CreateWalletActivity.start(this@InitWalletActivity, "", isAdd)
+            }
 
-        RxView.click(btnImport) {
-            ImportWalletActivity.start(this, "", isAdd)
+            RxView.click(btnImport) {
+                ImportWalletActivity.start(this@InitWalletActivity, "", isAdd)
+            }
         }
     }
 

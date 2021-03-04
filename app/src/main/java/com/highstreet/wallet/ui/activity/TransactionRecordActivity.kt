@@ -1,34 +1,41 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
-import com.highstreet.lib.ui.BaseActivity
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseViewPagerActivity
+import com.hao.library.ui.FragmentCreator
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
-import com.highstreet.wallet.ui.adapter.FragmentWithTabAdapter
+import com.highstreet.wallet.databinding.ActivityViewpagerBinding
 import com.highstreet.wallet.ui.fragment.TransactionRecordFragment
-import kotlinx.android.synthetic.main.g_activity_viewpager.*
-
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/20
  */
-
-class TransactionRecordActivity : BaseActivity() {
-
-    override fun getLayoutId() = R.layout.g_activity_viewpager
+@AndroidEntryPoint(injectViewModel = false)
+class TransactionRecordActivity :
+    BaseViewPagerActivity<ActivityViewpagerBinding, PlaceholderViewModel>() {
 
     override fun initView() {
         setTitle(R.string.transactionRecord)
-        val fragments = arrayListOf<Pair<String, Fragment>>(
-            Pair(getString(R.string.transferIn), TransactionRecordFragment.instance(true)),
-            Pair(getString(R.string.transferOut), TransactionRecordFragment.instance(false))
+        super.initView()
+    }
+
+    override fun getTitles(): List<String> {
+        return arrayListOf(
+            getString(R.string.transferIn),
+            getString(R.string.transferOut)
         )
-        viewPager.adapter = FragmentWithTabAdapter(supportFragmentManager, lifecycle, fragments)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            if (position in 0 until fragments.size) {
-                tab.text = fragments[position].first
+    }
+
+    override fun getFragments(): List<FragmentCreator> {
+        return arrayListOf(
+            object : FragmentCreator {
+                override fun createFragment() = TransactionRecordFragment.instance(true)
+            },
+            object : FragmentCreator {
+                override fun createFragment() = TransactionRecordFragment.instance(false)
             }
-        }.attach()
+        )
     }
 }

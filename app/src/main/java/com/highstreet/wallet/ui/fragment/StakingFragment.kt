@@ -1,37 +1,45 @@
 package com.highstreet.wallet.ui.fragment
 
-import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
-import com.highstreet.lib.ui.BaseFragment
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseViewPagerFragment
+import com.hao.library.ui.FragmentCreator
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
+import com.highstreet.wallet.databinding.FragmentStakingBinding
 import com.highstreet.wallet.ui.activity.DelegationTransactionRecordActivity
-import com.highstreet.wallet.ui.adapter.FragmentWithTabAdapter
-import kotlinx.android.synthetic.main.g_fragment_staking.*
-
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/24
  */
-
-class StakingFragment : BaseFragment() {
-
-    override fun getLayoutId() = R.layout.g_fragment_staking
+@AndroidEntryPoint(injectViewModel = false)
+class StakingFragment : BaseViewPagerFragment<FragmentStakingBinding, PlaceholderViewModel>() {
 
     override fun initView() {
-        val fragments = arrayListOf<Pair<String, Fragment>>(
-            Pair(getString(R.string.bond), DelegationListFragment()),
-            Pair(getString(R.string.unbond), UndelegationListFragment())
-        )
-        viewPager.adapter = FragmentWithTabAdapter(childFragmentManager, lifecycle, fragments)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            if (position in 0 until fragments.size) {
-                tab.text = fragments[position].first
+        super.initView()
+        viewBinding {
+            RxView.click(ivRecord) {
+                toA(DelegationTransactionRecordActivity::class.java)
             }
-        }.attach()
-        RxView.click(ivRecord) {
-            to(DelegationTransactionRecordActivity::class.java)
         }
+    }
+
+    override fun getTitles(): List<String> {
+        return arrayListOf(
+            getString(R.string.bond),
+            getString(R.string.unbond)
+        )
+    }
+
+    override fun getFragments(): List<FragmentCreator> {
+        return arrayListOf(
+            object : FragmentCreator {
+                override fun createFragment() = DelegationListFragment()
+            },
+            object : FragmentCreator {
+                override fun createFragment() = UndelegationListFragment()
+            }
+        )
     }
 }

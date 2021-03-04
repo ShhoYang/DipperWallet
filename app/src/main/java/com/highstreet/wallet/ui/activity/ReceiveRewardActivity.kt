@@ -1,21 +1,20 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.extensions.string
-import com.highstreet.lib.fingerprint.FingerprintUtils
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import androidx.lifecycle.Observer
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.R
-import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityReceiveRewardBinding
 import com.highstreet.wallet.extensions.isAddress
+import com.highstreet.wallet.extensions.string
+import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.ReceiveRewardVM
-import kotlinx.android.synthetic.main.g_activity_receive_reward.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -23,42 +22,45 @@ import kotlinx.android.synthetic.main.g_activity_receive_reward.*
  *
  * 领取奖励
  */
+@AndroidEntryPoint
+class ReceiveRewardActivity : BaseActivity<ActivityReceiveRewardBinding, ReceiveRewardVM>(),
+    View.OnFocusChangeListener {
 
-class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
-
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(ReceiveRewardVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_receive_reward
 
     override fun initView() {
         setTitle(R.string.receiveReward)
-        etReceiveAddress.onFocusChangeListener = this
-        RxView.textChanges(etReceiveAddress) {
-            btnConfirm.isEnabled = etReceiveAddress.string().isNotEmpty()
-        }
-        RxView.click(btnConfirm) {
-            receive()
+        viewBinding {
+            etReceiveAddress.onFocusChangeListener = this@ReceiveRewardActivity
+            RxView.textChanges(etReceiveAddress) {
+                btnConfirm.isEnabled = etReceiveAddress.string().isNotEmpty()
+            }
+            RxView.click(btnConfirm) {
+                receive()
+            }
         }
     }
 
     private fun receive() {
-        val validatorAddress = etValidatorAddress.string()
+        val validatorAddress = vb?.etValidatorAddress?.string() ?: ""
         if (!validatorAddress.isAddress()) {
             toast(R.string.invalidValidatorAddress)
             return
         }
-        val receiveAddress = etReceiveAddress.string()
+        val receiveAddress = vb?.etReceiveAddress?.string() ?: ""
         if (!receiveAddress.isAddress()) {
             toast(R.string.invalidReceiveAddress)
             return
         }
 
-        getFingerprint(
-            FingerprintUtils.isAvailable(this) && AccountManager.instance().fingerprint,
-            true
-        )?.authenticate()
+        FingerprintUtils.getFingerprint(
+            this,
+            null,
+            true,
+            {
+                showLoading()
+                vm?.receiveReward(validatorAddress, receiveAddress)
+            },
+        ).authenticate()
     }
 
     private fun updateLineStyle(view: View, hasFocus: Boolean) {
@@ -68,38 +70,29 @@ class ReceiveRewardActivity : BaseActivity(), View.OnFocusChangeListener {
     override fun initData() {
         val data = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as ArrayList<String>?
         if (data != null && data.size == 3) {
-            etValidatorAddress.setText(data[0])
-            etReceiveAddress.setText(data[1])
-            etAmount.setText(data[2])
+            viewBinding {
+                etValidatorAddress.setText(data[0])
+                etReceiveAddress.setText(data[1])
+                etAmount.setText(data[2])
+            }
         }
-        viewModel.resultLD.observe(this, Observer {
+        vm?.resultLD?.observe(this, Observer {
             hideLoading()
 
             if (it.first) {
                 toast(R.string.succeed)
-                to(MainActivity::class.java)
+                toA(MainActivity::class.java)
             } else {
                 toast(R.string.failed)
             }
         })
     }
 
-    override fun onFingerprintAuthenticateSucceed() {
-        showLoading()
-        viewModel.receiveReward(etValidatorAddress.string(), etReceiveAddress.string())
-    }
-
-    override fun usePassword(password: String): Boolean {
-        if (!AccountManager.instance().password!!.verify(password)) {
-            return false
-        }
-        onFingerprintAuthenticateSucceed()
-        return true
-    }
-
     override fun onFocusChange(v: View, hasFocus: Boolean) {
-        when (v) {
-            etReceiveAddress -> updateLineStyle(receiveAddressLine, hasFocus)
+        viewBinding {
+            when (v) {
+                etReceiveAddress -> updateLineStyle(receiveAddressLine.line, hasFocus)
+            }
         }
     }
 

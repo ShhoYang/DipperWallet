@@ -3,54 +3,64 @@ package com.highstreet.wallet.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import com.highstreet.lib.extensions.visibility
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.extensions.visibility
+import com.hao.library.ui.BaseActivity
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityValidatorDetailBinding
 import com.highstreet.wallet.extensions.copy
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.utils.StringUtils
-import kotlinx.android.synthetic.main.g_activity_validator_detail.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/24
  */
-class ValidatorDetailActivity : BaseActivity(), View.OnClickListener {
+@AndroidEntryPoint(injectViewModel = false)
+class ValidatorDetailActivity :
+    BaseActivity<ActivityValidatorDetailBinding, PlaceholderViewModel>(), View.OnClickListener {
 
     private var validator: Validator? = null
 
-    override fun showToolbar() = false
-
-    override fun getLayoutId() = R.layout.g_activity_validator_detail
-
     override fun initView() {
         setTitle(R.string.validatorDetail)
-        RxView.click(tvAddress, this)
-        RxView.click(ivCopy, this)
-        RxView.click(btnDelegate, this)
-
-        btnDelegate.visibility(intent.getBooleanExtra(ExtraKey.BOOLEAN,true))
+        viewBinding {
+            RxView.click(tvAddress, this@ValidatorDetailActivity)
+            RxView.click(ivCopy, this@ValidatorDetailActivity)
+            RxView.click(btnDelegate, this@ValidatorDetailActivity)
+            btnDelegate.visibility(intent.getBooleanExtra(ExtraKey.BOOLEAN, true))
+        }
     }
 
     override fun initData() {
         validator = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Validator?
         validator?.apply {
-            tvName.text = description?.moniker
-            tvAddress.text = operator_address
-            tvAvatar.text = getFirstLetterName()
-            tvShares.text = StringUtils.pdip2DIP(delegator_shares)
-            tvSelfShares.text = StringUtils.pdip2DIP(self_delegation)
-            tvRate.text = getRate()
-            tvProfile.text = getProfile()
+            viewBinding {
+                tvName.text = description?.moniker
+                tvAddress.text = operator_address
+                tvAvatar.text = getFirstLetterName()
+                tvShares.text = StringUtils.pdip2DIP(delegator_shares)
+                tvSelfShares.text = StringUtils.pdip2DIP(self_delegation)
+                tvRate.text = getRate()
+                tvProfile.text = getProfile()
+            }
         }
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            tvAddress, ivCopy -> tvAddress.text.toString().copy(this)
-            btnDelegate -> validator?.let { DelegationActivity.start(this, it) }
+        viewBinding {
+            when (v) {
+                tvAddress, ivCopy -> tvAddress.text.toString().copy(this@ValidatorDetailActivity)
+                btnDelegate -> validator?.let {
+                    DelegationActivity.start(
+                        this@ValidatorDetailActivity,
+                        it
+                    )
+                }
+            }
         }
     }
 

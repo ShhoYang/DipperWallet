@@ -2,15 +2,10 @@ package com.highstreet.wallet.ui.activity
 
 import androidx.lifecycle.Observer
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.adapter.BaseNormalAdapter
-import com.highstreet.lib.fingerprint.FingerprintUtils
-import com.highstreet.lib.ui.BaseSimpleListActivity
-import com.highstreet.lib.view.dialog.ConfirmDialog
-import com.highstreet.lib.view.dialog.ConfirmDialogListener
-import com.highstreet.lib.view.dialog.InputDialog
-import com.highstreet.lib.view.dialog.InputDialogListener
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseNormalListActivity
+import com.hao.library.view.dialog.ConfirmDialog
+import com.hao.library.view.dialog.ConfirmDialogListener
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.ui.adapter.WalletManageAdapter
@@ -19,14 +14,19 @@ import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.extensions.copy
 import com.highstreet.wallet.ui.vm.WalletManageVM
 import com.highstreet.wallet.crypto.KeyUtils
-import kotlinx.android.synthetic.main.g_activity_wallet_manage.*
+import com.highstreet.wallet.databinding.ActivityWalletManageBinding
+import com.highstreet.wallet.fingerprint.FingerprintUtils
+import com.highstreet.wallet.view.InputDialog
+import com.highstreet.wallet.view.InputDialogListener
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
  */
-
-class WalletManageActivity : BaseSimpleListActivity<Account>() {
+@AndroidEntryPoint
+class WalletManageActivity :
+    BaseNormalListActivity<ActivityWalletManageBinding, Account, WalletManageVM, WalletManageAdapter>() {
 
     /**
      * 当前操作的Account
@@ -35,56 +35,42 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
 
     private var type = 0
 
-    private lateinit var walletManageAdapter: WalletManageAdapter
-
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(WalletManageVM::class.java)
-    }
-
-    override fun showToolbar() = false
-
-    override fun getLayoutId() = R.layout.g_activity_wallet_manage
-
-    override fun createAdapter(): BaseNormalAdapter<Account> {
-        walletManageAdapter = WalletManageAdapter(this)
-        return walletManageAdapter
-    }
-
     override fun initView() {
         super.initView()
         setTitle(R.string.walletManager)
-        RxView.click(ivAdd) {
+        RxView.click(vb!!.ivAdd) {
             InitWalletActivity.start(this, true)
         }
     }
 
     override fun initData() {
-        super.initData()
         Db.instance().accountDao().queryAllByChainAsLiveData(AccountManager.instance().chain)
             .observe(this, Observer {
                 if (it.isEmpty()) {
                     InitWalletActivity.start(this)
                 } else {
-                    walletManageAdapter.resetData(it)
+                    adapter.resetData(it)
                 }
 
             })
-        viewModel.updateNameLD.observe(this, Observer {
-            hideLoading()
-            if (it) {
-                toast(R.string.updateSucceed)
-            } else {
-                toast(R.string.updateFailed)
-            }
-        })
-        viewModel.deleteLD.observe(this, Observer {
-            hideLoading()
-            if (it) {
-                toast(R.string.deleteSucceed)
-            } else {
-                toast(R.string.deleteFailed)
-            }
-        })
+        viewModel {
+            updateNameLD.observe(this@WalletManageActivity, Observer {
+                hideLoading()
+                if (it) {
+                    toast(R.string.updateSucceed)
+                } else {
+                    toast(R.string.updateFailed)
+                }
+            })
+            deleteLD.observe(this@WalletManageActivity, Observer {
+                hideLoading()
+                if (it) {
+                    toast(R.string.deleteSucceed)
+                } else {
+                    toast(R.string.deleteFailed)
+                }
+            })
+        }
     }
 
     override fun itemClicked(view: View, item: Account, position: Int) {
@@ -98,12 +84,13 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
                     .setText(item.nickName)
                     .setListener(object : InputDialogListener {
                         override fun confirm(content: String) {
-                            viewModel.updateWalletName(item, content)
+                            vm?.updateWalletName(item, content)
                         }
                     }).show()
             }
             R.id.ivDelete -> {
-                ConfirmDialog(this).setMsg("${getString(R.string.confirmDeleteWallet)}${item.nickName}?")
+                ConfirmDialog.Builder(this)
+                    .setMessage("${getString(R.string.confirmDeleteWallet)}${item.nickName}?")
                     .setListener(object : ConfirmDialogListener {
                         override fun confirm() {
                             fingerprint(TYPE_DELETE, item)
@@ -113,10 +100,11 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
 
                         }
 
-                    }).show()
+                    }).build().show()
+
             }
             else -> {
-                viewModel.changeLastAccount(item)
+                vm?.changeLastAccount(item)
             }
         }
     }
@@ -124,13 +112,15 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
     private fun fingerprint(type: Int, account: Account) {
         this.type = type
         useAccount = account
-        getFingerprint(
-            FingerprintUtils.isAvailable(this@WalletManageActivity) && AccountManager.instance().fingerprint,
-            true
-        )?.authenticate()
+        FingerprintUtils.getFingerprint(
+            this,
+            null,
+            true,
+            { onFingerprintAuthenticateSucceed() },
+        ).authenticate()
     }
 
-    override fun onFingerprintAuthenticateSucceed() {
+    private fun onFingerprintAuthenticateSucceed() {
         useAccount?.apply {
             if (type == TYPE_BACKUP) {
                 BackupActivity.start(
@@ -141,17 +131,9 @@ class WalletManageActivity : BaseSimpleListActivity<Account>() {
                 )
             } else if (type == TYPE_DELETE) {
                 showLoading()
-                viewModel.deleteAccount(this)
+                vm?.deleteAccount(this)
             }
         }
-    }
-
-    override fun usePassword(password: String): Boolean {
-        if (!AccountManager.instance().password!!.verify(password)) {
-            return false
-        }
-        onFingerprintAuthenticateSucceed()
-        return true
     }
 
     companion object {

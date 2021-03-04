@@ -1,7 +1,8 @@
 package com.highstreet.wallet.backup;
 
 
-import com.highstreet.lib.BaseApplication;
+
+import android.app.Application;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -10,11 +11,11 @@ import java.util.ArrayList;
 
 public class BaseData {
 
-    private BaseApplication mApp;
+    private Application mApp;
     private SQLiteDatabase mSQLiteDatabase;
 
 
-    public BaseData(BaseApplication apps) {
+    public BaseData(Application apps) {
         this.mApp = apps;
         SQLiteDatabase.loadLibs(mApp);
     }

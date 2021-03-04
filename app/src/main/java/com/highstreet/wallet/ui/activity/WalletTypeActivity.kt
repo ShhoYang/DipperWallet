@@ -2,35 +2,41 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
-import kotlinx.android.synthetic.main.g_activity_wallet_type.*
+import com.highstreet.wallet.databinding.ActivityWalletTypeBinding
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
-class WalletTypeActivity : BaseActivity() {
-
-    override fun getLayoutId() = R.layout.g_activity_wallet_type
+@AndroidEntryPoint(injectViewModel = false)
+class WalletTypeActivity : BaseActivity<ActivityWalletTypeBinding, PlaceholderViewModel>() {
 
     override fun initView() {
         setTitle(R.string.walletType)
-        RxView.click(clDip) {
+        viewBinding {
+            RxView.click(clDip) {
+                val toDoType =
+                    intent.getIntExtra(ExtraKey.INT, InitWalletActivity.TO_DO_TYPE_CREATE)
+                val isAdd = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
 
-            val toDoType = intent.getIntExtra(ExtraKey.INT, InitWalletActivity.TO_DO_TYPE_CREATE)
-            val isAdd = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
-
-            if (InitWalletActivity.TO_DO_TYPE_CREATE == toDoType) {
-                CreateWalletActivity.start(this, "", isAdd)
-                finish()
-            } else {
-                ImportWalletActivity.start(this, "", isAdd)
-                finish()
+                if (InitWalletActivity.TO_DO_TYPE_CREATE == toDoType) {
+                    CreateWalletActivity.start(this@WalletTypeActivity, "", isAdd)
+                    finish()
+                } else {
+                    ImportWalletActivity.start(this@WalletTypeActivity, "", isAdd)
+                    finish()
+                }
             }
         }
+    }
+
+    override fun initData() {
     }
 
     companion object {

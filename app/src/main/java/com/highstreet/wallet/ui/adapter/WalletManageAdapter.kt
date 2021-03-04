@@ -1,15 +1,18 @@
 package com.highstreet.wallet.ui.adapter
 
-import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.highstreet.lib.adapter.BaseNormalAdapter
-import com.highstreet.lib.adapter.ViewHolder
-import com.highstreet.lib.utils.DisplayUtils
-import com.highstreet.lib.utils.DrawableUtils
+import com.hao.library.adapter.BaseNormalAdapter
+import com.hao.library.adapter.ViewHolder
+import com.hao.library.extensions.gone
+import com.hao.library.utils.DisplayUtils
+import com.hao.library.utils.DrawableUtils
+import com.highstreet.wallet.App
 import com.highstreet.wallet.R
+import com.highstreet.wallet.databinding.ItemWalletManageBinding
 import com.highstreet.wallet.db.Account
 
 /**
@@ -17,13 +20,14 @@ import com.highstreet.wallet.db.Account
  * @Date 2020/10/22
  */
 
-class WalletManageAdapter() : BaseNormalAdapter<Account>(R.layout.g_item_wallet_manage) {
+class WalletManageAdapter : BaseNormalAdapter<ItemWalletManageBinding, Account>() {
 
-    private lateinit var normalDrawable: Drawable
-    private lateinit var selectedDrawable: Drawable
-    private lateinit var backupDrawable: Drawable
+    private var normalDrawable: Drawable
+    private var selectedDrawable: Drawable
+    private var backupDrawable: Drawable
 
-    constructor(context: Context) : this() {
+    init {
+        val context = App.instance
         val width = DisplayUtils.dp2px(context, 1)
         val radius = DisplayUtils.dp2px(context, 6).toFloat()
         normalDrawable = DrawableUtils.generateRoundRectBorderDrawable(
@@ -43,31 +47,39 @@ class WalletManageAdapter() : BaseNormalAdapter<Account>(R.layout.g_item_wallet_
         )
     }
 
-    override fun bindViewHolder(holder: ViewHolder, item: Account, position: Int) {
-        holder.getView<ConstraintLayout>(R.id.clContent).background = if (item.isLast) {
-            holder.visible(R.id.ivSelected)
-            selectedDrawable
-        } else {
-            holder.gone(R.id.ivSelected)
-            normalDrawable
-        }
+    override fun getViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup
+    ) = ItemWalletManageBinding.inflate(layoutInflater, parent, false)
 
-        holder.getView<TextView>(R.id.tvBackup).background = backupDrawable
+    override fun bindViewHolder(
+        viewHolder: ViewHolder<ItemWalletManageBinding>,
+        item: Account,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        viewHolder.viewBinding {
+            if (item.isLast) {
+                clContent.background = selectedDrawable
+                ivSelected.visibility
+            } else {
+                clContent.background = normalDrawable
+                ivSelected.gone()
+            }
+            tvBackup.background = backupDrawable
+            tvWalletName.text = item.nickName
+            tvWalletAddress.text = item.address
+            tvAmount.text = item.address
 
-        holder.setText(R.id.tvWalletName, item.nickName)
-            .setText(R.id.tvWalletAddress, item.address)
-            .setText(R.id.tvAmount, item.address)
+            val click: (View) -> Unit = {
+                itemClickListener?.itemClicked(it, item, position)
+            }
 
-        holder.setClickListener(
-            arrayOf(
-                R.id.tvWalletAddress,
-                R.id.ivCopy,
-                R.id.tvBackup,
-                R.id.ivEdit,
-                R.id.ivDelete
-            )
-        ) {
-            itemClickListener?.itemClicked(it, item, position)
+            tvWalletAddress.setOnClickListener(click)
+            ivCopy.setOnClickListener(click)
+            tvBackup.setOnClickListener(click)
+            ivEdit.setOnClickListener(click)
+            ivDelete.setOnClickListener(click)
         }
     }
 }

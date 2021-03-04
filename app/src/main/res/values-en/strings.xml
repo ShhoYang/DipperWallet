@@ -4,9 +4,15 @@
     <string name="tabCapital">Capital</string>
     <string name="tabDelegation">Delegation</string>
     <string name="tabProposal">Proposal</string>
+    <string name="tabBrowser">Browser</string>
     <string name="tabProfile">Profile</string>
     <string name="myDelegation">Delegation</string>
     <string name="proposalList">Proposal</string>
+    <string name="dapp">DApp</string>
+
+    <string name="dipsyn">dipsyn</string>
+    <string name="dipdex">DIPDEX</string>
+    <string name="dipbank">DIPBANK</string>
 
     <string name="createPassword">Create password</string>
     <string name="password">Password</string>
@@ -161,5 +167,25 @@
     <string name="AllReward">All Reward</string>
     <string name="withdrawAddress">Withdraw Address</string>
     <string name="fingerprint">Fingerprint</string>
+
+    <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
+    <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+
+    <string name="emptyLoading">Loading...</string>
+    <string name="emptyNoData">No data</string>
+    <string name="emptyLoadFailed">Load failed</string>
+    <string name="emptyNetworkUnavailable">Network error</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="passwordVerification">Password</string>
+    <string name="wrongPassword">Wrong Password</string>
+    <string name="verifyFingerprint">Please verify your fingerprint</string>
+    <string name="authenticateSucceed">Authenticate succeed</string>
+    <string name="authenticateFailed">Authenticate failed</string>
+
+    <string name="day">Day</string>
+    <string name="hour">Hour</string>
+    <string name="minute">Minute</string>
+    <string name="second">Second</string>
 
 </resources>

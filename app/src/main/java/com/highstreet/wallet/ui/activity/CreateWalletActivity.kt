@@ -4,59 +4,57 @@ import android.app.Activity
 import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.common.AppManager
-import com.highstreet.lib.extensions.string
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.AppManager
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.ui.UIParams
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityCreateWalletBinding
 import com.highstreet.wallet.extensions.isName
+import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.model.WalletParams
 import com.highstreet.wallet.ui.vm.CreateWalletVM
-import kotlinx.android.synthetic.main.g_activity_create_wallet.*
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
-class CreateWalletActivity : BaseActivity() {
+@AndroidEntryPoint
+class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWalletVM>() {
 
     private lateinit var walletParams: WalletParams
     private var chain = ""
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(CreateWalletVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_create_wallet
-
-    override fun prepare(savedInstanceState: Bundle?) {
-        chain = intent.getStringExtra(ExtraKey.STRING) ?: ""
+    override fun prepare(uiParams: UIParams, intent: Intent?) {
+        super.prepare(uiParams, intent)
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: ""
     }
 
     override fun initView() {
         setTitle(R.string.createWallet)
+        viewBinding {
+            etName.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus -> nameLine.line.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
 
-        etName.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus -> nameLine.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
+            RxView.textChanges(etName) {
+                btnCreate.isEnabled = etName.string().isNotEmpty()
+            }
 
-        RxView.textChanges(etName) {
-            btnCreate.isEnabled = etName.string().isNotEmpty()
-        }
-
-        RxView.click(btnCreate) {
-            createWallet()
+            RxView.click(btnCreate) {
+                createWallet()
+            }
         }
     }
 
     override fun initData() {
         walletParams = WalletParams.create()
-        etAddress.setText(walletParams.address)
-        viewModel.resultLD.observe(this, Observer {
+        vb!!.etAddress.setText(walletParams.address)
+        vm!!.resultLD.observe(this, Observer {
             hideLoading()
             if (true == it) {
                 AppManager.instance().finishActivity(InitWalletActivity::class.java)
@@ -81,7 +79,7 @@ class CreateWalletActivity : BaseActivity() {
             return
         }
 
-        val name = etName.string()
+        val name = vb?.etName?.string() ?: ""
 
         if (!name.isName()) {
             toast(R.string.walletNameFormatError)
@@ -90,7 +88,7 @@ class CreateWalletActivity : BaseActivity() {
         walletParams.nickName = name
 
         showLoading()
-        viewModel.createWallet(walletParams)
+        vm?.createWallet(walletParams)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -1,8 +1,8 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.utils.CoroutineUtils
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.utils.CoroutineUtils
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.RSA

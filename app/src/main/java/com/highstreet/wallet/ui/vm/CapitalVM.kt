@@ -1,8 +1,8 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.hao.library.http.subscribeBy
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.DelegationInfo
 
 /**
@@ -17,7 +17,7 @@ open class CapitalVM : BalanceVM() {
     fun getDelegationAmount(address: String) {
         ApiService.getDipApi().delegations(address, 1, Int.MAX_VALUE)
             .subscribeBy({
-                handle(it.result)
+                handle(it)
             }, {
                 handle(null)
             }).add()

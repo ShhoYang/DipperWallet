@@ -1,9 +1,9 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.highstreet.lib.viewmodel.BaseViewModel
+import com.hao.library.http.subscribeBy
+import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.http.ApiService
-import com.highstreet.wallet.http.subscribeBy
 import com.highstreet.wallet.model.res.AccountInfo
 
 /**
@@ -17,7 +17,7 @@ open class BalanceVM : BaseViewModel() {
 
     fun getAccountInfo(address: String) {
         ApiService.getDipApi().account(address).subscribeBy({
-            amountLD.value = it.result
+            amountLD.value = it
         }, {
             amountLD.value = null
         }).add()

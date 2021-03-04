@@ -4,41 +4,35 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.view.MotionEvent
-import com.highstreet.lib.ui.BaseActivity
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
+import com.highstreet.wallet.databinding.ActivityScanBinding
 import com.king.zxing.CaptureHelper
 import com.king.zxing.OnCaptureCallback
-import kotlinx.android.synthetic.main.g_activity_scan.*
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
  */
-
-class ScanActivity : BaseActivity(), OnCaptureCallback {
+@AndroidEntryPoint(injectViewModel = false)
+class ScanActivity : BaseActivity<ActivityScanBinding, PlaceholderViewModel>(), OnCaptureCallback {
 
     private var captureHelper: CaptureHelper? = null
 
-    override fun showToolbar() = false
-
-    override fun getLayoutId() = R.layout.g_activity_scan
-
     override fun initView() {
-
-        getToolbar()?.apply {
-            iconTintColor = Color.WHITE
+        toolbarLayout {
+            setIconColor(Color.WHITE)
             setTitle(R.string.scan)
         }
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN)
-//        val lp = window.attributes
-//        lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-//        window.attributes = lp
     }
 
     override fun initData() {
-        captureHelper = CaptureHelper(this, surfaceView, viewfinderView, null)
+        viewBinding {
+            captureHelper = CaptureHelper(this@ScanActivity, surfaceView, viewfinderView, null)
+        }
         captureHelper?.apply {
             setOnCaptureCallback(this@ScanActivity)
             onCreate()

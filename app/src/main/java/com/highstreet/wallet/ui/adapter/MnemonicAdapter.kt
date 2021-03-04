@@ -1,18 +1,31 @@
 package com.highstreet.wallet.ui.adapter
 
-import android.widget.TextView
-import com.highstreet.lib.adapter.BaseNormalAdapter
-import com.highstreet.lib.adapter.ViewHolder
-import com.highstreet.wallet.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.hao.library.adapter.BaseNormalAdapter
+import com.hao.library.adapter.ViewHolder
+import com.highstreet.wallet.databinding.ItemMnemonicBinding
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
 
-class MnemonicAdapter(data: ArrayList<String>) : BaseNormalAdapter<String>(R.layout.g_item_mnemonic, data) {
+class MnemonicAdapter : BaseNormalAdapter<ItemMnemonicBinding, String>() {
 
-    override fun bindViewHolder(holder: ViewHolder, item: String, position: Int) {
-        (holder.itemView as TextView).text = item
+    override fun getViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup
+    ) = ItemMnemonicBinding.inflate(layoutInflater, parent, false)
+
+    override fun bindViewHolder(
+        viewHolder: ViewHolder<ItemMnemonicBinding>,
+        item: String,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        viewHolder.viewBinding {
+            root.text = item
+        }
     }
 }

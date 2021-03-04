@@ -2,46 +2,50 @@ package com.highstreet.wallet.ui.fragment
 
 import android.view.View
 import androidx.lifecycle.Observer
-import com.highstreet.lib.adapter.OnItemClickListener
-import com.highstreet.lib.extensions.init
-import com.highstreet.lib.extensions.visibility
-import com.highstreet.lib.fingerprint.DialogParams
-import com.highstreet.lib.fingerprint.listener.FingerprintCallback
-import com.highstreet.lib.fingerprint.FingerprintM
-import com.highstreet.lib.fingerprint.FingerprintUtils
-import com.highstreet.lib.fingerprint.IFingerprint
-import com.highstreet.lib.ui.BaseFragment
-import com.highstreet.lib.utils.CoroutineUtils
-import com.highstreet.lib.view.dialog.ConfirmDialog
-import com.highstreet.lib.view.dialog.ConfirmDialogListener
-import com.highstreet.lib.view.listener.RxView
-import com.highstreet.wallet.R
+import com.hao.library.adapter.listener.OnItemClickListener
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.annotation.Inject
+import com.hao.library.extensions.init
+import com.hao.library.extensions.visibility
+import com.hao.library.ui.BaseFragment
+import com.hao.library.utils.CoroutineUtils
+import com.hao.library.view.dialog.ConfirmDialog
+import com.hao.library.view.dialog.ConfirmDialogListener
+import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Constant
+import com.highstreet.wallet.databinding.FragmentMeBinding
 import com.highstreet.wallet.db.Db
+import com.highstreet.wallet.fingerprint.DialogParams
+import com.highstreet.wallet.fingerprint.FingerprintM
+import com.highstreet.wallet.fingerprint.FingerprintUtils
+import com.highstreet.wallet.fingerprint.IFingerprint
+import com.highstreet.wallet.fingerprint.listener.FingerprintCallback
+import com.highstreet.wallet.model.Menu
 import com.highstreet.wallet.ui.activity.AboutActivity
 import com.highstreet.wallet.ui.activity.WalletManageActivity
 import com.highstreet.wallet.ui.adapter.MenuAdapter
-import com.highstreet.wallet.model.Menu
-import kotlinx.android.synthetic.main.g_fragment_me.*
-
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
  */
+@AndroidEntryPoint(injectViewModel = false)
+class MeFragment : BaseFragment<FragmentMeBinding, PlaceholderViewModel>(),
+    OnItemClickListener<Menu>, FingerprintCallback,
+    ConfirmDialogListener {
 
-class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
+    @Inject
+    lateinit var menuAdapter: MenuAdapter
 
     private var fingerprintM: IFingerprint? = null
 
     private var setFingerprint = false
 
-    override fun getLayoutId() = R.layout.g_fragment_me
-
     override fun initView() {
         val isFingerprint = FingerprintUtils.isHardwareDetected(context)
-        clFingerprint.visibility(isFingerprint)
 
         val menuList = ArrayList<Menu>()
         if (isFingerprint) {
@@ -49,48 +53,55 @@ class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
         }
         menuList.add(
             Menu(
-                getString(R.string.walletManager),
-                R.mipmap.my_wallet,
-                WalletManageActivity::class.java
+                title = getString(R.string.walletManager),
+                icon = R.mipmap.my_wallet,
+                action = WalletManageActivity::class.java
             )
         )
         menuList.add(Menu.wide())
-        menuList.add(Menu(getString(R.string.about), R.mipmap.my_friend, AboutActivity::class.java))
+        menuList.add(
+            Menu(
+                title = getString(R.string.about),
+                icon = R.mipmap.my_friend,
+                action = AboutActivity::class.java
+            )
+        )
 
-        val menuAdapter = MenuAdapter(menuList)
-        menuAdapter.itemClickListener = object : OnItemClickListener<Menu> {
-            override fun itemClicked(view: View, item: Menu, position: Int) {
-                if (item.cls == null) {
-
+        menuAdapter.setOnItemClickListener(this@MeFragment)
+        viewBinding {
+            clFingerprint.visibility(isFingerprint)
+            baseRecyclerView.init(menuAdapter)
+            RxView.click(ivSwitch) {
+                if (setFingerprint) {
+                    activity?.let {
+                        ConfirmDialog.Builder(it)
+                            .setMessage(getString(R.string.cancelFingerprintVerification))
+                            .setListener(this@MeFragment)
+                            .build()
+                            .show()
+                    }
+                } else if (FingerprintUtils.hasEnrolledFingerprints(context)) {
+                    getFingerprint()?.authenticate()
                 } else {
-                    this@MeFragment.to(item.cls)
+                    toast(R.string.noFingerprint)
                 }
             }
         }
-        baseRecyclerView.init(menuAdapter)
-        RxView.click(ivSwitch) {
-            if (setFingerprint) {
-                activity?.let {
-                    ConfirmDialog(it).setMsg(getString(R.string.cancelFingerprintVerification))
-                        .setListener(this).show()
-                }
-            } else if (FingerprintUtils.hasEnrolledFingerprints(context)) {
-                getFingerprint()?.authenticate()
-            } else {
-                toast(R.string.noFingerprint)
-            }
-        }
+
+        menuAdapter.resetData(menuList)
     }
 
     override fun initData() {
         Db.instance().passwordDao().queryByIdAsLiveData(Constant.PASSWORD_DEFAULT_ID)
             .observe(this, Observer {
                 setFingerprint = it?.fingerprint ?: false
-                if (setFingerprint) {
-                    ivSwitch.setImageResource(R.mipmap.icon_switch_open)
-                } else {
-                    ivSwitch.setImageResource(R.mipmap.icon_switch_close)
-                }
+                vb?.ivSwitch?.setImageResource(
+                    if (setFingerprint) {
+                        R.mipmap.icon_switch_open
+                    } else {
+                        R.mipmap.icon_switch_close
+                    }
+                )
             })
     }
 
@@ -118,6 +129,13 @@ class MeFragment : BaseFragment(), FingerprintCallback, ConfirmDialogListener {
     override fun onDestroyView() {
         super.onDestroyView()
         fingerprintM?.onDestroy()
+    }
+
+    override fun itemClicked(view: View, item: Menu, position: Int) {
+        if (item.action == null) {
+        } else {
+            this@MeFragment.toA(item.action)
+        }
     }
 
     /**

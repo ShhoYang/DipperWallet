@@ -4,32 +4,33 @@ import android.app.Activity
 import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
-import androidx.lifecycle.ViewModelProvider
-import com.highstreet.lib.common.AppManager
-import com.highstreet.lib.extensions.string
-import com.highstreet.lib.ui.BaseActivity
-import com.highstreet.lib.view.listener.RxView
+import com.hao.library.AppManager
+import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.ui.BaseActivity
+import com.hao.library.ui.UIParams
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
-import com.highstreet.wallet.extensions.isName
 import com.highstreet.wallet.model.WalletParams
 import com.highstreet.wallet.ui.vm.ImportWalletVM
 import com.highstreet.wallet.crypto.KeyUtils
-import kotlinx.android.synthetic.main.g_activity_import_wallet.*
+import com.highstreet.wallet.databinding.ActivityImportWalletBinding
+import com.highstreet.wallet.extensions.isName
+import com.highstreet.wallet.extensions.string
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/15
  */
-class ImportWalletActivity : BaseActivity() {
+@AndroidEntryPoint
+class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWalletVM>() {
 
     private var chain = ""
 
@@ -37,68 +38,65 @@ class ImportWalletActivity : BaseActivity() {
 
     private val editTexts = ArrayList<EditText>(25)
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(ImportWalletVM::class.java)
-    }
-
-    override fun getLayoutId() = R.layout.g_activity_import_wallet
-
-    override fun prepare(savedInstanceState: Bundle?) {
-        chain = intent.getStringExtra(ExtraKey.STRING) ?: ""
+    override fun prepare(uiParams: UIParams, intent: Intent?) {
+        super.prepare(uiParams, intent)
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: ""
     }
 
     override fun initView() {
         setTitle(R.string.importWallet)
 
-        etName.onFocusChangeListener =
-            View.OnFocusChangeListener { _, hasFocus -> nameLine.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
+        viewBinding {
+            etName.onFocusChangeListener =
+                View.OnFocusChangeListener { _, hasFocus -> nameLine.line.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
 
-        editTexts.clear()
-        editTexts.add(etMnemonic01)
-        editTexts.add(etMnemonic02)
-        editTexts.add(etMnemonic03)
-        editTexts.add(etMnemonic04)
-        editTexts.add(etMnemonic05)
-        editTexts.add(etMnemonic06)
-        editTexts.add(etMnemonic07)
-        editTexts.add(etMnemonic08)
-        editTexts.add(etMnemonic09)
-        editTexts.add(etMnemonic10)
-        editTexts.add(etMnemonic11)
-        editTexts.add(etMnemonic12)
-        editTexts.add(etMnemonic13)
-        editTexts.add(etMnemonic14)
-        editTexts.add(etMnemonic15)
-        editTexts.add(etMnemonic16)
-        editTexts.add(etMnemonic17)
-        editTexts.add(etMnemonic18)
-        editTexts.add(etMnemonic19)
-        editTexts.add(etMnemonic20)
-        editTexts.add(etMnemonic21)
-        editTexts.add(etMnemonic22)
-        editTexts.add(etMnemonic23)
-        editTexts.add(etMnemonic24)
+            editTexts.clear()
+            editTexts.add(etMnemonic01)
+            editTexts.add(etMnemonic02)
+            editTexts.add(etMnemonic03)
+            editTexts.add(etMnemonic04)
+            editTexts.add(etMnemonic05)
+            editTexts.add(etMnemonic06)
+            editTexts.add(etMnemonic07)
+            editTexts.add(etMnemonic08)
+            editTexts.add(etMnemonic09)
+            editTexts.add(etMnemonic10)
+            editTexts.add(etMnemonic11)
+            editTexts.add(etMnemonic12)
+            editTexts.add(etMnemonic13)
+            editTexts.add(etMnemonic14)
+            editTexts.add(etMnemonic15)
+            editTexts.add(etMnemonic16)
+            editTexts.add(etMnemonic17)
+            editTexts.add(etMnemonic18)
+            editTexts.add(etMnemonic19)
+            editTexts.add(etMnemonic20)
+            editTexts.add(etMnemonic21)
+            editTexts.add(etMnemonic22)
+            editTexts.add(etMnemonic23)
+            editTexts.add(etMnemonic24)
 
-        editTexts.forEachIndexed { i, editText ->
-            editText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    focusPosition = i
+            editTexts.forEachIndexed { i, editText ->
+                editText.setOnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        focusPosition = i
+                    }
                 }
             }
-        }
 
-        RxView.click(btnImport) {
-            importWallet()
+            RxView.click(btnImport) {
+                importWallet()
+            }
         }
     }
 
     override fun initData() {
-        viewModel.resultLD.observe(this, Observer {
+        vm?.resultLD?.observe(this, Observer {
             hideLoading()
             if (true == it) {
                 AppManager.instance().finishActivity(InitWalletActivity::class.java)
                 if (!intent.getBooleanExtra(ExtraKey.BOOLEAN, false)) {
-                    to(MainActivity::class.java)
+                    toA(MainActivity::class.java)
                 }
                 finish()
             } else {
@@ -137,7 +135,7 @@ class ImportWalletActivity : BaseActivity() {
             }
         }
 
-        val name = etName.string()
+        val name = vb?.etName?.string() ?: ""
 
         if (!name.isName()) {
             toast(R.string.walletNameFormatError)
@@ -145,7 +143,7 @@ class ImportWalletActivity : BaseActivity() {
         }
         walletParams.nickName = name
         showLoading()
-        viewModel.importWallet(walletParams)
+        vm?.importWallet(walletParams)
     }
 
     private fun isValidMnemonic(mnemonic: ArrayList<String>): Boolean {

@@ -1,6 +1,6 @@
 package com.highstreet.wallet.http
 
-import com.highstreet.lib.utils.L
+import com.hao.library.utils.L
 import com.highstreet.wallet.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

@@ -1,132 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activity.ValidatorDetailActivity">
 
-    <com.hao.library.view.ToolbarLayout
-        android:id="@+id/baseToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:toolbarBackIconColor="@color/white" />
+    <include layout="@layout/include_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_padding"
-            android:layout_marginRight="@dimen/activity_padding"
-            android:gravity="center"
-            android:textColor="@color/text_white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:orientation="vertical"
+        android:padding="@dimen/blockPadding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="middle"
-                android:singleLine="true"
-                android:textColor="@color/text_light_blue"
-                android:textSize="16sp" />
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/ivCopy"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@mipmap/icon_copy_2" />
+                android:id="@+id/ivAvatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/textWhite"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
-        <FrameLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:layout_marginTop="32dp">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/shape_validator_detail" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_gravity="center"
-                app:cardBackgroundColor="@color/colorPrimary9"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="12dp">
-
-                <TextView
-                    android:id="@+id/tvAvatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/text_dark_blue"
-                    android:textSize="48sp"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-        </FrameLayout>
-
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/line" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/shares"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
-
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvShares"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/selfShares"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
 
 
             <TextView
@@ -134,26 +86,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/rate"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
 
 
             <TextView
@@ -161,95 +110,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp" />
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
 
         </FrameLayout>
 
-        <FrameLayout
+        <com.hao.library.view.RoundTextView
+            android:id="@+id/btnDelegate"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/validatorActivity"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:text="100%"
-                android:textColor="@color/text_dark_blue"
-                android:textSize="16sp" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_gravity="center_vertical"
-                android:background="@color/line" />
-
-        </FrameLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/activity_padding"
-            android:text="@string/validatorProfile"
-            android:textColor="@color/text_black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvProfile"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:lineSpacingMultiplier="1.2"
-            android:paddingLeft="@dimen/activity_padding"
-            android:paddingRight="@dimen/activity_padding"
-            android:textColor="@color/text_dark_blue"
-            android:textSize="16sp" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/white"
-            android:padding="@dimen/activity_padding">
-
-            <com.hao.library.view.RoundTextView
-                android:id="@+id/btnDelegate"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:gravity="center"
-                android:text="@string/delegate"
-                android:textSize="@dimen/button_text"
-                app:roundTextViewDisableColor="@color/colorPrimary8"
-                app:roundTextViewNormalColor="@color/colorPrimary"
-                app:roundTextViewNormalTextColor="@color/text_white"
-                app:roundTextViewPressedColor="@color/colorPrimary"
-                app:roundTextViewRadius="@dimen/button_radius" />
-        </FrameLayout>
-
+            android:layout_height="@dimen/buttonHeightS"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/delegate"
+            android:textSize="@dimen/buttonText"
+            app:roundTextViewBorderColor="@color/btnBorderColor"
+            app:roundTextViewBorderWidth="@dimen/buttonBorder"
+            app:roundTextViewNormalTextColor="@color/btnTextColor"
+            app:roundTextViewRadius="@dimen/buttonRadius" />
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

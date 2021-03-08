@@ -51,7 +51,7 @@ class FingerprintDialog(activity: Activity) :
         val drawable = DrawableUtils.generateRoundRectBorderDrawable(
             12.0F,
             DisplayUtils.dp2px(activity, 1),
-            ContextCompat.getColor(activity, R.color.colorPrimary9)
+            ContextCompat.getColor(activity, R.color.lightGray)
         )
 
         viewBinding {

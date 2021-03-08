@@ -59,11 +59,6 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.AgreementActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
             android:name=".ui.activity.InitWalletActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
@@ -75,6 +70,11 @@
 
         <activity
             android:name=".ui.activity.CreatePasswordActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
+            android:name=".ui.activity.LockActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -110,7 +110,13 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.ReceiveActivity"
+            android:name=".ui.activity.StakingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
+            android:name=".ui.activity.ProposalActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -147,7 +153,6 @@
         <activity
             android:name=".ui.activity.ValidatorDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeColorBgTheme"
             tools:replace="screenOrientation" />
 
         <activity
@@ -181,17 +186,18 @@
             tools:replace="screenOrientation" />
 
         <activity
+            android:name=".ui.activity.WebActivity"
+            android:process=":h5"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
             android:name=".ui.activity.DAppActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
             android:name=".ui.activity.CrashActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
-            android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
     </application>

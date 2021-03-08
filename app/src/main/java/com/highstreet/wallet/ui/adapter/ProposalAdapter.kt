@@ -27,8 +27,9 @@ class ProposalAdapter : BasePagedAdapter<ItemProposalBinding, Proposal>() {
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            tvId.text = "#" + item.id
+            tvId.text = "# " + item.id
             tvTitle.text = item.content?.value?.title
+            tvDesc.text = item.content?.value?.description
             tvStatus.text = item.getStatus(root.context)
             statusPoint.setBackgroundResource(if (item.isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
         }

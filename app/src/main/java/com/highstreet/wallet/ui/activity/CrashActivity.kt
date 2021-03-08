@@ -10,7 +10,6 @@ import com.highstreet.wallet.databinding.ActivityCarshBinding
 import com.highstreet.wallet.view.listener.RxView
 import com.tbruyelle.rxpermissions2.RxPermissions
 
-
 /**
  * @author Yang Shihao
  * @Date 2019-07-20

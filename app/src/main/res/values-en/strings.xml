@@ -1,13 +1,19 @@
 <resources>
     <string name="wallet_app_name">DipperWallet</string>
 
+    <string name="tabWallet">WALLET</string>
+    <string name="tabTokens">TOKENS</string>
+    <string name="tabHistory">HISTORY</string>
+    <string name="tabSetting">SETTING</string>
+    <string name="tabDApp">DAPP</string>
+
     <string name="tabCapital">Capital</string>
     <string name="tabDelegation">Delegation</string>
     <string name="tabProposal">Proposal</string>
-    <string name="tabBrowser">Browser</string>
     <string name="tabProfile">Profile</string>
     <string name="myDelegation">Delegation</string>
-    <string name="proposalList">Proposal</string>
+    <string name="proposalList">Proposal List</string>
+    <string name="proposalDetail">Proposal Info</string>
     <string name="dapp">DApp</string>
 
     <string name="dipsyn">dipsyn</string>
@@ -48,9 +54,8 @@
     <string name="invalidMnemonic">Invalid mnemonic</string>
 
     <string name="QRCode">Wallet QR Code</string>
-    <string name="copyAddress">Copy Address</string>
+    <string name="copyAddress">Copy</string>
 
-    <string name="walletManager">Wallet Manager</string>
     <string name="backup">Backup</string>
     <string name="updateWalletName">Update wallet name</string>
     <string name="inputNewWalletName">Please input new wallet name</string>
@@ -69,11 +74,11 @@
     <string name="bonded">Bonded</string>
     <string name="jailed">To be released</string>
 
-    <string name="validatorDetail">Detail</string>
+    <string name="validatorDetail">Validator Detail</string>
     <string name="validatorActivity">Activity</string>
     <string name="selfShares">Self Shares</string>
     <string name="validatorProfile">Profile</string>
-    <string name="delegate">Delegate</string>
+
 
     <string name="about">About</string>
     <string name="scan">Scan</string>
@@ -93,8 +98,9 @@
     <string name="no">No</string>
     <string name="abstain">Abstain</string>
     <string name="proposalTime">Proposal Time</string>
-    <string name="voteStartTime">Vote Start Time</string>
-    <string name="voteEndTime">Vote End Time</string>
+    <string name="voteStartTime">Voting Start Time</string>
+    <string name="voteEndTime">Voting End Time</string>
+    <string name="description">Description</string>
     <string name="myVote">My Vote</string>
 
     <string name="transaction">Transaction</string>
@@ -131,10 +137,45 @@
     <string name="inputUndelegateAmount">Input undelegate amount</string>
     <string name="undelegateMaxAmount">Undelegate max amount</string>
 
-    <string name="delegationTransactionRecord">Delegation transaction record</string>
+    <string name="delegationTransactionRecord">Delegation Transaction Record</string>
     <string name="AddressTransfer">Address Transfer</string>
     <string name="transactionRecord">Transaction Record</string>
     <string name="transactionDetail">Transaction Detail</string>
+    <string name="myAddress">My Address</string>
+    <string name="available">Available</string>
+    <string name="delegated">Delegated</string>
+    <string name="unbonding">Unbonding</string>
+    <string name="reward">Reward</string>
+    <string name="delegate">Delegate</string>
+    <string name="vote">Vote</string>
+    <string name="currentPrice">Current Price</string>
+    <string name="gecko">(CoinGecko)</string>
+    <string name="inflation">Inflation</string>
+    <string name="averageYield">Average Yield</string>
+    <string name="dipperNetwork">Dipper Network</string>
+    <string name="dipperNetworkDesc">跨链和DeFi技术支持的去中心化区块链网络</string>
+    <string name="home">Home</string>
+    <string name="medium">Medium</string>
+    <string name="send">SEND</string>
+
+    <string name="total">Total</string>
+
+    <string name="wallet">Wallet</string>
+    <string name="walletManager">Wallet Manager</string>
+    <string name="general">General</string>
+    <string name="appLock">App Lock</string>
+    <string name="currency">Currency</string>
+    <string name="basePrice">Base Price</string>
+    <string name="support">Support</string>
+    <string name="faq">FAQ</string>
+    <string name="telegram">Telegram</string>
+    <string name="explorer">Explorer</string>
+    <string name="appInfo">APP Info</string>
+    <string name="terms">Terms Of Service</string>
+    <string name="openSource">Open source(Github)</string>
+    <string name="version">Version</string>
+    <string name="cny">CNY</string>
+
     <string name="transferIn">Transfer In</string>
     <string name="transferOut">Transfer Out</string>
 
@@ -151,6 +192,7 @@
     <string name="time">Time</string>
     <string name="timeRemaining">Time Remaining</string>
     <string name="balance">Balance</string>
+
     <string name="availableBalance">Available Balance</string>
     <string name="fromAddress">From address</string>
     <string name="validatorAddress">Validator address</string>
@@ -167,6 +209,8 @@
     <string name="AllReward">All Reward</string>
     <string name="withdrawAddress">Withdraw Address</string>
     <string name="fingerprint">Fingerprint</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>

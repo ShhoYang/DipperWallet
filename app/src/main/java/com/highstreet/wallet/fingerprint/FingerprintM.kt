@@ -60,8 +60,7 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
         fingerprintDialog?.show()
         if (useFingerprint) {
             cancellationSignal = CancellationSignal()
-            cancellationSignal?.setOnCancelListener {
-            }
+            cancellationSignal?.setOnCancelListener {}
             fingerprintManagerCompat.authenticate(cryptoObject, 0, cancellationSignal, this, null)
         }
     }

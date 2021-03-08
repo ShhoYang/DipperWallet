@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_padding">16dp</dimen>
-    <dimen name="title_height">96dp</dimen>
-    <dimen name="app_title">22sp</dimen>
-    <dimen name="button_height">48dp</dimen>
-    <dimen name="button_text">14sp</dimen>
-    <dimen name="button_radius">6dp</dimen>
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="titleHeight">48dp</dimen>
+    <dimen name="appTitle">16sp</dimen>
+    <dimen name="buttonHeightS">40dp</dimen>
+    <dimen name="buttonHeight">48dp</dimen>
+    <dimen name="buttonText">14sp</dimen>
+    <dimen name="buttonRadius">6dp</dimen>
+    <dimen name="buttonBorder">1dp</dimen>
+    <dimen name="blockPadding">12dp</dimen>
+    <dimen name="blockSpace">8dp</dimen>
 </resources>

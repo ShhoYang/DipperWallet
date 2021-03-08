@@ -13,10 +13,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="144dp"
-            android:layout_marginLeft="@dimen/activity_padding"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="@dimen/activity_padding"
-            android:background="@drawable/shape_round_primary"
+            android:layout_marginLeft="@dimen/activityPadding"
+            android:layout_marginTop="@dimen/activityPadding"
+            android:layout_marginRight="@dimen/activityPadding"
+            android:background="@drawable/shape_block"
             android:orientation="horizontal"
             app:layout_scrollFlags="scroll">
 
@@ -34,7 +34,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/delegateTotal"
-                    android:textColor="@color/text_light_blue"
+                    android:textColor="@color/textGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -47,9 +47,8 @@
                     android:layout_marginBottom="12dp"
                     android:singleLine="true"
                     android:text="0"
-                    android:textColor="@color/text_white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/textWhite"
+                    android:textSize="14sp" />
 
             </FrameLayout>
 
@@ -67,7 +66,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/delegateValidator"
-                    android:textColor="@color/text_light_blue"
+                    android:textColor="@color/textGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -80,7 +79,7 @@
                     android:layout_marginBottom="12dp"
                     android:singleLine="true"
                     android:text="0"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/textWhite"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </FrameLayout>
@@ -99,7 +98,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/AllReward"
-                    android:textColor="@color/text_light_blue"
+                    android:textColor="@color/textGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -112,7 +111,7 @@
                     android:layout_marginBottom="12dp"
                     android:singleLine="true"
                     android:text="0"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/textWhite"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -132,7 +131,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/withdrawAddress"
-                    android:textColor="@color/text_light_blue"
+                    android:textColor="@color/textGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -145,20 +144,12 @@
                     android:layout_marginBottom="12dp"
                     android:ellipsize="middle"
                     android:singleLine="true"
-                    android:textColor="@color/text_white"
+                    android:textColor="@color/textWhite"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
             </FrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/activity_padding"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="@dimen/activity_padding"
-            android:background="@color/line" />
 
         <com.hao.library.view.EmptyView
             android:id="@+id/baseEmptyView"

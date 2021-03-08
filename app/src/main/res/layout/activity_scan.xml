@@ -15,9 +15,9 @@
         android:id="@+id/viewfinderView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cornerColor="@color/colorPrimary"
-        app:frameColor="@color/colorPrimary"
-        app:laserColor="@color/colorPrimary" />
+        app:cornerColor="@color/white"
+        app:frameColor="@color/white"
+        app:laserColor="@color/white" />
 
     <include layout="@layout/include_toolbar" />
 

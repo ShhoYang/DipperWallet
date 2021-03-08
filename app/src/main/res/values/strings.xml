@@ -1,13 +1,19 @@
 <resources>
     <string name="wallet_app_name">DipperWallet</string>
 
+    <string name="tabWallet">钱包</string>
+    <string name="tabTokens">代币</string>
+    <string name="tabHistory">历史记录</string>
+    <string name="tabSetting">设置</string>
+    <string name="tabDApp">浏览</string>
+
     <string name="tabCapital">资产</string>
     <string name="tabDelegation">委托</string>
     <string name="tabProposal">投票</string>
-    <string name="tabBrowser">浏览</string>
     <string name="tabProfile">我的</string>
     <string name="myDelegation">我的委托</string>
-    <string name="proposalList">提案列表</string>
+    <string name="proposalList">提案清单</string>
+    <string name="proposalDetail">提案详情信息</string>
     <string name="dapp">DApp</string>
 
     <string name="dipsyn">合成资产</string>
@@ -20,9 +26,43 @@
     <string name="AddressTransfer">地址转账</string>
     <string name="transactionRecord">交易记录</string>
     <string name="transactionDetail">交易明细</string>
+    <string name="myAddress">地址</string>
+    <string name="available">可用</string>
+    <string name="delegated">委托</string>
+    <string name="unbonding">赎回中</string>
+    <string name="reward">收益</string>
+    <string name="delegate">委托</string>
+    <string name="vote">投票</string>
+    <string name="currentPrice">当前价格</string>
+    <string name="gecko">(CoinGecko)</string>
+    <string name="inflation">通货膨胀</string>
+    <string name="averageYield">预计年化收益</string>
+    <string name="dipperNetwork">Dipper Network</string>
+    <string name="dipperNetworkDesc">跨链和DeFi技术支持的去中心化区块链网络</string>
+    <string name="home">主页</string>
+    <string name="medium">Medium</string>
+    <string name="send">转账</string>
+
+    <string name="total">合计</string>
+
+    <string name="wallet">钱包</string>
+    <string name="walletManager">钱包管理</string>
+    <string name="general">普通</string>
+    <string name="appLock">App锁</string>
+    <string name="currency">货币</string>
+    <string name="basePrice">基本价格</string>
+    <string name="support">支持</string>
+    <string name="faq">FAQ</string>
+    <string name="telegram">Telegram</string>
+    <string name="explorer">区块链浏览器</string>
+    <string name="appInfo">关于APP</string>
+    <string name="terms">条款和政策</string>
+    <string name="openSource">源代码(Github)</string>
+    <string name="version">版本</string>
+    <string name="cny">人民币</string>
 
     <string name="QRCode">钱包地址</string>
-    <string name="copyAddress">复制地址</string>
+    <string name="copyAddress">复制</string>
 
     <string name="createPassword">创建密码</string>
     <string name="password">密码</string>
@@ -37,6 +77,8 @@
     <string name="cancelFingerprintVerification">确定取消指纹验证吗？</string>
     <string name="noFingerprint">没有录入指纹，请先到系统设置录入指纹</string>
     <string name="fingerprint">指纹验证</string>
+    <string name="open">开</string>
+    <string name="close">关</string>
 
     <string name="walletType">请选择钱包类型</string>
     <string name="walletDip">DIP</string>
@@ -56,7 +98,7 @@
     <string name="verifyMnemonic">验证您备份的助记词</string>
     <string name="clickMnemonic">请按顺序点击助记词，验证你备注的助记词正确无误</string>
     <string name="invalidMnemonic">助记词无效</string>
-    <string name="walletManager">钱包管理</string>
+
     <string name="backup">备份</string>
     <string name="updateWalletName">修改钱包名字</string>
     <string name="inputNewWalletName">请输入新的钱包名称</string>
@@ -73,12 +115,17 @@
     <string name="clickSelectValidator">点击选择验证人</string>
     <string name="allValidator">全部</string>
     <string name="shares">受托总数</string>
-
     <string name="rate">佣金率</string>
     <string name="bonded">共识中</string>
     <string name="jailed">待解禁</string>
 
-    <string name="validatorDetail">详情</string>
+    <string-array name="validatorFilter">
+        <item>@string/all</item>
+        <item>@string/bonded</item>
+        <item>@string/jailed</item>
+    </string-array>
+
+    <string name="validatorDetail">验证人详情</string>
     <string name="validatorActivity">活跃度</string>
     <string name="selfShares">自抵押总数</string>
     <string name="validatorProfile">简介</string>
@@ -99,7 +146,7 @@
     <string name="inputAmount">请输入转账数量</string>
     <string name="notEnoughToTransfer">Not enough balance to transfer</string>
 
-    <string name="delegate">委托</string>
+
     <string name="delegation">委托</string>
     <string name="delegateAmount">委托数量</string>
     <string name="inputDelegateAmount">请输入委托数量</string>
@@ -159,6 +206,7 @@
     <string name="proposalTime">提案发起时间</string>
     <string name="voteStartTime">投票开始时间</string>
     <string name="voteEndTime">投票截止时间</string>
+    <string name="description">描述</string>
     <string name="myVote">我的意见</string>
 
     <string name="succeed">成功</string>

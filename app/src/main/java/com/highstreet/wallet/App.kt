@@ -6,28 +6,32 @@ import com.hao.library.HaoLibrary
 import com.hao.library.HaoLibraryConfig
 import com.hao.library.extensions.notNullSingleValue
 import com.hao.library.http.HttpResponseModel
-import com.hao.library.view.EmptyView
+import com.hao.library.service.InitX5Service
+import com.hao.library.utils.AppUtils
+import com.hao.library.utils.CoroutineUtils
 import com.highstreet.wallet.backup.BaseData
 import com.highstreet.wallet.ui.activity.CrashActivity
 import com.highstreet.wallet.ui.activity.WelcomeActivity
 import com.tencent.bugly.crashreport.CrashReport
 
 class App : MultiDexApplication() {
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        HaoLibrary.init(this, haoLibraryConfig)
+        HaoLibrary.init(this, LibraryConfig())
         if (!BuildConfig.testnet) {
             CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
-            CaocConfig.Builder
-                .create()
-                .errorActivity(CrashActivity::class.java)
-                .restartActivity(WelcomeActivity::class.java)
-                .apply()
         }
-
-        EmptyView
+        if (AppUtils.isMainProcess(instance, android.os.Process.myPid())) {
+            CoroutineUtils.io {
+                InitX5Service.start(instance)
+            }
+        }
+        CaocConfig.Builder
+            .create()
+            .errorActivity(CrashActivity::class.java)
+            .restartActivity(WelcomeActivity::class.java)
+            .apply()
     }
 
     private var baseData: BaseData? = null
@@ -39,32 +43,14 @@ class App : MultiDexApplication() {
         return baseData!!
     }
 
-    private val haoLibraryConfig by lazy {
-        object : HaoLibraryConfig() {
-
-            override fun toolbarLayoutTheme(): Int {
-                return R.style.AppToolbarLayout
-            }
-
-            override fun isLogin(): Boolean {
-                return true
-            }
-
-            override fun login() {
-
-            }
-
-            override fun getBaseUrl(): String {
-                return BuildConfig.BASE_URL
-            }
-
-            override fun <T : HttpResponseModel<*>> handleResponse(t: T): Boolean {
-                return false
-            }
-        }
-    }
-
     companion object {
         open var instance by notNullSingleValue<App>()
     }
 }
+
+// orient, gloom, about, better,
+// trigger, beyond, visual, merit,
+// best, first, broom, opera,
+// color, boost, labor, piece,
+// jar, renew, cannon, horn,
+// slot, alone, stove, use

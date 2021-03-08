@@ -2,8 +2,8 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="32dp"
-    android:layout_margin="2dp"
-    android:background="@color/mnemonic_bg"
+    android:layout_margin="4dp"
+    android:background="@drawable/selector_mnemonic"
     android:gravity="center"
-    android:textColor="@color/text_link"
+    android:textColor="@color/textWhite"
     android:textSize="14sp" />

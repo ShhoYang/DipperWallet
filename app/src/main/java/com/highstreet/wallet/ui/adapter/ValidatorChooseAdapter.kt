@@ -27,11 +27,9 @@ class ValidatorChooseAdapter : BasePagedAdapter<ItemValidatorChooseBinding, Vali
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            tvAvatar.text = item.getFirstLetterName()
             tvName.text = item.description?.moniker
             tvShares.text = StringUtils.formatDecimal(item.delegator_shares)
-            tvAddress.text = item.operator_address
-            tvRate.text = item.getRate()
+            tvAverageYield.text = item.getRate()
             ivArrow.setOnClickListener {
                 itemClickListener?.itemClicked(it, item, position)
             }

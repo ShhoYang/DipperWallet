@@ -13,14 +13,14 @@
         android:id="@+id/clDip"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_margin="@dimen/activity_padding"
-        android:background="@drawable/shape_round_primary">
+        android:layout_margin="@dimen/activityPadding"
+        android:background="@drawable/shape_block">
 
         <ImageView
             android:id="@+id/ivIcon01_"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginLeft="@dimen/activity_padding"
+            android:layout_marginLeft="@dimen/activityPadding"
             android:src="@mipmap/icon_01"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginRight="@dimen/activity_padding"
+            android:layout_marginRight="@dimen/activityPadding"
             android:src="@mipmap/icon_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

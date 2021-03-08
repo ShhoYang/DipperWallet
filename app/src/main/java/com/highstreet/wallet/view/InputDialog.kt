@@ -4,7 +4,6 @@ import android.app.Activity
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import android.view.Gravity
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.hao.library.utils.DisplayUtils
@@ -19,8 +18,7 @@ import com.highstreet.wallet.extensions.string
  * @Date 2020/10/21
  */
 
-class InputDialog(activity: Activity) : BaseDialog<DialogInputBinding>(activity = activity),
-    View.OnClickListener {
+class InputDialog(activity: Activity) : BaseDialog<DialogInputBinding>(activity = activity) {
 
     private var inputDialogListener: InputDialogListener? = null
 
@@ -41,12 +39,17 @@ class InputDialog(activity: Activity) : BaseDialog<DialogInputBinding>(activity 
         val drawable = DrawableUtils.generateRoundRectBorderDrawable(
             12.0F,
             DisplayUtils.dp2px(activity, 1),
-            ContextCompat.getColor(activity, R.color.colorPrimary9)
+            ContextCompat.getColor(activity, R.color.lightGray)
         )
         viewBinding {
             etContent.background = drawable
-            tvCancel.setOnClickListener(this@InputDialog)
-            tvConfirm.setOnClickListener(this@InputDialog)
+            tvCancel.setOnClickListener {
+                dismiss()
+            }
+            tvConfirm.setOnClickListener {
+                inputDialogListener?.confirm(etContent.string())
+                dismiss()
+            }
         }
     }
 
@@ -74,15 +77,6 @@ class InputDialog(activity: Activity) : BaseDialog<DialogInputBinding>(activity 
     fun setListener(inputDialogListener: InputDialogListener?): InputDialog {
         this.inputDialogListener = inputDialogListener
         return this
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.tvConfirm) {
-           viewBinding {
-               inputDialogListener?.confirm(etContent.string())
-           }
-        }
-        dismiss()
     }
 }
 

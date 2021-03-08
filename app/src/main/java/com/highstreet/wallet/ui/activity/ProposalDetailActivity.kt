@@ -36,12 +36,13 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
     }
 
     override fun initView() {
+        setTitle(R.string.proposalDetail)
         setData(proposal)
         viewBinding {
-            RxView.click(llYes, this@ProposalDetailActivity)
-            RxView.click(llNo, this@ProposalDetailActivity)
-            RxView.click(llNoWithVeto, this@ProposalDetailActivity)
-            RxView.click(llAbstain, this@ProposalDetailActivity)
+            RxView.click(btnYes, this@ProposalDetailActivity)
+            RxView.click(btnNo, this@ProposalDetailActivity)
+            RxView.click(btnNoWithVeto, this@ProposalDetailActivity)
+            RxView.click(btnAbstain, this@ProposalDetailActivity)
         }
     }
 
@@ -79,15 +80,13 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
 
     private fun setData(proposal: Proposal?) {
         proposal?.apply {
-            title = "#$id"
             viewBinding {
                 statusPoint.setBackgroundResource(if (isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
                 tvStatus.text = getStatus(this@ProposalDetailActivity)
-                tvTitle.text = content?.value?.title
+                tvTitle.text = "# ${id}.${content?.value?.title}"
                 tvDesc.text = content?.value?.description
                 tvProposer.text = proposer
                 tvType.text = content?.type
-                tvSubmitTime.text = StringUtils.utc2String(submit_time)
                 tvVotingStartTime.text = StringUtils.utc2String(voting_start_time)
                 tvVotingEndTime.text = StringUtils.utc2String(voting_end_time)
                 llVote.visibility(isVotingPeriod())
@@ -144,10 +143,10 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
     override fun onClick(v: View?) {
         viewBinding {
             when (v) {
-                llYes -> vote(ProposalOpinion.YES)
-                llNo -> vote(ProposalOpinion.NO)
-                llNoWithVeto -> vote(ProposalOpinion.NO_WITH_VETO)
-                llAbstain -> vote(ProposalOpinion.ABSTAIN)
+                btnYes -> vote(ProposalOpinion.YES)
+                btnNo -> vote(ProposalOpinion.NO)
+                btnNoWithVeto -> vote(ProposalOpinion.NO_WITH_VETO)
+                btnAbstain -> vote(ProposalOpinion.ABSTAIN)
             }
         }
     }

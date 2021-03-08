@@ -3,9 +3,9 @@ package com.highstreet.wallet.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import com.hao.library.adapter.listener.OnItemClickListener
 import com.hao.library.annotation.AndroidEntryPoint
-import com.hao.library.extensions.gone
-import com.hao.library.extensions.visible
+import com.hao.library.annotation.Inject
 import com.hao.library.ui.BaseListActivity
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
@@ -13,8 +13,10 @@ import com.highstreet.wallet.constant.SortType
 import com.highstreet.wallet.constant.ValidatorType
 import com.highstreet.wallet.databinding.ActivityValidatorListBinding
 import com.highstreet.wallet.model.res.Validator
+import com.highstreet.wallet.ui.adapter.BottomMenuDialogAdapter
 import com.highstreet.wallet.ui.adapter.ValidatorChooseAdapter
 import com.highstreet.wallet.ui.vm.ValidatorVM
+import com.highstreet.wallet.view.BottomMenuDialog
 
 /**
  * @author Yang Shihao
@@ -25,11 +27,15 @@ class ValidatorChooseActivity :
     BaseListActivity<ActivityValidatorListBinding, Validator, ValidatorVM, ValidatorChooseAdapter>(),
     View.OnClickListener {
 
-    private var filterShow = false
     private var filterType = ValidatorType.ALL
     private var sortType = SortType.SHARES_DESC
     private var rateSort = SortType.RATE_DESC
     private var sharesSort = SortType.SHARES_DESC
+
+    @Inject
+    lateinit var bottomMenuDialogAdapter: BottomMenuDialogAdapter
+
+    private var bottomMenuDialog: BottomMenuDialog? = null
 
     override fun initView() {
         super.initView()
@@ -39,11 +45,25 @@ class ValidatorChooseActivity :
             llType.setOnClickListener(this@ValidatorChooseActivity)
             llRate.setOnClickListener(this@ValidatorChooseActivity)
             llShares.setOnClickListener(this@ValidatorChooseActivity)
-            llFilter.setOnClickListener(this@ValidatorChooseActivity)
-            tvTypeAll.setOnClickListener(this@ValidatorChooseActivity)
-            tvTypeBonded.setOnClickListener(this@ValidatorChooseActivity)
-            tvTypeJailed.setOnClickListener(this@ValidatorChooseActivity)
         }
+
+        val optionList = arrayListOf(
+            getString(R.string.allValidator),
+            getString(R.string.bonded),
+            getString(R.string.jailed)
+        )
+
+        bottomMenuDialogAdapter.resetData(optionList)
+        bottomMenuDialogAdapter.setOnItemClickListener(object : OnItemClickListener<String> {
+            override fun itemClicked(view: View, item: String, position: Int) {
+                when (position) {
+                    0 -> selectedType(item, ValidatorType.ALL)
+                    1 -> selectedType(item, ValidatorType.BONDED)
+                    2 -> selectedType(item, ValidatorType.JAILED)
+                }
+                bottomMenuDialog?.dismiss()
+            }
+        })
     }
 
     override fun itemClicked(view: View, item: Validator, position: Int) {
@@ -63,32 +83,16 @@ class ValidatorChooseActivity :
                 llType -> clickType()
                 llRate -> clickRate()
                 llShares -> clickShares()
-                llFilter -> hideFilter()
-                tvTypeAll -> selectedType(tvTypeAll.text.toString(), ValidatorType.ALL)
-                tvTypeBonded -> selectedType(tvTypeBonded.text.toString(), ValidatorType.BONDED)
-                tvTypeJailed -> selectedType(tvTypeJailed.text.toString(), ValidatorType.JAILED)
             }
         }
-    }
-
-    private fun hideFilter() {
-        filterShow = false
-        vb?.llFilter?.gone()
     }
 
     private fun clickType() {
-        if (filterShow) {
-            hideFilter()
-        } else {
-            filterShow = true
-            viewBinding {
-                llFilter.visible()
-                val type = tvType.text
-                tvTypeAll.isSelected = type == tvTypeAll.text
-                tvTypeBonded.isSelected = type == tvTypeBonded.text
-                tvTypeJailed.isSelected = type == tvTypeJailed.text
-            }
+        if (bottomMenuDialog == null) {
+            bottomMenuDialog = BottomMenuDialog(this).setAdapter(bottomMenuDialogAdapter)
         }
+
+        bottomMenuDialog?.show()
     }
 
     private fun clickRate() {
@@ -136,7 +140,6 @@ class ValidatorChooseActivity :
     private fun selectedType(text: String, type: Int) {
         filterType = type
         vb?.tvType?.text = text
-        hideFilter()
         vm?.filter(filterType, sortType)
     }
 

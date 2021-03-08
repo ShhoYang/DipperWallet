@@ -29,9 +29,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:layout_marginTop="24dp"
-            android:background="@color/line" />
+            android:background="@color/dialogLine" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,14 +45,14 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/cancel"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/dialogCancelBtn"
                 android:textSize="16sp" />
 
             <View
                 android:id="@+id/lineV"
-                android:layout_width="1dp"
+                android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/line" />
+                android:background="@color/dialogLine" />
 
             <TextView
                 android:id="@+id/tvUsePassword"
@@ -61,7 +61,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/passwordVerification"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/dialogConfirmBtn"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -82,7 +82,7 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/inputPassword"
-            android:textColor="@color/text_black"
+            android:textColor="@color/dialogTitle"
             android:textSize="18sp" />
 
         <EditText
@@ -98,15 +98,15 @@
             android:inputType="textPassword"
             android:maxLength="16"
             android:singleLine="true"
-            android:textColor="@color/text_black"
-            android:textColorHint="@color/text_desc"
+            android:textColor="@color/textBlack"
+            android:textColorHint="@color/textGray"
             android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="32dp"
-            android:background="@color/line" />
+            android:background="@color/dialogLine" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,13 +120,13 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/cancel"
-                android:textColor="@color/text_subtitle"
+                android:textColor="@color/dialogCancelBtn"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/line" />
+                android:background="@color/dialogLine" />
 
             <TextView
                 android:id="@+id/tvConfirm"
@@ -135,7 +135,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/confirm"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/dialogConfirmBtn"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>

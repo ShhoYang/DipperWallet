@@ -20,4 +20,7 @@ object Constant {
     // 别名
     const val PASSWORD_KEYSTORE_ALIAS = "PASSWORD_KEY"
     const val MNEMONIC_KEYSTORE_ALIAS = "MNEMONIC_KEY"
+
+    const val DIPPER_NETWORK = "https://www.dippernetwork.com/"
+
 }

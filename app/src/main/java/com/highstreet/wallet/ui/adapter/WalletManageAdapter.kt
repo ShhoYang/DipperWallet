@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.hao.library.adapter.BaseNormalAdapter
 import com.hao.library.adapter.ViewHolder
 import com.hao.library.extensions.gone
+import com.hao.library.extensions.visible
 import com.hao.library.utils.DisplayUtils
 import com.hao.library.utils.DrawableUtils
 import com.highstreet.wallet.App
@@ -43,7 +44,7 @@ class WalletManageAdapter : BaseNormalAdapter<ItemWalletManageBinding, Account>(
         backupDrawable = DrawableUtils.generateRoundRectBorderDrawable(
             100.0F,
             width,
-            ContextCompat.getColor(context, R.color.text_orange)
+            ContextCompat.getColor(context, R.color.textOrange)
         )
     }
 
@@ -61,7 +62,7 @@ class WalletManageAdapter : BaseNormalAdapter<ItemWalletManageBinding, Account>(
         viewHolder.viewBinding {
             if (item.isLast) {
                 clContent.background = selectedDrawable
-                ivSelected.visibility
+                ivSelected.visible()
             } else {
                 clContent.background = normalDrawable
                 ivSelected.gone()

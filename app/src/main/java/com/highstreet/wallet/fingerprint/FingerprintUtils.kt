@@ -64,7 +64,7 @@ object FingerprintUtils {
     ): IFingerprint {
         val fingerprint = FingerprintM()
         val useFingerprint2 =
-            useFingerprint ?: isAvailable(activity) && AccountManager.instance().fingerprint
+            useFingerprint ?: (isAvailable(activity) && AccountManager.instance().fingerprint)
         fingerprint.init(
             activity,
             useFingerprint2,

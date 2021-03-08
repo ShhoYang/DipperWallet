@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/themeColor</color>
-    <color name="colorPrimaryDark">@color/window_bg</color>
-    <color name="colorAccent">@color/themeColor</color>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/white</color>
 
-    <color name="transparent">#00000000</color>
-
-    <color name="themeColor">#3B64DB</color>
-    <color name="colorPrimary0">#133149</color>
-    <color name="colorPrimary7">#CAD2E7</color>
-    <color name="colorPrimary8">#D4DAED</color>
-    <color name="colorPrimary9">#D4DAED</color>
-
-    <color name="window_bg">#FAFAFA</color>
-    <color name="window_bg2">#F5F5F5</color>
     <color name="white">#FFFFFF</color>
-    <color name="app_back">#333333</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="lightGray">#D4DAED</color>
+    <color name="dipperGreen">#76C197</color>
+    <color name="orange">#FF8C00</color>
+    <color name="purple">#9C6CFF</color>
 
-    <color name="text_primary">@color/colorPrimary</color>
-    <color name="text_white">#FFFFFF</color>
-    <color name="text_black">#333333</color>
-    <color name="text_title">#353535</color>
-    <color name="text_subtitle">#888888</color>
-    <color name="text_desc">#B2B2B2</color>
-    <color name="text_link">#576B95</color>
-    <color name="text_orange">#FF8C00</color>
-    <color name="text_dark_blue">@color/colorPrimary0</color>
-    <color name="text_light_blue">@color/colorPrimary7</color>
+    <color name="appBack">@color/white</color>
+    <color name="blockBg">#20FFFFFF</color>
+    <color name="line">#47494d</color>
 
-    <color name="light_grey">#E0E0E0</color>
-    <color name="line">@color/colorPrimary8</color>
-    <color name="mnemonic_bg">#F0F3FB</color>
+    <color name="tabSelected">@color/textWhite</color>
+    <color name="tabUnselected">@color/textGray</color>
 
-    <color name="proposal_yes">@color/colorPrimary</color>
-    <color name="proposal_no">#FF859B</color>
-    <color name="proposal_no_with_veto">#F4425F</color>
-    <color name="proposal_abstain">#919AB2</color>
+    <color name="dialogTitle">@color/confirmDialogTitleTextColor</color>
+    <color name="dialogMessage">@color/confirmDialogMessageTextColor</color>
+    <color name="dialogLine">@color/confirmDialogLineColor</color>
+    <color name="dialogCancelBtn">@color/textGray</color>
+    <color name="dialogConfirmBtn">@color/textBlack</color>
+
+    <color name="btnTextColor">@color/textDipperGreen</color>
+    <color name="btnBorderColor">@color/white</color>
+    <color name="btnDisableColor">@color/lightGray</color>
+    <color name="btnDisableTextColor">@color/textBlack</color>
+
+    <color name="textPrimary">@color/colorPrimary</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textBlack">#333333</color>
+    <color name="textGray">#7A7f88</color>
+    <color name="textDipperGreen">@color/dipperGreen</color>
+    <color name="textOrange">#FF8C00</color>
+    <color name="textPurple">@color/purple</color>
+
+    <color name="proposalYes">@color/dipperGreen</color>
+    <color name="proposalNo">#FF859B</color>
+    <color name="proposalNoWithVeto">#F4425F</color>
+    <color name="proposalAbstain">#919AB2</color>
 
 </resources>

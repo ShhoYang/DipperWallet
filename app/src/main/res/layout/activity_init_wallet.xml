@@ -1,68 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".ui.activity.InitWalletActivity">
 
-    <include layout="@layout/include_toolbar2" />
+    <include layout="@layout/include_toolbar" />
 
     <ImageView
         android:id="@+id/ivLogo_"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/baseToolbar" />
-
-    <TextView
-        android:id="@+id/tvName_"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:text="@string/wallet_app_name"
-        android:textColor="@color/text_dark_blue"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo_" />
+        android:layout_marginTop="48dp"
+        android:src="@mipmap/logo2" />
 
     <com.hao.library.view.RoundTextView
         android:id="@+id/btnCreate"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginLeft="@dimen/activity_padding"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="@dimen/activity_padding"
+        android:layout_marginRight="@dimen/activityPadding"
         android:gravity="center"
         android:text="@string/createWallet"
-        android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvName_"
-        app:roundTextViewNormalColor="@color/colorPrimary8"
-        app:roundTextViewNormalTextColor="@color/text_primary"
-        app:roundTextViewPressedColor="@color/colorPrimary8"
-        app:roundTextViewRadius="@dimen/button_radius" />
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
 
     <com.hao.library.view.RoundTextView
         android:id="@+id/btnImport"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginLeft="@dimen/activity_padding"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="32dp"
-        android:layout_marginRight="@dimen/activity_padding"
+        android:layout_marginRight="@dimen/activityPadding"
         android:gravity="center"
         android:text="@string/importWallet"
-        android:textSize="@dimen/button_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCreate"
-        app:roundTextViewNormalColor="@color/colorPrimary8"
-        app:roundTextViewNormalTextColor="@color/text_primary"
-        app:roundTextViewPressedColor="@color/colorPrimary8"
-        app:roundTextViewRadius="@dimen/button_radius" />
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

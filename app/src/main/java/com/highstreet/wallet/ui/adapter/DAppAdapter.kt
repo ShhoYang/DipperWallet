@@ -27,7 +27,7 @@ class DAppAdapter : BaseNormalAdapter<ItemDappBinding, Menu>() {
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            ivIcon.load(Icons.get(position))
+            ivIcon.load(Icons.get(position + 1))
             tvName.text = item.title
         }
     }

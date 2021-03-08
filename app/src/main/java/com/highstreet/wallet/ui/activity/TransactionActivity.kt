@@ -39,9 +39,6 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
             etAmount.onFocusChangeListener = this@TransactionActivity
             etRemarks.onFocusChangeListener = this@TransactionActivity
 
-            RxView.textChanges(etAmount) {
-                btnConfirm.isEnabled = etAmount.string().isNotEmpty()
-            }
             RxView.click(ivScan, this@TransactionActivity)
             RxView.click(btnConfirm, this@TransactionActivity)
             RxView.click(tvAll, this@TransactionActivity)
@@ -49,7 +46,6 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
     }
 
     private fun transact() {
-
         val address = vb?.etToAddress?.string() ?: ""
         if (!address.isAddress()) {
             toast(R.string.invalidAddress)

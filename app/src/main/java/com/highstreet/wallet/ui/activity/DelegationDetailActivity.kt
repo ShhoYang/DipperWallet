@@ -6,7 +6,8 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
-import com.hao.library.extensions.visibility
+import com.hao.library.extensions.gone
+import com.hao.library.extensions.visible
 import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.R
 import com.highstreet.wallet.utils.StringUtils
@@ -31,33 +32,31 @@ class DelegationDetailActivity :
 
     override fun initView() {
         setTitle(R.string.delegationDetail)
-        viewBinding {
-            RxView.click(tvDetail, this@DelegationDetailActivity)
-            RxView.click(ivDetail, this@DelegationDetailActivity)
-            RxView.click(llRedelegate, this@DelegationDetailActivity)
-            RxView.click(llUndelegate, this@DelegationDetailActivity)
-            RxView.click(llReward, this@DelegationDetailActivity)
-            RxView.click(llDelegate, this@DelegationDetailActivity)
-        }
     }
 
     override fun initData() {
         val isUndelegate = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
         viewBinding {
-            llRedelegate.visibility(!isUndelegate)
-            llUndelegate.visibility(!isUndelegate)
-            llReward.visibility(!isUndelegate)
-            llDelegate.visibility(!isUndelegate)
-            tvUnDelegateAmount.visibility(isUndelegate)
+            if(isUndelegate){
+                llBtn.gone()
+                tvUnDelegateAmount.visible()
+            }else {
+                llBtn.visible()
+                tvUnDelegateAmount.gone()
+                RxView.click(btnRedelegate, this@DelegationDetailActivity)
+                RxView.click(btnUndelegate, this@DelegationDetailActivity)
+                RxView.click(btnReward, this@DelegationDetailActivity)
+                RxView.click(btnDelegate, this@DelegationDetailActivity)
+            }
         }
         viewModel {
             validatorLD.observe(this@DelegationDetailActivity, Observer {
                 validator = it
                 validator?.apply {
                     viewBinding {
-                        tvAvatar.text = getFirstLetterName()
                         tvName.text = description?.moniker
-                        tvAddress.text = operator_address
+                        tvShares.text = StringUtils.pdip2DIP(delegator_shares)
+                        tvSelfShares.text = StringUtils.pdip2DIP(self_delegation)
                         tvRate.text = getRate()
                     }
                 }
@@ -95,22 +94,17 @@ class DelegationDetailActivity :
     override fun onClick(v: View?) {
         viewBinding {
             when (v) {
-                tvDetail, ivDetail -> {
-                    if (null != validator) {
-                        ValidatorDetailActivity.start(this@DelegationDetailActivity, validator!!)
-                    }
-                }
-                llRedelegate -> {
+                btnRedelegate -> {
                     if (null != delegationInfo) {
                         RedelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
                     }
                 }
-                llUndelegate -> {
+                btnUndelegate -> {
                     if (null != delegationInfo) {
                         UndelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
                     }
                 }
-                llReward -> {
+                btnReward -> {
                     if (TextUtils.isEmpty(reward) || "0" == reward || reward.toDouble() == 0.0) {
                         toast(R.string.notEnough)
                     } else {
@@ -129,7 +123,7 @@ class DelegationDetailActivity :
                         }
                     }
                 }
-                llDelegate -> {
+                btnDelegate -> {
                     if (null != validator) {
                         DelegationActivity.start(this@DelegationDetailActivity, validator!!)
                     }

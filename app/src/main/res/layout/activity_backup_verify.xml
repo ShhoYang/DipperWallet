@@ -9,60 +9,64 @@
 
     <include layout="@layout/include_toolbar" />
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:text="@string/verifyMnemonic"
+        android:textColor="@color/textWhite"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:text="@string/clickMnemonic"
+        android:textColor="@color/textWhite"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_padding">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:minHeight="96dp"
+        android:overScrollMode="never"
+        android:padding="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/verifyMnemonic"
-            android:textColor="@color/text_black"
-            android:textSize="16sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:minHeight="96dp"
+        android:overScrollMode="never"
+        android:padding="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/clickMnemonic"
-            android:textColor="@color/text_subtitle"
-            android:textSize="16sp" />
+    <com.hao.library.view.RoundTextView
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/mnemonic_border"
-            android:minHeight="84dp"
-            android:overScrollMode="never"
-            android:padding="4dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:overScrollMode="never"
-            android:padding="4dp" />
-
-        <com.hao.library.view.RoundTextView
-            android:id="@+id/btnConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginTop="32dp"
-            android:enabled="false"
-            android:gravity="center"
-            android:text="@string/confirm"
-            android:textSize="@dimen/button_text"
-            app:roundTextViewDisableColor="@color/colorPrimary8"
-            app:roundTextViewNormalColor="@color/colorPrimary"
-            app:roundTextViewNormalTextColor="@color/text_white"
-            app:roundTextViewPressedColor="@color/colorPrimary"
-            app:roundTextViewRadius="@dimen/button_radius" />
-
-    </LinearLayout>
 </LinearLayout>

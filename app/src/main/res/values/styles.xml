@@ -4,68 +4,106 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/window_bg</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@mipmap/bg_app</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="GStatusBarTransparentTheme" parent="GAppTheme">
-        <!--        <item name="android:windowTranslucentStatus">true</item>-->
-        <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-
     <style name="WelcomeTheme" parent="GStatusBarTransparentTheme">
-        <!--        <item name="android:windowFullscreen">true</item>-->
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
-    </style>
-
-    <style name="ThemeColorBgTheme" parent="GAppTheme">
-        <item name="colorPrimaryDark">@color/themeColor</item>
-        <item name="android:windowBackground">@color/themeColor</item>
+        <item name="android:windowBackground">@mipmap/bg_welcome</item>
     </style>
 
     <style name="AppToolbarLayout">
-        <item name="toolbarLayoutId">@layout/app_toolbar</item>
+        <item name="toolbarLayoutId">@layout/toolbar</item>
         <item name="toolbarBackgroundColor">@android:color/transparent</item>
         <item name="toolbarBackIcon">@drawable/ic_back</item>
-        <item name="toolbarBackIconColor">@color/app_back</item>
-        <item name="toolbarTitleTextSize">@dimen/app_title</item>
-        <item name="toolbarTitleTextColor">@color/text_primary</item>
+        <item name="toolbarBackIconColor">@color/appBack</item>
+        <item name="toolbarTitleTextSize">@dimen/appTitle</item>
+        <item name="toolbarTitleTextColor">@color/textWhite</item>
         <item name="toolbarShowLine">false</item>
         <item name="toolbarLineColor">@color/toolbarLineColor</item>
+    </style>
+
+    <style name="AppEmptyView">
+        <item name="emptyViewIconColor">@color/white</item>
+        <item name="emptyViewTextSize">@dimen/emptyViewTextSize</item>
+        <item name="emptyViewTextColor">@color/white</item>
+        <item name="emptyViewLoadingText">@string/emptyViewLoadingText</item>
+        <item name="emptyViewNoDataText">@string/emptyViewNoDataText</item>
+        <item name="emptyViewLoadFailedText">@string/emptyViewLoadFailedText</item>
+        <item name="emptyViewNetworkUnavailableText">@string/emptyViewNetworkUnavailableText</item>
+        <item name="emptyViewLoadingLayoutId">@null</item>
+        <item name="emptyViewNoDataLayoutId">@null</item>
+        <item name="emptyViewLoadFailedLayoutId">@null</item>
+        <item name="emptyViewNetworkUnavailableLayoutId">@null</item>
+    </style>
+
+    <style name="AppConfirmDialog" parent="Dialog">
+        <item name="android:windowBackground">@drawable/dialog_bg_white</item>
+        <item name="confirmDialogWidthRate">0.8</item>
+        <item name="confirmDialogTitleTextSize">@dimen/confirmDialogTitleTextSize</item>
+        <item name="confirmDialogTitleTextColor">@color/confirmDialogTitleTextColor</item>
+        <item name="confirmDialogMessageTextSize">@dimen/confirmDialogMessageTextSize</item>
+        <item name="confirmDialogMessageTextColor">@color/confirmDialogMessageTextColor</item>
+        <item name="confirmDialogBtnTextSize">@dimen/confirmDialogBtnTextSize</item>
+        <item name="confirmDialogCancelBtnText">@string/confirmDialogCancelBtnText</item>
+        <item name="confirmDialogCancelBtnTextColor">@color/dialogCancelBtn</item>
+        <item name="confirmDialogConfirmBtnText">@string/confirmDialogConfirmBtnText</item>
+        <item name="confirmDialogConfirmBtnTextColor">@color/dialogConfirmBtn</item>
+        <item name="confirmDialogLineColor">@color/dialogLine</item>
+    </style>
+
+    <style name="AppLoadingDialog" parent="Dialog">
+        <item name="android:windowBackground">@drawable/shape_block</item>
+        <item name="loadingDialogWidthRate">0.33</item>
+        <item name="loadingDialogLoadingLayoutId">@null</item>
+        <item name="loadingDialogIconColor">@color/loadingDialogIconColor</item>
+        <item name="loadingDialogMessageText">@string/loadingDialogLoadingText</item>
+        <item name="loadingDialogMessageTextSize">@dimen/loadingDialogMessageTextSize</item>
+        <item name="loadingDialogMessageTextColor">@color/loadingDialogMessageTextColor</item>
+    </style>
+
+    <style name="BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_dialog_out</item>
     </style>
 
     <style name="mnemonic">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">32dp</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:layout_margin">4dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@color/mnemonic_bg</item>
+        <item name="android:background">@drawable/selector_mnemonic</item>
         <item name="android:digits">@string/digits2</item>
         <item name="android:gravity">center</item>
         <item name="android:imeOptions">actionNext</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/text_link</item>
+        <item name="android:textColor">@color/textWhite</item>
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="InputViewName">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_black</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textColor">@color/textWhite</item>
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="InputViewContent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@null</item>
-        <item name="android:textColor">@color/text_black</item>
-        <item name="android:textColorHint">@color/text_desc</item>
+        <item name="android:textColor">@color/textWhite</item>
+        <item name="android:textColorHint">@color/textGray</item>
         <item name="android:textCursorDrawable">@drawable/input_cursor</item>
         <item name="android:textSize">14sp</item>
     </style>
@@ -73,9 +111,19 @@
     <style name="InputViewTip">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginTop">2dp</item>
-        <item name="android:textColor">@color/text_subtitle</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textColor">@color/textGray</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TitleMenu">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:padding">12dp</item>
     </style>
 
 </resources>

@@ -14,8 +14,8 @@
         app:tabBackground="@null"
         app:tabIndicatorFullWidth="false"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/text_subtitle" />
+        app:tabSelectedTextColor="@color/tabSelected"
+        app:tabTextColor="@color/tabUnselected" />
 
     <View
         android:layout_width="match_parent"

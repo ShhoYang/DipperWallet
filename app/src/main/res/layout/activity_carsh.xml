@@ -17,20 +17,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/activity_padding"
+            android:layout_margin="@dimen/activityPadding"
             android:gravity="center"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/customactivityoncrash_error_image" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="An error occurred. We\'re deeply sorry."
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -39,9 +34,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Error details:"
+                android:textColor="@color/textWhite"
                 android:textStyle="bold" />
 
             <TextView
+                android:textColor="@color/textWhite"
                 android:id="@+id/tvDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,16 +50,15 @@
     <com.hao.library.view.RoundTextView
         android:id="@+id/btnRestart"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="@dimen/buttonHeight"
         android:layout_gravity="bottom"
-        android:layout_margin="@dimen/activity_padding"
+        android:layout_margin="@dimen/activityPadding"
         android:gravity="center"
         android:text="重启"
-        android:textSize="@dimen/button_text"
-        app:roundTextViewDisableColor="@color/colorPrimary8"
-        app:roundTextViewNormalColor="@color/colorPrimary"
-        app:roundTextViewNormalTextColor="@color/text_white"
-        app:roundTextViewPressedColor="@color/colorPrimary"
-        app:roundTextViewRadius="@dimen/button_radius" />
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
 
 </LinearLayout>

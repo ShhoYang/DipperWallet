@@ -2,4 +2,4 @@
 <com.hao.library.view.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/baseToolbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/title_height" />
+    android:layout_height="@dimen/titleHeight" />

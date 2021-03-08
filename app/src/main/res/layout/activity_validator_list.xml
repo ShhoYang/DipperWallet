@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".ui.activity.ValidatorListActivity">
 
-    <include layout="@layout/include_toolbar"/>
+    <include layout="@layout/include_toolbar" />
 
     <com.hao.library.view.RefreshLayout
         android:id="@+id/baseRefreshLayout"
@@ -33,7 +33,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/allValidator"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/textWhite"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -120,60 +120,6 @@
                     android:overScrollMode="never" />
 
             </com.hao.library.view.EmptyView>
-
-            <LinearLayout
-                android:id="@+id/llFilter"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="#80000000"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/_line">
-
-                <TextView
-                    android:id="@+id/tvTypeAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:text="@string/allValidator"
-                    android:textColor="@color/color_sort_text"
-                    android:textSize="14sp" />
-
-                <include layout="@layout/include_line" />
-
-                <TextView
-                    android:id="@+id/tvTypeBonded"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:text="@string/bonded"
-                    android:textColor="@color/color_sort_text"
-                    android:textSize="14sp" />
-
-                <include layout="@layout/include_line" />
-
-                <TextView
-                    android:id="@+id/tvTypeJailed"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:text="@string/jailed"
-                    android:textColor="@color/color_sort_text"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

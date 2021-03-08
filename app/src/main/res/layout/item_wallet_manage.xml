@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,9 +8,9 @@
         android:id="@+id/clContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_padding"
+        android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="12dp"
-        android:layout_marginRight="@dimen/activity_padding"
+        android:layout_marginRight="@dimen/activityPadding"
         android:layout_marginBottom="4dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
@@ -23,7 +22,7 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:textColor="@color/text_title"
+            android:textColor="@color/textWhite"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +34,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/backup"
-            android:textColor="@color/text_orange"
+            android:textColor="@color/textOrange"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvWalletName" />
@@ -48,7 +47,7 @@
             android:ellipsize="middle"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:textColor="@color/text_subtitle"
+            android:textColor="@color/textWhite"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvWalletName"
@@ -56,9 +55,9 @@
 
         <ImageView
             android:id="@+id/ivCopy"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/icon_copy"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_copy"
             app:layout_constraintBottom_toBottomOf="@id/tvWalletAddress"
             app:layout_constraintStart_toEndOf="@id/tvWalletAddress"
             app:layout_constraintTop_toTopOf="@id/tvWalletAddress" />
@@ -73,7 +72,7 @@
             android:ellipsize="middle"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:textColor="@color/text_title"
+            android:textColor="@color/textGray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivEdit"
@@ -85,19 +84,21 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginRight="16dp"
-            android:src="@mipmap/icon_edit"
+            android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="@id/ivDelete"
             app:layout_constraintEnd_toStartOf="@id/ivDelete"
-            app:layout_constraintTop_toTopOf="@id/ivDelete" />
+            app:layout_constraintTop_toTopOf="@id/ivDelete"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/ivDelete"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@mipmap/icon_delete"
+            android:src="@drawable/ic_delete"
             app:layout_constraintBottom_toBottomOf="@id/tvAmount"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvAmount" />
+            app:layout_constraintTop_toTopOf="@id/tvAmount"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

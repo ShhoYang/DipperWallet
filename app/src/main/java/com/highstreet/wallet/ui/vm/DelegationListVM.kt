@@ -20,17 +20,17 @@ class DelegationListVM : BaseListViewModel<DelegationInfo>() {
     val rewardD: MutableLiveData<String> = MutableLiveData()
 
     override fun loadData(page: Int, onResponse: (ArrayList<DelegationInfo>?) -> Unit) {
-        ApiService.getDipApi().delegations(AccountManager.instance().address, page, pageSize())
+        ApiService.getApi().delegations(AccountManager.instance().address, page, pageSize())
             .subscribeBy({
                 onResponse(it)
-                handle(it)
+                processData(it)
             }, {
                 onResponse(null)
-                handle(null)
+                processData(null)
             }).add()
     }
 
-    private fun handle(list: ArrayList<DelegationInfo>?) {
+    private fun processData(list: ArrayList<DelegationInfo>?) {
         if (list == null || list.isEmpty()) {
             totalLD.value = Pair("0", "0")
             return
@@ -43,20 +43,14 @@ class DelegationListVM : BaseListViewModel<DelegationInfo>() {
             validators.add(it.validator_address)
         }
 
-        totalLD.value = Pair(amount.toString(), validators.size.toString())
+        totalLD.value = Pair(StringUtils.pdip2DIP(amount.toString()), validators.size.toString())
     }
 
     override fun refresh(callback: PageKeyedDataSource.LoadInitialCallback<Int, DelegationInfo>) {
-        ApiService.getDipApi().rewards(AccountManager.instance().address).subscribeBy({
-            val total = it?.total
-            rewardD.value = if (total == null || total.isEmpty()) {
-                "0"
-            } else {
-                val coin = total[0]
-                StringUtils.formatDecimal(coin.amount)
-            }
+        ApiService.getApi().rewards(AccountManager.instance().address).subscribeBy({
+            rewardD.value = it?.getTotalReward() ?: ""
         }, {
-            rewardD.value = "0"
+            rewardD.value = ""
         }).add()
         super.refresh(callback)
     }

@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="12dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginRight="12dp"
+    android:layout_marginLeft="@dimen/activityPadding"
+    android:layout_marginTop="@dimen/blockSpace"
+    android:layout_marginRight="@dimen/activityPadding"
     android:background="@drawable/shape_block"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:padding="@dimen/blockPadding">
 
     <ImageView
         android:id="@+id/tvAvatar"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/def_validator" />
 
     <View
         android:layout_width="1dp"
@@ -39,8 +39,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,14 +61,13 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/averageYield"
+                android:text="@string/rate"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 

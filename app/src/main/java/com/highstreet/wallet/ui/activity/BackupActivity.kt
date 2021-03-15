@@ -34,7 +34,7 @@ class BackupActivity : BaseActivity<ActivityBackupBinding, PlaceholderViewModel>
         from = intent.getIntExtra(ExtraKey.INT, FROM_CREATE)
         val account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
         val mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
-        if (account == null || mnemonic == null || mnemonic!!.isEmpty()) {
+        if (account == null || mnemonic == null || mnemonic.isEmpty()) {
             finish()
             return
         }
@@ -42,7 +42,7 @@ class BackupActivity : BaseActivity<ActivityBackupBinding, PlaceholderViewModel>
             rv.init(adapter, 4)
             adapter.resetData(mnemonic)
             RxView.click(btnNext) {
-                BackupVerifyActivity.start(this@BackupActivity, from, account!!, mnemonic!!)
+                BackupVerifyActivity.start(this@BackupActivity, from, account, mnemonic)
                 finish()
             }
         }

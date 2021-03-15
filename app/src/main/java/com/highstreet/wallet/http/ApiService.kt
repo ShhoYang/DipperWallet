@@ -1,7 +1,8 @@
 package com.highstreet.wallet.http
 
 import com.hao.library.utils.L
-import com.highstreet.wallet.BuildConfig
+import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.constant.Chain
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -18,24 +19,46 @@ import java.util.concurrent.TimeUnit
  */
 object ApiService {
 
-//    private const val BASE_URL_MAIN = "https://rpc.dippernetwork.com/"
-//    private const val BASE_URL_TEST = "https://rpc.testnet.dippernetwork.com/"
+    private const val BASE_URL_MAIN = "https://rpc.dippernetwork.com/"
+    private const val BASE_URL_TEST = "https://rpc.testnet.dippernetwork.com/"
 
-    private var dipApi: DipApi? = null
-    fun getDipApi(): DipApi {
-        if (dipApi == null) {
+    fun getApi(chain: Chain? = null): DipApi {
+        return when (chain ?: Chain.getChain(AccountManager.instance().chain)) {
+            Chain.DIP_MAIN, Chain.DIP_MAIN2 -> getDipperMainApi()
+            else -> getDipperTestApi()
+        }
+    }
+
+    private var dipperTestApi: DipApi? = null
+    private fun getDipperTestApi(): DipApi {
+        if (dipperTestApi == null) {
             synchronized(ApiService::class.java) {
-
                 val retrofit = Retrofit.Builder()
-                        .baseUrl(BuildConfig.BASE_URL)
-                        .client(getOkHttp())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build()
-                dipApi = retrofit.create(DipApi::class.java)
+                    .baseUrl(BASE_URL_TEST)
+                    .client(getOkHttp())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build()
+                dipperTestApi = retrofit.create(DipApi::class.java)
             }
         }
-        return dipApi!!
+        return dipperTestApi!!
+    }
+
+    private var dipperMainApi: DipApi? = null
+    private fun getDipperMainApi(): DipApi {
+        if (dipperMainApi == null) {
+            synchronized(ApiService::class.java) {
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL_MAIN)
+                    .client(getOkHttp())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build()
+                dipperMainApi = retrofit.create(DipApi::class.java)
+            }
+        }
+        return dipperMainApi!!
     }
 
     private fun getOkHttp(): OkHttpClient {
@@ -47,13 +70,13 @@ object ApiService {
         })
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
-                .addNetworkInterceptor(NetInterceptor())
-                .retryOnConnectionFailure(true)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(httpLoggingInterceptor)
-                .build()
+            .addNetworkInterceptor(NetInterceptor())
+            .retryOnConnectionFailure(true)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
     }
 }
 
@@ -62,10 +85,10 @@ class NetInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
         val request = original.newBuilder()
-                .addHeader("Connection", "close")
-                .addHeader("accept", "application/json")
-                .method(original.method, original.body)
-                .build()
+            .addHeader("Connection", "close")
+            .addHeader("accept", "application/json")
+            .method(original.method, original.body)
+            .build()
         return chain.proceed(request)
     }
 }

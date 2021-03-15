@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:background="@drawable/shape_block">
+    android:layout_marginLeft="@dimen/activityPadding"
+    android:layout_marginRight="@dimen/activityPadding"
+    android:background="@drawable/shape_block"
+    android:paddingLeft="@dimen/blockPadding"
+    android:paddingRight="@dimen/blockPadding">
 
     <TextView
         android:id="@+id/tvLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:textColor="@color/textWhite"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,9 +32,8 @@
 
     <ImageView
         android:id="@+id/_ivArrow"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginRight="6dp"
+        android:layout_width="6dp"
+        android:layout_height="12dp"
         android:contentDescription="@null"
         android:src="@drawable/ic_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"

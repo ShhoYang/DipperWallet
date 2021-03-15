@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.DelegateActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="16dp"
+        android:text="@string/validatorAddress" />
+
+    <EditText
+        android:id="@+id/etAddress"
+        style="@style/InputViewContent"
+        android:enabled="false" />
+
+    <include layout="@layout/include_input_line" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="32dp"
+        android:text="@string/delegateAmount" />
+
+    <EditText
+        android:id="@+id/etAmount"
+        style="@style/InputViewContent"
+        android:hint="@string/inputDelegateAmount"
+        android:inputType="number"
+        android:maxLength="19"
+        android:singleLine="true" />
+
+    <include
+        android:id="@+id/amountLine"
+        layout="@layout/include_input_line" />
+
+    <TextView
+        android:id="@+id/tvBalance"
+        style="@style/InputViewTip" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="32dp"
+        android:text="@string/remarks" />
+
+    <EditText
+        android:id="@+id/etRemarks"
+        style="@style/InputViewContent"
+        android:layout_marginTop="8dp"
+        android:hint="@string/remarks"
+        android:inputType="text"
+        android:maxLength="100" />
+
+    <include
+        android:id="@+id/remarksLine"
+        layout="@layout/include_input_line" />
+
+    <com.hao.library.view.RoundTextView
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
+</LinearLayout>

@@ -23,7 +23,7 @@ class DelegationTransactionRecordAdapter : CommonAdapter<Tx>() {
             val context = root.context
             val desc = StringBuilder()
             desc.append(context.getString(R.string.amount)).append("：")
-                .append(StringUtils.pdip2DIP(item.getAmount())).append("\n")
+                .append(item.getAmount()).append("\n")
                 .append(context.getString(R.string.time)).append("：")
                 .append(StringUtils.utc2String(item.timestamp))
 

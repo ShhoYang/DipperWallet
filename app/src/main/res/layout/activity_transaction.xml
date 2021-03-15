@@ -19,7 +19,6 @@
 
     </com.hao.library.view.ToolbarLayout>
 
-
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="16dp"
@@ -58,6 +57,7 @@
             android:singleLine="true" />
 
         <TextView
+            android:layout_marginRight="16dp"
             android:id="@+id/tvAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

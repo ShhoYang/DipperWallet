@@ -12,7 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activityPadding"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/activityPadding"
+        android:layout_marginRight="@dimen/activityPadding"
         android:background="@drawable/shape_block"
         android:orientation="vertical"
         android:padding="@dimen/blockPadding">
@@ -26,7 +28,7 @@
                 android:id="@+id/ivAvatar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/def_validator" />
 
             <TextView
                 android:id="@+id/tvName"
@@ -41,13 +43,13 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/blockPadding"
             android:background="@color/line" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="@dimen/blockPadding">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +108,7 @@
 
 
             <TextView
-                android:id="@id/tvRate"
+                android:id="@+id/tvRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
@@ -116,7 +118,7 @@
         </FrameLayout>
 
         <com.hao.library.view.RoundTextView
-            android:id="@+id/btnDelegate"
+            android:id="@+id/btnDelegate2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buttonHeightS"
             android:layout_marginTop="12dp"
@@ -127,6 +129,179 @@
             app:roundTextViewBorderWidth="@dimen/buttonBorder"
             app:roundTextViewNormalTextColor="@color/btnTextColor"
             app:roundTextViewRadius="@dimen/buttonRadius" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDelegation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/blockSpace"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:orientation="vertical"
+        android:padding="@dimen/blockPadding">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/delegate"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tvDelegationAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/unbonding"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tvUnbondingDelegationAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/blockPadding"
+            android:orientation="horizontal">
+
+            <com.hao.library.view.RoundTextView
+                android:id="@+id/btnDelegate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/delegate"
+                android:textSize="12sp"
+                app:roundTextViewBorderColor="@color/btnBorderColor"
+                app:roundTextViewBorderWidth="@dimen/buttonBorder"
+                app:roundTextViewNormalTextColor="@color/textWhite"
+                app:roundTextViewRadius="@dimen/buttonRadius" />
+
+            <com.hao.library.view.RoundTextView
+                android:id="@+id/btnUndelegate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/undelegate"
+                android:textSize="12sp"
+                app:roundTextViewBorderColor="@color/btnBorderColor"
+                app:roundTextViewBorderWidth="@dimen/buttonBorder"
+                app:roundTextViewNormalTextColor="@color/textWhite"
+                app:roundTextViewRadius="@dimen/buttonRadius" />
+
+            <com.hao.library.view.RoundTextView
+                android:id="@+id/btnRedelegate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/redelegate"
+                android:textSize="12sp"
+                app:roundTextViewBorderColor="@color/btnBorderColor"
+                app:roundTextViewBorderWidth="@dimen/buttonBorder"
+                app:roundTextViewNormalTextColor="@color/textWhite"
+                app:roundTextViewRadius="@dimen/buttonRadius" />
+
+        </LinearLayout>
+
+        <include layout="@layout/include_block_line" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/blockPadding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/reward"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tvReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/blockPadding"
+            android:orientation="horizontal">
+
+            <com.hao.library.view.RoundTextView
+                android:id="@+id/btnRedeemReward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/redeemReward"
+                android:textSize="12sp"
+                app:roundTextViewBorderColor="@color/btnBorderColor"
+                app:roundTextViewBorderWidth="@dimen/buttonBorder"
+                app:roundTextViewNormalTextColor="@color/textWhite"
+                app:roundTextViewRadius="@dimen/buttonRadius" />
+
+            <com.hao.library.view.RoundTextView
+                android:id="@+id/btnDelegateReward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/delegateReward"
+                android:textSize="12sp"
+                app:roundTextViewBorderColor="@color/btnBorderColor"
+                app:roundTextViewBorderWidth="@dimen/buttonBorder"
+                app:roundTextViewNormalTextColor="@color/textWhite"
+                app:roundTextViewRadius="@dimen/buttonRadius" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

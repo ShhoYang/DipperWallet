@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="12dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginRight="12dp"
+    android:layout_marginLeft="@dimen/activityPadding"
+    android:layout_marginTop="@dimen/blockSpace"
+    android:layout_marginRight="@dimen/activityPadding"
     android:background="@drawable/shape_block"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="@dimen/blockPadding">
 
     <TextView
         android:id="@+id/tvTitle"

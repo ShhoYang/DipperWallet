@@ -30,7 +30,7 @@ class TransactionVM : BalanceVM() {
         isAll: Boolean,
         remarks: String
     ) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (isAll) {
                 generateParams(
                     it,
@@ -95,7 +95,7 @@ class TransactionVM : BalanceVM() {
     }
 
     private fun doTransact(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 resultLD.value = Pair(true, App.instance.getString(R.string.succeed))

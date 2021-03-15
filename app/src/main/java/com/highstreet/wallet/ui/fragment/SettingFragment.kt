@@ -9,7 +9,7 @@ import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.App
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Constant
-import com.highstreet.wallet.databinding.FragmentSettingBinding
+import com.highstreet.wallet.databinding.FragmentListBinding
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.model.Menu
 import com.highstreet.wallet.ui.activity.LockActivity
@@ -23,7 +23,7 @@ import com.highstreet.wallet.ui.adapter.SettingAdapter
  */
 @AndroidEntryPoint(injectViewModel = false)
 class SettingFragment :
-    BaseNormalListFragment<FragmentSettingBinding, Menu, PlaceholderViewModel, SettingAdapter>() {
+    BaseNormalListFragment<FragmentListBinding, Menu, PlaceholderViewModel, SettingAdapter>() {
     override fun initData() {
         Db.instance().passwordDao().queryByIdAsLiveData(Constant.PASSWORD_DEFAULT_ID)
             .observe(this) {
@@ -38,7 +38,7 @@ class SettingFragment :
         list.add(Menu.group(getString(R.string.wallet)))
         list.add(
             Menu(
-                title = getString(R.string.walletManager),
+                title = getString(R.string.walletManage),
                 action = WalletManageActivity::class.java
             )
         )
@@ -132,7 +132,7 @@ class SettingFragment :
 
     override fun itemClicked(view: View, item: Menu, position: Int) {
         if (item.action != null) {
-            if (item.action?.name == WebActivity::class.java.name) {
+            if (item.action.name == WebActivity::class.java.name) {
                 act {
                     WebActivity.start(it, item.title, item.data ?: "")
                 }

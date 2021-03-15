@@ -23,4 +23,6 @@ object Constant {
 
     const val DIPPER_NETWORK = "https://www.dippernetwork.com/"
 
+    const val WALLET_PATH ="m/44'/925'/0'/0/0"
+
 }

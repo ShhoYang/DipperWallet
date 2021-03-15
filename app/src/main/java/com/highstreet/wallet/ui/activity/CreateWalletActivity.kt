@@ -8,9 +8,9 @@ import android.view.View
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
-import com.hao.library.ui.UIParams
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityCreateWalletBinding
@@ -30,11 +30,6 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
     private lateinit var walletParams: WalletParams
     private var chain = ""
 
-    override fun prepare(uiParams: UIParams, intent: Intent?) {
-        super.prepare(uiParams, intent)
-        chain = intent?.getStringExtra(ExtraKey.STRING) ?: ""
-    }
-
     override fun initView() {
         setTitle(R.string.createWallet)
         viewBinding {
@@ -52,7 +47,8 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
     }
 
     override fun initData() {
-        walletParams = WalletParams.create()
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST2.chainName
+        walletParams = WalletParams.create(chain)
         vb!!.etAddress.setText(walletParams.address)
         vm!!.resultLD.observe(this, Observer {
             hideLoading()

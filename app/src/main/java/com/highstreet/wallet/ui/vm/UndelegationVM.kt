@@ -23,7 +23,7 @@ class UndelegationVM : BaseViewModel() {
     val undelegateLD: MutableLiveData<Pair<Boolean, String>> = MutableLiveData()
 
     fun undelegate(amount: String, delegationInfo: DelegationInfo) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (it == null) {
                 undelegateLD.value = Pair(false, "")
             } else {
@@ -63,7 +63,7 @@ class UndelegationVM : BaseViewModel() {
     }
 
     private fun doUndelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 undelegateLD.value = Pair(true, "")

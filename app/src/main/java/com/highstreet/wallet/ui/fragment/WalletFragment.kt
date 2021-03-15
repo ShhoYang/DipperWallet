@@ -5,18 +5,15 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseFragment
-import com.hao.library.utils.L
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.databinding.FragmentWalletBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.ui.activity.ProposalActivity
-import com.highstreet.wallet.ui.activity.StakingActivity
 import com.highstreet.wallet.ui.activity.TransactionActivity
-import com.highstreet.wallet.ui.vm.CapitalVM
+import com.highstreet.wallet.ui.activity.ValidatorListActivity
+import com.highstreet.wallet.ui.vm.WalletVM
 import com.highstreet.wallet.utils.JumpUtils
-import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.view.QRDialog
 import com.highstreet.wallet.view.listener.RxView
 import kotlin.properties.Delegates
@@ -26,12 +23,15 @@ import kotlin.properties.Delegates
  * @Date 3/5/21
  */
 @AndroidEntryPoint
-class WalletFragment : BaseFragment<FragmentWalletBinding, CapitalVM>(), View.OnClickListener {
+class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>(), View.OnClickListener {
 
     private var account: Account? = null
 
     private var amount = ""
     private var delegationAmount = ""
+    private var undelegationAmount = ""
+    private var rewardAmount = ""
+    private var inflation = ""
 
     private var refresh: Int by Delegates.observable(0) { _, old, new ->
         if (old != new) {
@@ -57,7 +57,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, CapitalVM>(), View.On
             }
             baseRefreshLayout.isRefreshing = true
             tvCoinUnit.text = "DIP"
-            tvInflation.text = "5.22%"
             tvAverageYield.text = "95.29%"
         }
     }
@@ -73,14 +72,29 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, CapitalVM>(), View.On
                 vb?.baseRefreshLayout?.stopRefresh()
             })
             delegationAmountLD.observe(this@WalletFragment, Observer {
+                delegationAmount = it
+                updateUIStyle()
+                vb?.baseRefreshLayout?.stopRefresh()
+            })
+            undelegationAmountLD.observe(this@WalletFragment, Observer {
+                undelegationAmount = it
+                updateUIStyle()
+                vb?.baseRefreshLayout?.stopRefresh()
+            })
+            rewardD.observe(this@WalletFragment, Observer {
+                rewardAmount = it
+                updateUIStyle()
+                vb?.baseRefreshLayout?.stopRefresh()
+            })
+            inflationD.observe(this@WalletFragment, Observer {
                 if (!TextUtils.isEmpty(it)) {
-                    delegationAmount = it
+                    inflation = it
                     updateUIStyle()
                 }
                 vb?.baseRefreshLayout?.stopRefresh()
             })
         }
-        Db.instance().accountDao().queryLastUserAsLiveData(true).observe(this, Observer {
+        Db.instance().accountDao().queryFirstUserAsLiveData().observe(this, Observer {
             account = it
             loadData()
         })
@@ -88,42 +102,41 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, CapitalVM>(), View.On
 
     private fun loadData() {
         account?.let {
-            viewModel {
-                getAccountInfo(it.address)
-                getDelegationAmount(it.address)
-            }
+            vm?.loadData(it.address)
         }
     }
 
     private fun updateUIStyle() {
         viewBinding {
             tvWalletAddress.text = account?.address
-            val amount = StringUtils.pdip2DIP(amount, false)
             tvAmount.text = amount
             tvCash.text = amount
             tvAvailable.text = amount
-            tvDelagated.text = StringUtils.pdip2DIP(delegationAmount, false)
-            tvUnbonding.text = ""
-            tvReward.text = ""
+            tvDelagated.text = delegationAmount
+            tvUnbondingDelegationAmount.text = undelegationAmount
+            tvReward.text = rewardAmount
+            tvInflation.text = inflation
         }
     }
 
     override fun onClick(v: View?) {
         viewBinding {
             when (v) {
-                ivWalletAddress -> {
-                    act { activity ->
-                        account?.let {
-                            QRDialog(activity).show(it.nickName, it.address)
-                        }
-                    }
-                }
-                llDelegate -> toA(StakingActivity::class.java)
+                ivWalletAddress -> showQr()
+                llDelegate -> toA(ValidatorListActivity::class.java)
                 llVote -> toA(ProposalActivity::class.java)
                 tvHome, tvMedium -> act {
                     JumpUtils.toDipperNetwork(it)
                 }
                 cvTransaction -> toA(TransactionActivity::class.java)
+            }
+        }
+    }
+
+    private fun showQr() {
+        act { activity ->
+            account?.let {
+                QRDialog(activity).show(it.nickName, it.address)
             }
         }
     }

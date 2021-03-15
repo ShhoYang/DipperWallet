@@ -25,11 +25,11 @@ class TransactionRecordAdapter : CommonAdapter<Tx>() {
             val context = root.context
             val desc = StringBuilder()
             desc.append(context.getString(R.string.amount)).append("：")
-                .append(StringUtils.pdip2DIP(item.getAmount())).append("\n")
+                .append(item.getAmount()).append("\n")
             if (!isIn) {
 
                 desc.append(context.getString(R.string.fee)).append("：")
-                    .append(StringUtils.pdip2DIP(item.getFee())).append("\n")
+                    .append(item.getFee()).append("\n")
             }
             desc.append(context.getString(R.string.time)).append("：")
                 .append(StringUtils.utc2String(item.timestamp))

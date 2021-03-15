@@ -23,9 +23,9 @@ class UndelegationAdapter : CommonAdapter<DelegationInfo>() {
             val context = root.context
             val desc = StringBuilder()
             desc.append(context.getString(R.string.initAmount)).append("：")
-                .append(StringUtils.pdip2DIP(item.shares)).append("\n")
+                .append(item.getDelegationAmount()).append("\n")
                 .append(context.getString(R.string.balance)).append("：")
-                .append(StringUtils.pdip2DIP(item.balance)).append("\n")
+                .append(item.getBalance()).append("\n")
                 .append(context.getString(R.string.timeRemaining)).append("：")
                 .append(StringUtils.timeGap(context, item.completionTime))
 

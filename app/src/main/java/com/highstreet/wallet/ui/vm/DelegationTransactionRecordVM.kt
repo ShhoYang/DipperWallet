@@ -17,7 +17,7 @@ class DelegationTransactionRecordVM : BaseListViewModel<Tx>() {
     var type = DelegationTransactionRecordFragment.TYPE_BOND
 
     override fun loadData(page: Int, onResponse: (ArrayList<Tx>?) -> Unit) {
-        ApiService.getDipApi()
+        ApiService.getApi()
             .delegationTransactionRecord(AccountManager.instance().address, type, page, pageSize())
             .subscribeBy({
                 onResponse(it?.get(0)?.txs)

@@ -4,21 +4,21 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
-import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.databinding.ActivityMainBinding
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.ui.adapter.FragmentAdapter
 import com.highstreet.wallet.ui.fragment.*
+import com.highstreet.wallet.ui.vm.NodeInfoVM
 import com.highstreet.wallet.view.listener.RxView
 
-@AndroidEntryPoint(injectViewModel = false)
-class MainActivity : BaseActivity<ActivityMainBinding, PlaceholderViewModel>() {
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
 
     override fun initView() {
         val fragments = arrayListOf<Pair<String, Fragment>>(
             Pair("", WalletFragment()),
-            Pair("", TokensFragment()),
+            Pair("", MyTokenFragment()),
             Pair("", HistoryFragment()),
             Pair("", DAppFragment()),
             Pair("", SettingFragment())
@@ -45,21 +45,28 @@ class MainActivity : BaseActivity<ActivityMainBinding, PlaceholderViewModel>() {
                 true
             }
 
-           RxView.click(ivSwitchWallet){
-               toA(WalletManageActivity::class.java)
-           }
+            RxView.click(ivSwitchWallet) {
+                toA(WalletManageActivity::class.java)
+            }
         }
     }
 
     override fun initData() {
-        Db.instance().accountDao().queryLastUserAsLiveData(true).observe(this, {
+        Db.instance().accountDao().queryFirstUserAsLiveData().observe(this, {
             it?.apply {
                 viewBinding {
                     tvWalletName.text = nickName
-                    tvChainName.text = "(${chain})"
                 }
             }
         })
+
+        viewModel {
+            nodeInfoLD.observe(this@MainActivity) {
+                vb?.tvChainName?.text = "(${it?.node_info?.network})"
+            }
+
+            getNodeInfo()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

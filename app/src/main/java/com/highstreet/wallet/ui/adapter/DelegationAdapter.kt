@@ -23,9 +23,9 @@ class DelegationAdapter : CommonAdapter<DelegationInfo>() {
             val context = root.context
             val desc = StringBuilder()
             desc.append(context.getString(R.string.initAmount)).append("：")
-                .append(StringUtils.pdip2DIP(item.shares)).append("\n")
+                .append(item.getDelegationAmount()).append("\n")
                 .append(context.getString(R.string.balance)).append("：")
-                .append(StringUtils.pdip2DIP(item.balance))
+                .append(item.getBalance())
 
             tvTitle.text =
                 "${context.getString(R.string.validatorAddress)}：${item.validator_address}"

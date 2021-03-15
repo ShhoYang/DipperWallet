@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="activityPadding">12dp</dimen>
     <dimen name="titleHeight">48dp</dimen>
     <dimen name="appTitle">16sp</dimen>
     <dimen name="buttonHeightS">40dp</dimen>

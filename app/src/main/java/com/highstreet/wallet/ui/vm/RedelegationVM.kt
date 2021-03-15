@@ -23,7 +23,7 @@ class RedelegationVM : BaseViewModel() {
     val redelegateLD: MutableLiveData<Pair<Boolean, String>> = MutableLiveData()
 
     fun redelegate(amount: String, delegationInfo: DelegationInfo, toValidatorAddress: String) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (it == null) {
                 redelegateLD.value = Pair(false, "")
             } else {
@@ -65,7 +65,7 @@ class RedelegationVM : BaseViewModel() {
     }
 
     private fun doRedelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 redelegateLD.value = Pair(true, "")

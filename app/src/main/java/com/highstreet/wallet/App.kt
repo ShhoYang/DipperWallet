@@ -3,18 +3,28 @@ package com.highstreet.wallet
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.hao.library.HaoLibrary
-import com.hao.library.HaoLibraryConfig
 import com.hao.library.extensions.notNullSingleValue
-import com.hao.library.http.HttpResponseModel
-import com.hao.library.service.InitX5Service
-import com.hao.library.utils.AppUtils
-import com.hao.library.utils.CoroutineUtils
+import com.hao.library.utils.L
 import com.highstreet.wallet.backup.BaseData
 import com.highstreet.wallet.ui.activity.CrashActivity
 import com.highstreet.wallet.ui.activity.WelcomeActivity
 import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.smtt.sdk.QbSdk
+
+
+/**
+ * todo
+ *
+ * 1》UI
+ * 2》dapp
+ * 3》合约转账
+ * 4》tokens
+ */
 
 class App : MultiDexApplication() {
+
+    private var baseData: BaseData? = null
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -22,19 +32,13 @@ class App : MultiDexApplication() {
         if (!BuildConfig.testnet) {
             CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
         }
-        if (AppUtils.isMainProcess(instance, android.os.Process.myPid())) {
-            CoroutineUtils.io {
-                InitX5Service.start(instance)
-            }
-        }
+        initX5()
         CaocConfig.Builder
             .create()
             .errorActivity(CrashActivity::class.java)
             .restartActivity(WelcomeActivity::class.java)
             .apply()
     }
-
-    private var baseData: BaseData? = null
 
     fun getOldDB(): BaseData {
         if (baseData == null) {
@@ -43,8 +47,23 @@ class App : MultiDexApplication() {
         return baseData!!
     }
 
+    private fun initX5() {
+        val callback = object : QbSdk.PreInitCallback {
+            override fun onCoreInitFinished() {
+                L.d(TAG, "onCoreInitFinished")
+            }
+
+            override fun onViewInitFinished(p0: Boolean) {
+                L.d(TAG, "onViewInitFinished:$p0")
+            }
+        }
+        QbSdk.setDownloadWithoutWifi(true)
+        QbSdk.initX5Environment(this, callback)
+    }
+
     companion object {
-        open var instance by notNullSingleValue<App>()
+        private const val TAG = "--App--"
+        var instance by notNullSingleValue<App>()
     }
 }
 

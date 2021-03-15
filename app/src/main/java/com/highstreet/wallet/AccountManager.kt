@@ -1,6 +1,7 @@
 package com.highstreet.wallet
 
 import com.hao.library.utils.SPUtils
+import com.highstreet.wallet.cache.BalanceCache
 import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.db.Account
@@ -17,9 +18,6 @@ class AccountManager private constructor() {
      * 余额变动
      */
     var refresh = 0
-
-    var chain = Chain.DIP_MAIN
-        private set
 
     /**
      * 所有账户
@@ -48,6 +46,12 @@ class AccountManager private constructor() {
         }
         private set
 
+    var chain = ""
+        get() {
+            return account?.chain ?: ""
+        }
+        private set
+
     /**
      * 是否开始指纹验证
      */
@@ -61,11 +65,9 @@ class AccountManager private constructor() {
      * 子线程执行
      */
     fun init(): Account? {
-        var isTest = BuildConfig.testnet
-        chain = if (isTest) Chain.DIP_TEST else Chain.DIP_MAIN
         copy13()
         password = Db.instance().passwordDao().queryById(Constant.PASSWORD_DEFAULT_ID)
-        getLaseAccount()
+        getFirstAccount()
         return account
     }
 
@@ -75,7 +77,7 @@ class AccountManager private constructor() {
     fun addAccount(account: Account): Boolean {
         val dao = Db.instance().accountDao()
         val ret = dao.insert(account)
-        changeLastAccount(account)
+        getFirstAccount()
         return ret > 0
     }
 
@@ -93,39 +95,24 @@ class AccountManager private constructor() {
     fun deleteAccount(account: Account): Boolean {
         val dao = Db.instance().accountDao()
         val ret = dao.delete(account) > 0
-        getLaseAccount()
+        getFirstAccount()
         return ret
-    }
-
-    /**
-     * 改变当前账户
-     */
-    fun changeLastAccount(lastAccount: Account): Boolean {
-        val dao = Db.instance().accountDao()
-        val list = dao.queryByChain(chain)
-        accounts.clear()
-        accounts.addAll(list)
-        accounts.forEach { it.isLast = it.address == lastAccount.address }
-        dao.updateAll(accounts)
-        account = lastAccount
-        return true
     }
 
     /**
      * 获取当前账户
      */
-    private fun getLaseAccount() {
+    private fun getFirstAccount() {
         val dao = Db.instance().accountDao()
-        val list = dao.queryByChain(chain)
-        var lastAccount: Account? = list.find { it.isLast }
-        if (null == lastAccount && list.isNotEmpty()) {
-            lastAccount = list[0]
-            lastAccount.isLast = true
-            dao.update(lastAccount)
-        }
-        account = lastAccount
+        val list = dao.query()
         accounts.clear()
-        accounts.addAll(list)
+        if (list != null && list.isNotEmpty()) {
+            account = list[0]
+            accounts.addAll(list)
+        } else {
+            account = null
+        }
+        BalanceCache.instance().loadBalances()
     }
 
 
@@ -145,7 +132,7 @@ class AccountManager private constructor() {
 
     private fun copyAccount() {
         val dao = Db.instance().accountDao()
-        val list = dao.queryByChain(chain)
+        val list = dao.query()
         if (list.isNotEmpty()) {
             return
         }
@@ -157,6 +144,13 @@ class AccountManager private constructor() {
         }
         val newData = ArrayList<Account>(oldData.size)
         oldData.forEach {
+            val c = if (Chain.DIP_MAIN.chainName == it.baseChain) {
+                Chain.DIP_MAIN2.chainName
+            } else if (Chain.DIP_TEST.chainName == it.baseChain) {
+                Chain.DIP_TEST2.chainName
+            } else {
+                it.baseChain
+            }
             newData.add(
                 Account(
                     id = it.id,
@@ -164,13 +158,16 @@ class AccountManager private constructor() {
                     nickName = it.nickName,
                     isValidator = false,
                     address = it.address,
-                    chain = it.baseChain,
+                    chain = c,
                     path = it.path.toInt(),
                     resource = it.resource,
                     spec = it.spec,
                     mnemonicSize = Constant.MNEMONIC_SIZE,
                     fromMnemonic = it.fromMnemonic,
                     balance = "",
+                    delegateAmount = "",
+                    unbondingAmount = "",
+                    reward = "",
                     sequenceNumber = 0,
                     accountNumber = 0,
                     hasPrivateKey = true,
@@ -209,7 +206,7 @@ class AccountManager private constructor() {
             oldPassword.resource,
             oldPassword.spec ?: "",
             SPUtils.get(App.instance, KEY_FINGERPRINT, false)
-        );
+        )
 
         dao.insert(newPassword)
         val p = dao.queryById(Constant.PASSWORD_DEFAULT_ID)
@@ -219,6 +216,7 @@ class AccountManager private constructor() {
     }
 
     fun refresh() {
+        BalanceCache.instance().loadBalances()
         refresh++
     }
 

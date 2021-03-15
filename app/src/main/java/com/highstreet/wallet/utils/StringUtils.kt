@@ -1,9 +1,10 @@
 package com.highstreet.wallet.utils
 
 import android.content.Context
-import android.text.TextUtils
 import com.highstreet.wallet.R
 import com.highstreet.wallet.model.req.Coin
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +25,12 @@ object StringUtils {
     private const val DIP = "DIP"
     private const val DIP_RATE = 1_000_000_000_000
 
+    private const val ZERO = "0.000000"
+    private const val UNIT_ZERO = "0.000000DIP"
+
+    private val df = DecimalFormat("0.000000")
+    private val df2 = DecimalFormat("0.00%")
+
     fun formatDecimal(s: String?): String {
         if (s == null || s.isEmpty()) {
             return ""
@@ -37,20 +44,15 @@ object StringUtils {
 
     fun pdip2DIP(coin: Coin?, unit: Boolean = true): String {
         if (coin == null) {
-            return "0DIP"
+            return formatUnit(ZERO, unit)
         }
 
         return pdip2DIP("${coin.amount}${coin.denom}", unit)
     }
 
-    fun pdip2DIP(amount: String?, unit: Boolean = true): String {
-
+    fun pdip2DIP(amount: String?, unit: Boolean = false): String {
         if (amount == null || amount.isEmpty()) {
-            return formatUnit("0", unit)
-        }
-
-        if (amount.endsWith(DIP)) {
-            return amount
+            return formatUnit(ZERO, unit)
         }
 
         val temp = if (amount.endsWith(PDIP)) {
@@ -60,16 +62,18 @@ object StringUtils {
         }
 
         if (temp == "" || temp == "0") {
-            return formatUnit("0", unit)
+            return formatUnit(ZERO, unit)
         }
 
-        val df = DecimalFormat("#.######")
-        if (TextUtils.isDigitsOnly(temp)) {
-            val l = temp.toLong().toDouble() / DIP_RATE
-            return formatUnit(df.format(l), unit)
-        } else if (temp.contains(".")) {
-            val l = temp.toDouble() / DIP_RATE
-            return formatUnit(df.format(l), unit)
+        if (amount.endsWith(DIP)) {
+            return formatUnit(df.format(amount.replace(DIP, "")), unit)
+        }
+
+        try {
+            val bigDecimal = BigDecimal(temp)
+            return bigDecimal.divide(BigDecimal(DIP_RATE)).setScale(6, RoundingMode.DOWN).toString()
+        } catch (e: Exception) {
+
         }
         return amount
     }
@@ -80,6 +84,13 @@ object StringUtils {
         } else {
             value
         }
+    }
+
+    fun formatPercent(s: String?): String {
+        if (s == null || s == "" || s == "0") {
+            return "0.00%"
+        }
+        return df2.format(s.toDouble())
     }
 
     fun utc2String(s: String?): String {

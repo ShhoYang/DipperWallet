@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activityPadding"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
         android:text="@string/backupTip2"
         android:textColor="@color/textWhite"

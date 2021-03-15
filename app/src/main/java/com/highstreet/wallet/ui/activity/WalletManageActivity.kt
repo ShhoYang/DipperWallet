@@ -1,24 +1,31 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.lifecycle.Observer
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.hao.library.adapter.listener.ItemDragListener
+import com.hao.library.adapter.listener.ItemTouchCallback
+import com.hao.library.adapter.listener.OnItemClickListener
 import com.hao.library.annotation.AndroidEntryPoint
-import com.hao.library.ui.BaseNormalListActivity
-import com.hao.library.view.dialog.ConfirmDialog
-import com.hao.library.view.dialog.ConfirmDialogListener
+import com.hao.library.annotation.Inject
+import com.hao.library.extensions.gone
+import com.hao.library.extensions.init
+import com.hao.library.extensions.visible
+import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.R
-import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.ui.adapter.WalletManageAdapter
+import com.highstreet.wallet.cache.BalanceCache
+import com.highstreet.wallet.constant.Chain
+import com.highstreet.wallet.databinding.ActivityWalletManageBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
-import com.highstreet.wallet.extensions.copy
+import com.highstreet.wallet.model.WalletType
+import com.highstreet.wallet.ui.adapter.BottomMenuDialogAdapter
+import com.highstreet.wallet.ui.adapter.WalletManageLeftAdapter
+import com.highstreet.wallet.ui.adapter.WalletManageRightAdapter
 import com.highstreet.wallet.ui.vm.WalletManageVM
-import com.highstreet.wallet.crypto.KeyUtils
-import com.highstreet.wallet.databinding.ActivityWalletManageBinding
-import com.highstreet.wallet.fingerprint.FingerprintUtils
-import com.highstreet.wallet.view.InputDialog
-import com.highstreet.wallet.view.InputDialogListener
-import com.highstreet.wallet.view.listener.RxView
+import com.highstreet.wallet.view.BottomMenuDialog
+import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 /**
  * @author Yang Shihao
@@ -26,118 +33,157 @@ import com.highstreet.wallet.view.listener.RxView
  */
 @AndroidEntryPoint
 class WalletManageActivity :
-    BaseNormalListActivity<ActivityWalletManageBinding, Account, WalletManageVM, WalletManageAdapter>() {
+    BaseActivity<ActivityWalletManageBinding, WalletManageVM>(), View.OnClickListener {
 
-    /**
-     * 当前操作的Account
-     */
-    private var useAccount: Account? = null
+    private var editable by Delegates.observable(false) { _, old, new ->
+        if (new != old) {
+            viewBinding {
+                if (new) {
+                    ivEdit.visible()
+                    ivEdit.setOnClickListener(this@WalletManageActivity)
+                } else {
+                    ivEdit.gone()
+                    ivEdit.setOnClickListener(null)
+                }
+            }
+        }
+    }
 
-    private var type = 0
+    private var isEdit by Delegates.observable(false) { _, old, new ->
+        if (new != old) {
+            viewBinding {
+                if (new) {
+                    ivEdit.setImageResource(R.drawable.ic_completed)
+                } else {
+                    ivEdit.setImageResource(R.drawable.ic_sort)
+                }
+            }
+        }
+    }
+
+    private lateinit var itemTouchHelper: ItemTouchHelper
+
+    @Inject
+    lateinit var leftAdapter: WalletManageLeftAdapter
+
+    @Inject
+    lateinit var rightAdapter: WalletManageRightAdapter
+
+    private var bottomMenuDialogAdapter: BottomMenuDialogAdapter? = null
+
+    private var bottomMenuDialog: BottomMenuDialog? = null
 
     override fun initView() {
-        super.initView()
-        setTitle(R.string.walletManager)
-        RxView.click(vb!!.ivAdd) {
-            InitWalletActivity.start(this, true)
+        setTitle(R.string.walletManage)
+        leftAdapter.setOnItemClickListener(object : OnItemClickListener<WalletType> {
+            override fun itemClicked(view: View, item: WalletType, position: Int) {
+                leftAdapter.data.forEach {
+                    it.selected = item.chain == it.chain
+                }
+                leftAdapter.notifyDataSetChanged()
+                resetRightData(leftAdapter.data, position)
+            }
+        })
+
+        itemTouchHelper = ItemTouchHelper(ItemTouchCallback(object : ItemDragListener {
+            override fun dragged(fromPosition: Int, toPosition: Int) {
+                if (true == vm?.sort(rightAdapter.data, fromPosition, toPosition)) {
+                    rightAdapter.notifyItemMoved(fromPosition, toPosition)
+                }
+            }
+        }))
+        rightAdapter.itemTouchHelper = itemTouchHelper
+        rightAdapter.setOnItemClickListener(object : OnItemClickListener<Account> {
+            override fun itemClicked(view: View, item: Account, position: Int) {
+                toA(WalletDetailActivity::class.java)
+                if (item.address == "") {
+                    selectCreateOrImport(item.chain)
+                } else {
+                    WalletDetailActivity.start(this@WalletManageActivity, item)
+                }
+            }
+        })
+
+        viewBinding {
+            rvLeft.init(leftAdapter)
+            itemTouchHelper.attachToRecyclerView(rvRight)
+            rvRight.init(rightAdapter)
         }
     }
 
     override fun initData() {
-        Db.instance().accountDao().queryAllByChainAsLiveData(AccountManager.instance().chain)
+        Db.instance().accountDao().queryAllAsLiveData()
             .observe(this, Observer {
-                if (it.isEmpty()) {
-                    InitWalletActivity.start(this)
-                } else {
-                    adapter.resetData(it)
-                }
+                processData(it ?: ArrayList())
+            })
+    }
 
-            })
-        viewModel {
-            updateNameLD.observe(this@WalletManageActivity, Observer {
-                hideLoading()
-                if (it) {
-                    toast(R.string.updateSucceed)
-                } else {
-                    toast(R.string.updateFailed)
+    private fun processData(accounts: List<Account>) {
+        val list = ArrayList<WalletType>()
+        val mainList = ArrayList<Account>()
+        val testList = ArrayList<Account>()
+        accounts.forEach {
+            it.balance = BalanceCache.instance().getBalance(it)
+            if (it.isMain()) {
+                mainList.add(it)
+            } else if (it.isTest()) {
+                testList.add(it)
+            }
+        }
+        mainList.add(Account.empty(Chain.DIP_MAIN2))
+        testList.add(Account.empty(Chain.DIP_TEST2))
+        list.add(WalletType(Chain.ALL, 0, accounts, selected = true, isAll = true))
+        list.add(WalletType(Chain.DIP_MAIN2, R.mipmap.dipper_hub, mainList))
+        list.add(WalletType(Chain.DIP_TEST2, R.mipmap.dipper_test, testList))
+        leftAdapter.resetData(list)
+        resetRightData(list, 0)
+    }
+
+    private fun selectCreateOrImport(chain: String) {
+        if (bottomMenuDialog == null) {
+            bottomMenuDialogAdapter = BottomMenuDialogAdapter()
+            bottomMenuDialogAdapter!!.setOnItemClickListener(object : OnItemClickListener<String> {
+                override fun itemClicked(view: View, item: String, position: Int) {
+                    when (position) {
+                        0 -> CreateWalletActivity.start(this@WalletManageActivity, chain, true)
+                        1 -> ImportWalletActivity.start(this@WalletManageActivity, chain, true)
+                    }
+                    bottomMenuDialog?.dismiss()
                 }
             })
-            deleteLD.observe(this@WalletManageActivity, Observer {
-                hideLoading()
-                if (it) {
-                    toast(R.string.deleteSucceed)
-                } else {
-                    toast(R.string.deleteFailed)
-                }
-            })
+            val optionList = arrayListOf(
+                getString(R.string.createWallet),
+                getString(R.string.importWallet),
+            )
+            bottomMenuDialogAdapter!!.resetData(optionList)
+            bottomMenuDialog = BottomMenuDialog(this).setAdapter(bottomMenuDialogAdapter!!)
+        }
+
+        bottomMenuDialog!!.show()
+    }
+
+    private fun resetRightData(leftList: ArrayList<WalletType>, currentLeftSelected: Int) {
+        val right = leftList[currentLeftSelected]
+        editable = right.isAll
+        isEdit = false
+        rightAdapter.edit = editable && isEdit
+        rightAdapter.resetData(right.accounts)
+    }
+
+    private fun edit() {
+        if (isEdit) {
+            isEdit = false
+            vm?.save(leftAdapter.data, rightAdapter.data)
+        } else {
+            isEdit = true
+            rightAdapter.edit = editable && isEdit
+            rightAdapter.notifyDataSetChanged()
         }
     }
 
-    override fun itemClicked(view: View, item: Account, position: Int) {
-        when (view.id) {
-            R.id.tvWalletAddress, R.id.ivCopy -> item.address?.copy(this)
-            R.id.tvBackup -> fingerprint(TYPE_BACKUP, item)
-            R.id.ivEdit -> {
-                InputDialog(this)
-                    .setTitle(getString(R.string.updateWalletName))
-                    .setHint(getString(R.string.inputNewWalletName))
-                    .setText(item.nickName)
-                    .setListener(object : InputDialogListener {
-                        override fun confirm(content: String) {
-                            vm?.updateWalletName(item, content)
-                        }
-                    }).show()
-            }
-            R.id.ivDelete -> {
-                ConfirmDialog.Builder(this)
-                    .setMessage("${getString(R.string.confirmDeleteWallet)}${item.nickName}?")
-                    .setListener(object : ConfirmDialogListener {
-                        override fun confirm() {
-                            fingerprint(TYPE_DELETE, item)
-                        }
-
-                        override fun cancel() {
-
-                        }
-
-                    }).build().show()
-
-            }
-            else -> {
-                vm?.changeLastAccount(item)
-            }
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.ivEdit) {
+            edit()
         }
-    }
-
-    private fun fingerprint(type: Int, account: Account) {
-        this.type = type
-        useAccount = account
-        FingerprintUtils.getFingerprint(
-            this,
-            null,
-            true,
-            { onFingerprintAuthenticateSucceed() },
-        ).authenticate()
-    }
-
-    private fun onFingerprintAuthenticateSucceed() {
-        useAccount?.apply {
-            if (type == TYPE_BACKUP) {
-                BackupActivity.start(
-                    this@WalletManageActivity,
-                    BackupActivity.FROM_WALLET_MANAGER,
-                    this,
-                    KeyUtils.entropy2Mnemonic(getEntropyAsHex()) as ArrayList<String>
-                )
-            } else if (type == TYPE_DELETE) {
-                showLoading()
-                vm?.deleteAccount(this)
-            }
-        }
-    }
-
-    companion object {
-        private const val TYPE_BACKUP = 1
-        private const val TYPE_DELETE = 2
     }
 }

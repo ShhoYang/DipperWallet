@@ -42,11 +42,10 @@ class WalletParams(
          * 6、位转换
          * 7、bech32编码
          */
-        fun create(): WalletParams {
+        fun create(chain: String): WalletParams {
             val entropy = KeyUtils.generateEntropy()
             val entropyAsHex = HexUtils.bytesToHexString(entropy)
             val mnemonic = KeyUtils.entropy2Mnemonic(entropy)
-            val chain = AccountManager.instance().chain
             val address = KeyUtils.getAddress(chain, mnemonic, Constant.PATH)
             return WalletParams(
                 chain,
@@ -62,10 +61,9 @@ class WalletParams(
             )
         }
 
-        fun import(mnemonic: ArrayList<String>): WalletParams {
+        fun import(chain: String,mnemonic: ArrayList<String>): WalletParams {
             val entropy = KeyUtils.mnemonic2Entropy(mnemonic)
             val entropyAsHex = HexUtils.bytesToHexString(entropy)
-            val chain = AccountManager.instance().chain
             val address = KeyUtils.getAddress(chain, mnemonic, Constant.PATH)
             return WalletParams(
                 chain,

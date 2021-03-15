@@ -30,7 +30,7 @@ class ProposalDetailVM : BaseViewModel() {
      * 详情
      */
     private fun proposalDetail(proposalId: String) {
-        ApiService.getDipApi().proposalDetail(proposalId).subscribeBy({
+        ApiService.getApi().proposalDetail(proposalId).subscribeBy({
             proposalLD.value = it
         }, {
         }, false).add()
@@ -40,7 +40,7 @@ class ProposalDetailVM : BaseViewModel() {
      * 投票比例
      */
     fun votingRate(proposalId: String) {
-        ApiService.getDipApi().votingRate(proposalId).subscribeBy({
+        ApiService.getApi().votingRate(proposalId).subscribeBy({
             rateLD.value = it
         }, {
         }, false).add()
@@ -50,7 +50,7 @@ class ProposalDetailVM : BaseViewModel() {
      * 我的意见
      */
     fun proposalOpinion(proposalId: String) {
-        ApiService.getDipApi().proposalOpinion(proposalId, AccountManager.instance().address)
+        ApiService.getApi().proposalOpinion(proposalId, AccountManager.instance().address)
             .subscribeBy({
                 opinionLD.value = it?.option
             }, {
@@ -61,7 +61,7 @@ class ProposalDetailVM : BaseViewModel() {
      * 投票
      */
     fun vote(proposalId: String, opinion: String) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (null == it) {
                 voteLD.value = Pair(false, "")
             } else {
@@ -96,7 +96,7 @@ class ProposalDetailVM : BaseViewModel() {
     }
 
     private fun doVote(reqBroadCast: RequestBroadCast, proposalId: String) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 proposalDetail(proposalId)
                 votingRate(proposalId)

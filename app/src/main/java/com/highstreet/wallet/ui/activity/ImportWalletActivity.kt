@@ -11,9 +11,9 @@ import android.widget.EditText
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
-import com.hao.library.ui.UIParams
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
@@ -37,11 +37,6 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
     private var focusPosition = 0
 
     private val editTexts = ArrayList<EditText>(25)
-
-    override fun prepare(uiParams: UIParams, intent: Intent?) {
-        super.prepare(uiParams, intent)
-        chain = intent?.getStringExtra(ExtraKey.STRING) ?: ""
-    }
 
     override fun initView() {
         setTitle(R.string.importWallet)
@@ -91,6 +86,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
     }
 
     override fun initData() {
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST2.chainName
         vm?.resultLD?.observe(this, Observer {
             hideLoading()
             if (true == it) {
@@ -126,7 +122,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
             return
         }
 
-        val walletParams = WalletParams.import(mnemonic)
+        val walletParams = WalletParams.import(chain, mnemonic)
         val accounts = AccountManager.instance().accounts
         accounts.forEach { account ->
             if (account.address == walletParams.address) {

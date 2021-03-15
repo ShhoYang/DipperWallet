@@ -16,7 +16,7 @@ open class BalanceVM : BaseViewModel() {
     val amountLD = MutableLiveData<AccountInfo>()
 
     fun getAccountInfo(address: String) {
-        ApiService.getDipApi().account(address).subscribeBy({
+        ApiService.getApi().account(address).subscribeBy({
             amountLD.value = it
         }, {
             amountLD.value = null

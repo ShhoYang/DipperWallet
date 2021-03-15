@@ -39,7 +39,7 @@ class CrashActivity : BaseActivity<ActivityCarshBinding, PlaceholderViewModel>()
     }
 
     private fun getDeviceInfo(): String {
-        val stringBuffer = StringBuffer("")
+        val sb = StringBuffer("")
         try {
             val packageManager = packageManager
             val packageInfo =
@@ -48,21 +48,22 @@ class CrashActivity : BaseActivity<ActivityCarshBinding, PlaceholderViewModel>()
             if (packageInfo != null) {
                 val versionName =
                     if (packageInfo.versionName == null) "null" else packageInfo.versionName
-                stringBuffer.append("versionName = ").append(versionName).append("\n")
+                sb.append("versionName = ").append(versionName).append("\n")
                     .append("versionCode = ").append(packageInfo.versionCode).append("\n")
             }
             val fields = Build::class.java.declaredFields
             for (field in fields) {
                 field.isAccessible = true
-                stringBuffer.append(field.name).append(" = ").append(field.get(null).toString())
+                sb.append(field.name).append(" = ")
+                    .append(field.get(null)?.toString() ?: "")
                     .append("\n")
             }
-            stringBuffer.append("\n\n")
-            return stringBuffer.toString()
+            sb.append("\n\n")
+            return sb.toString()
         } catch (e: PackageManager.NameNotFoundException) {
-            return stringBuffer.toString()
+            return sb.toString()
         } catch (e: IllegalAccessException) {
-            return stringBuffer.toString()
+            return sb.toString()
         }
     }
 }

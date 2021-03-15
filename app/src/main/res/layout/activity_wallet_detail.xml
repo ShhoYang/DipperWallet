@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.WalletDetailActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/activityPadding"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:padding="@dimen/blockPadding">
+
+        <ImageView
+            android:id="@+id/ivChainIcon"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWalletName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/textWhite"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivChainIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivEditName"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/blockSpace"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:orientation="vertical"
+        android:padding="@dimen/blockPadding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/walletAddress"
+            android:textColor="@color/textGray"
+            android:textSize="12sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/tvWalletAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="48sp"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/ivWalletAddress"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_qr" />
+
+        </FrameLayout>
+
+        <include layout="@layout/include_block_line" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/blockPadding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/chainInfo"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvChainName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/importTime"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvImportTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/importState"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvImportState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/chainPath"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvPath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.hao.library.view.RoundTextView
+        android:id="@+id/btnBackup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:gravity="center"
+        android:text="@string/backupMnemonic"
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
+
+    <com.hao.library.view.RoundTextView
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_margin="@dimen/activityPadding"
+        android:gravity="center"
+        android:text="@string/deleteWallet"
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/textRed"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
+
+</LinearLayout>

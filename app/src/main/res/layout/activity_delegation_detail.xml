@@ -33,8 +33,7 @@
                 android:ellipsize="middle"
                 android:singleLine="true"
                 android:textColor="@color/textWhite"
-                android:textSize="16sp"
-                tools:text="30000000" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,8 +60,7 @@
                 android:ellipsize="middle"
                 android:singleLine="true"
                 android:textColor="@color/textWhite"
-                android:textSize="16sp"
-                tools:text="30000000" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,16 +104,12 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/line" />
+        <include layout="@layout/include_block_line" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="@dimen/blockPadding">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -186,7 +180,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvUnDelegateAmount"
+        android:id="@+id/tvUnbondingDelegationAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activityPadding"
@@ -209,7 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="@dimen/activityPadding"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activityPadding"
             android:layout_marginRight="@dimen/activityPadding"
             android:orientation="horizontal">
 
@@ -221,7 +215,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/redelegate"
-                android:textColor="@color/textWhite"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -237,7 +230,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/undelegate"
-                android:textColor="@color/textWhite"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -248,10 +240,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="@dimen/activityPadding"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="@dimen/activityPadding"
-            android:layout_marginBottom="@dimen/activityPadding"
+            android:layout_margin="@dimen/activityPadding"
             android:orientation="horizontal">
 
 
@@ -264,7 +253,6 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/receiveReward"
-                android:textColor="@color/textWhite"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -279,7 +267,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/delegate"
-                android:textColor="@color/textWhite"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"

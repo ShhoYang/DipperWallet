@@ -28,18 +28,21 @@ interface AccountDao {
     @Query("SELECT * FROM Account WHERE id = (:id) LIMIT 1")
     fun queryById(id: Long): LiveData<Account?>
 
+    @Query("SELECT * FROM Account ORDER BY sort ASC LIMIT 1")
+    fun queryFirstUserAsLiveData(): LiveData<Account?>
+
     @Query("SELECT * FROM Account WHERE isLast = (:isLast) LIMIT 1")
     fun queryLastUserAsLiveData(isLast: Boolean): LiveData<Account?>
 
-    @Query("SELECT * FROM Account WHERE chain = (:chain)")
+    @Query("SELECT * FROM Account WHERE chain = (:chain) ORDER BY sort ASC")
     fun queryByChain(chain: String): List<Account>
 
-    @Query("SELECT * FROM Account WHERE chain = (:chain)")
+    @Query("SELECT * FROM Account WHERE chain = (:chain) ORDER BY sort ASC")
     fun queryAllByChainAsLiveData(chain: String): LiveData<List<Account>>
 
-    @Query("SELECT * FROM Account")
+    @Query("SELECT * FROM Account ORDER BY sort ASC")
     fun query(): List<Account>
 
-    @Query("SELECT * FROM Account")
+    @Query("SELECT * FROM Account ORDER BY sort ASC")
     fun queryAllAsLiveData(): LiveData<List<Account>>
 }

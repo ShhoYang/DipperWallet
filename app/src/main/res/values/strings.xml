@@ -44,9 +44,14 @@
     <string name="send">转账</string>
 
     <string name="total">合计</string>
+    <string name="tokens">代币</string>
+    <string name="addToken">添加代币</string>
+    <string name="tokenAddress">代币地址</string>
+    <string name="tokenName">代币符号</string>
+    <string name="decimalPlaces">精确小数点</string>
 
     <string name="wallet">钱包</string>
-    <string name="walletManager">钱包管理</string>
+    <string name="walletManage">钱包管理</string>
     <string name="general">普通</string>
     <string name="appLock">App锁</string>
     <string name="currency">货币</string>
@@ -63,6 +68,12 @@
 
     <string name="QRCode">钱包地址</string>
     <string name="copyAddress">复制</string>
+
+    <string name="walletDetail">钱包详情</string>
+    <string name="chainInfo">链信息</string>
+    <string name="importTime">导入日期</string>
+    <string name="importState">导入状态</string>
+    <string name="chainPath">关键路径</string>
 
     <string name="createPassword">创建密码</string>
     <string name="password">密码</string>
@@ -99,7 +110,7 @@
     <string name="clickMnemonic">请按顺序点击助记词，验证你备注的助记词正确无误</string>
     <string name="invalidMnemonic">助记词无效</string>
 
-    <string name="backup">备份</string>
+    <string name="deleteWallet">删除钱包</string>
     <string name="updateWalletName">修改钱包名字</string>
     <string name="inputNewWalletName">请输入新的钱包名称</string>
     <string name="updateSucceed">修改成功</string>
@@ -114,21 +125,18 @@
     <string name="selectValidator">选择验证人</string>
     <string name="clickSelectValidator">点击选择验证人</string>
     <string name="allValidator">全部</string>
-    <string name="shares">受托总数</string>
+    <string name="shares">投票权</string>
     <string name="rate">佣金率</string>
     <string name="bonded">共识中</string>
     <string name="jailed">待解禁</string>
-
-    <string-array name="validatorFilter">
-        <item>@string/all</item>
-        <item>@string/bonded</item>
-        <item>@string/jailed</item>
-    </string-array>
+    <string name="my">我的</string>
 
     <string name="validatorDetail">验证人详情</string>
     <string name="validatorActivity">活跃度</string>
     <string name="selfShares">自抵押总数</string>
     <string name="validatorProfile">简介</string>
+    <string name="redeemReward">赎回收益</string>
+    <string name="delegateReward">复投收益</string>
 
     <string name="about">关于</string>
 
@@ -138,14 +146,12 @@
     <string name="proposalRejected">未通过</string>
     <string name="proposalFailed">未通过</string>
 
-
     <string name="invalidAddress">地址无效</string>
     <string name="receiveAddress">收款地址</string>
     <string name="inputToAddress">请输入对方地址</string>
     <string name="amountDip">数量/DIP</string>
     <string name="inputAmount">请输入转账数量</string>
     <string name="notEnoughToTransfer">Not enough balance to transfer</string>
-
 
     <string name="delegation">委托</string>
     <string name="delegateAmount">委托数量</string>
@@ -165,7 +171,7 @@
     <string name="redelegateMaxAmount">最多可转委托</string>
     <string name="overMaxAmount">超出最大可转委托数量</string>
 
-    <string name="undelegate">解委托</string>
+    <string name="undelegate">取消委托</string>
     <string name="undelegateAmount">解委托数量</string>
     <string name="remarks">备注</string>
     <string name="inputUndelegateAmount">请输入解委托数量</string>
@@ -174,7 +180,6 @@
     <string name="delegationTransactionRecord">委托交易记录</string>
     <string name="bond">委托</string>
     <string name="unbond">待解托</string>
-
 
     <string name="transferIn">转入</string>
     <string name="transferOut">转出</string>

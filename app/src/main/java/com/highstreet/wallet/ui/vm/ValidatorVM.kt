@@ -36,7 +36,7 @@ class ValidatorVM : BaseListViewModel<Validator>() {
     override fun loadData(page: Int, onResponse: (ArrayList<Validator>?) -> Unit) {
 
         if (list.isEmpty()) {
-            ApiService.getDipApi().validators(page, pageSize()).subscribeBy({
+            ApiService.getApi().validators(page, pageSize()).subscribeBy({
                 list.clear()
                 if (it != null && it.isNotEmpty()) {
                     list.addAll(it)

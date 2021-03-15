@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.AddTokenActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="16dp"
+        android:text="@string/tokenAddress" />
+
+    <EditText
+        android:id="@+id/etAddress"
+        style="@style/InputViewContent" />
+
+    <include
+        android:id="@+id/addressLine"
+        layout="@layout/include_input_line" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="32dp"
+        android:text="@string/tokenName" />
+
+    <EditText
+        android:id="@+id/etName"
+        style="@style/InputViewContent"
+        android:singleLine="true" />
+
+    <include
+        android:id="@+id/nameLine"
+        layout="@layout/include_input_line" />
+
+    <TextView
+        style="@style/InputViewName"
+        android:layout_marginTop="32dp"
+        android:text="@string/decimalPlaces" />
+
+    <EditText
+        android:id="@+id/etDecimalPlaces"
+        style="@style/InputViewContent"
+        android:inputType="number"
+        android:maxLength="20"
+        android:singleLine="true" />
+
+    <include
+        android:id="@+id/decimalPlacesLine"
+        layout="@layout/include_input_line" />
+
+    <com.hao.library.view.RoundTextView
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonHeight"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:gravity="center"
+        android:text="@string/next"
+        android:textSize="@dimen/buttonText"
+        app:roundTextViewBorderColor="@color/btnBorderColor"
+        app:roundTextViewBorderWidth="@dimen/buttonBorder"
+        app:roundTextViewNormalTextColor="@color/btnTextColor"
+        app:roundTextViewRadius="@dimen/buttonRadius" />
+
+</LinearLayout>

@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/baseRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:overScrollMode="never">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activityPadding"
             android:background="@drawable/shape_block"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/blockPadding"
-            app:elevation="0dp">
+            android:padding="@dimen/blockPadding">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +55,7 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
 
         <com.hao.library.view.EmptyView
             android:id="@id/baseEmptyView"
@@ -65,10 +66,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@id/baseRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
         </com.hao.library.view.EmptyView>
 
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
 </com.hao.library.view.RefreshLayout>

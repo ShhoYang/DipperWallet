@@ -16,7 +16,7 @@ class TransactionRecordVM : BaseListViewModel<Tx>() {
 
     override fun loadData(page: Int, onResponse: (ArrayList<Tx>?) -> Unit) {
         if (isIn) {
-            ApiService.getDipApi()
+            ApiService.getApi()
                 .transactionInRecord(AccountManager.instance().address, page, pageSize())
                 .subscribeBy2({
                     onResponse(it?.txs)
@@ -24,7 +24,7 @@ class TransactionRecordVM : BaseListViewModel<Tx>() {
                     onResponse(null)
                 }).add()
         } else {
-            ApiService.getDipApi()
+            ApiService.getApi()
                 .transactionOutRecord(AccountManager.instance().address, page, pageSize())
                 .subscribeBy2({
                     onResponse(it?.txs)

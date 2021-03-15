@@ -23,7 +23,7 @@ class DelegationVM : BalanceVM() {
     val resultLD = MutableLiveData<Pair<Boolean, String>>()
 
     fun delegate(validationAddress: String, toAmount: String, remarks: String) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             val coins = it?.value?.coins
             if (null != coins && coins.isNotEmpty()) {
                 val balance = coins[0].amount ?: "0"
@@ -72,7 +72,7 @@ class DelegationVM : BalanceVM() {
     }
 
     private fun doDelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 AccountManager.instance().refresh()
                 resultLD.value = Pair(true, App.instance.getString(R.string.succeed))

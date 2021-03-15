@@ -14,7 +14,7 @@ class ProposalVM : BaseListViewModel<Proposal>() {
     override fun pageSize() = Int.MAX_VALUE
 
     override fun loadData(page: Int, onResponse: (ArrayList<Proposal>?) -> Unit) {
-        ApiService.getDipApi().proposals().subscribeBy({
+        ApiService.getApi().proposals().subscribeBy({
             onResponse(it)
         }, {
             onResponse(null)

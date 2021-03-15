@@ -3,14 +3,15 @@ package com.highstreet.wallet.model.res
 import android.text.TextUtils
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.PublicKey
+import com.highstreet.wallet.utils.StringUtils
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/16
  */
 data class AccountInfo(
-        val type: String?,
-        val value: AccountValue?
+    val type: String?,
+    val value: AccountValue?
 ) {
     fun getAccountNumber(): Int {
         val account_number = value?.account_number
@@ -30,29 +31,30 @@ data class AccountInfo(
 
     fun getAmount(): String {
         val coins = value?.coins
-        if (null != coins && coins.isNotEmpty()) {
-            val coinBean = coins[0]
-            return coinBean.amount + coinBean.denom
+        val coin = if (null == coins || coins.isEmpty()) {
+            null
+        } else {
+            coins[0]
         }
-        return ""
+        return StringUtils.pdip2DIP(coin, false)
     }
 
     fun getLongAmount(): Long {
         val coins = value?.coins
         if (null != coins && coins.isNotEmpty()) {
             val coinBean = coins[0]
-            return coinBean.amount?.toLong()?:0L
+            return coinBean.amount?.toLong() ?: 0L
         }
         return 0L
     }
 }
 
 data class AccountValue(
-        val account_number: String?,
-        val address: String?,
-        val code_hash: String?,
-        val coins: List<Coin>?,
-        val public_key: PublicKey?,
-        val sequence: String?
+    val account_number: String?,
+    val address: String?,
+    val code_hash: String?,
+    val coins: List<Coin>?,
+    val public_key: PublicKey?,
+    val sequence: String?
 )
 

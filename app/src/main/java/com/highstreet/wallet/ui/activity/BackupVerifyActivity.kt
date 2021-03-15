@@ -44,13 +44,13 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
         from = intent.getIntExtra(ExtraKey.INT, BackupActivity.FROM_CREATE)
         account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
         val mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
-        if (account == null || mnemonic == null || mnemonic!!.isEmpty()) {
+        if (account == null || mnemonic == null || mnemonic.isEmpty()) {
             finish()
             return
         }
         topList.clear()
         bottomList.clear()
-        bottomList.addAll(mnemonic!!)
+        bottomList.addAll(mnemonic)
         mnemonicS = bottomList.joinToString()
         bottomList.shuffle()
         topAdapter.setOnItemClickListener(object : OnItemClickListener<String> {

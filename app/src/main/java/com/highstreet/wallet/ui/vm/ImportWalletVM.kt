@@ -44,7 +44,7 @@ class ImportWalletVM : BaseViewModel() {
             walletParams.entropyAsHex,
             Constant.MNEMONIC_KEYSTORE_ALIAS + walletParams.uuid,
 
-        )
+            )
         return Account(
             id = null,
             uuid = walletParams.uuid,
@@ -58,6 +58,9 @@ class ImportWalletVM : BaseViewModel() {
             mnemonicSize = walletParams.mnemonicSize,
             fromMnemonic = walletParams.fromMnemonic,
             balance = "",
+            delegateAmount = "",
+            unbondingAmount = "",
+            reward = "",
             sequenceNumber = 0,
             accountNumber = 0,
             hasPrivateKey = true,

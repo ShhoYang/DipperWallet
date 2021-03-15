@@ -64,6 +64,9 @@ class CreateWalletVM : BaseViewModel() {
             mnemonicSize = walletParams.mnemonicSize,
             fromMnemonic = walletParams.fromMnemonic,
             balance = "",
+            delegateAmount = "",
+            unbondingAmount = "",
+            reward = "",
             sequenceNumber = 0,
             accountNumber = 0,
             hasPrivateKey = true,
@@ -88,7 +91,7 @@ class CreateWalletVM : BaseViewModel() {
             return
         }
 
-        ApiService.getDipApi()
+        ApiService.getApi()
             .test("https://faucet.testnet.dippernetwork.com/get_token?" + accountManager.address)
             .subscribeBy2({
                 resultLD.value = true

@@ -2,6 +2,7 @@ package com.highstreet.wallet.model.res
 
 import android.text.TextUtils
 import com.hao.library.adapter.PagedAdapterItem
+import com.highstreet.wallet.utils.StringUtils
 import java.io.Serializable
 import java.text.DecimalFormat
 
@@ -22,7 +23,11 @@ data class Validator(
     val status: Int?,
     val tokens: String?,
     val unbonding_height: String?,
-    val unbonding_time: String?
+    val unbonding_time: String?,
+    // 附加
+    var delegationInfo: DelegationInfo?,
+    var unbondingDelegationInfo: DelegationInfo?,
+    var reward: Reward?
 ) : PagedAdapterItem, Serializable {
     override fun getKey(): Any {
         return operator_address + consensus_pubkey
@@ -50,14 +55,16 @@ data class Validator(
         return firstLetterName!!
     }
 
+    fun getDelegatorShares(): String {
+        return StringUtils.pdip2DIP(delegator_shares)
+    }
+
+    fun getSelfDelegation(): String {
+        return StringUtils.pdip2DIP(self_delegation)
+    }
+
     fun getRate(): String {
-
-        val rate = commission?.commission_rates?.rate
-        if (rate == null || rate.isEmpty()) {
-            return ""
-        }
-
-        return "${DecimalFormat("0.00").format(rate.toDouble() * 100)}%"
+        return StringUtils.formatPercent(commission?.commission_rates?.rate)
     }
 
     fun getProfile(): String {

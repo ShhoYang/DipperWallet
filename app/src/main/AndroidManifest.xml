@@ -94,6 +94,11 @@
             tools:replace="screenOrientation" />
 
         <activity
+            android:name=".ui.activity.WalletDetailActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
             android:name=".ui.activity.BackupActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
@@ -131,6 +136,16 @@
             tools:replace="screenOrientation" />
 
         <activity
+            android:name=".ui.activity.TokenListActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
+            android:name=".ui.activity.AddTokenActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
             android:name=".ui.activity.TransactionRecordActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
@@ -146,6 +161,11 @@
             tools:replace="screenOrientation" />
 
         <activity
+            android:name=".ui.activity.ValidatorList2Activity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
             android:name=".ui.activity.ValidatorChooseActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
@@ -156,7 +176,7 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.DelegationActivity"
+            android:name=".ui.activity.DelegateActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -166,17 +186,17 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.UndelegationActivity"
+            android:name=".ui.activity.UndelegateActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.RedelegationActivity"
+            android:name=".ui.activity.RedelegateActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.ReceiveRewardActivity"
+            android:name=".ui.activity.RedeemRewardActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -187,7 +207,6 @@
 
         <activity
             android:name=".ui.activity.WebActivity"
-            android:process=":h5"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 

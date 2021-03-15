@@ -15,14 +15,14 @@ import com.highstreet.wallet.model.res.DelegationInfo
 class UndelegationListVM : BaseListViewModel<DelegationInfo>() {
 
     override fun loadData(page: Int, onResponse: (ArrayList<DelegationInfo>?) -> Unit) {
-        ApiService.getDipApi().unBondingDelegations(AccountManager.instance().address, page, pageSize()).subscribeBy({
-            onResponse(handle(it))
+        ApiService.getApi().unbondingDelegations(AccountManager.instance().address, page, pageSize()).subscribeBy({
+            onResponse(processData(it))
         }, {
             onResponse(null)
         }).add()
     }
 
-    private fun handle(list: ArrayList<DelegationInfo>?): ArrayList<DelegationInfo>? {
+    private fun processData(list: ArrayList<DelegationInfo>?): ArrayList<DelegationInfo>? {
         if (list == null || list.isEmpty()) {
             return list
         }

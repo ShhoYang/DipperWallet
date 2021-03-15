@@ -56,7 +56,13 @@
     <string name="QRCode">Wallet QR Code</string>
     <string name="copyAddress">Copy</string>
 
-    <string name="backup">Backup</string>
+    <string name="walletDetail">Wallet Detail</string>
+    <string name="chainInfo">Chain Info</string>
+    <string name="importTime">Import Time</string>
+    <string name="importState">Import State</string>
+    <string name="chainPath">Path</string>
+
+    <string name="deleteWallet">Delete Wallet</string>
     <string name="updateWalletName">Update wallet name</string>
     <string name="inputNewWalletName">Please input new wallet name</string>
     <string name="updateSucceed">Update succeed</string>
@@ -72,13 +78,15 @@
     <string name="shares">Shares</string>
     <string name="rate">Rate</string>
     <string name="bonded">Bonded</string>
-    <string name="jailed">To be released</string>
+    <string name="jailed">Jailed</string>
+    <string name="my">我的</string>
 
     <string name="validatorDetail">Validator Detail</string>
     <string name="validatorActivity">Activity</string>
     <string name="selfShares">Self Shares</string>
     <string name="validatorProfile">Profile</string>
-
+    <string name="redeemReward">Redeem Reward</string>
+    <string name="delegateReward">Delegate Reward</string>
 
     <string name="about">About</string>
     <string name="scan">Scan</string>
@@ -159,9 +167,14 @@
     <string name="send">SEND</string>
 
     <string name="total">Total</string>
+    <string name="tokens">Tokens</string>
+    <string name="addToken">Add Tokens</string>
+    <string name="tokenAddress">Token Address</string>
+    <string name="tokenName">Token Symbol</string>
+    <string name="decimalPlaces">Decimal Places</string>
 
     <string name="wallet">Wallet</string>
-    <string name="walletManager">Wallet Manager</string>
+    <string name="walletManage">Wallet Manage</string>
     <string name="general">General</string>
     <string name="appLock">App Lock</string>
     <string name="currency">Currency</string>

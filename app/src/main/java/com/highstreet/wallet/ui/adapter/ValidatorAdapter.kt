@@ -6,14 +6,13 @@ import com.hao.library.adapter.BasePagedAdapter
 import com.hao.library.adapter.ViewHolder
 import com.highstreet.wallet.databinding.ItemValidatorBinding
 import com.highstreet.wallet.model.res.Validator
-import com.highstreet.wallet.utils.StringUtils
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/24
  */
 
-class ValidatorAdapter : BasePagedAdapter<ItemValidatorBinding,Validator>() {
+class ValidatorAdapter : BasePagedAdapter<ItemValidatorBinding, Validator>() {
 
     override fun getViewBinding(
         layoutInflater: LayoutInflater,
@@ -28,7 +27,7 @@ class ValidatorAdapter : BasePagedAdapter<ItemValidatorBinding,Validator>() {
     ) {
         viewHolder.viewBinding {
             tvName.text = item.description?.moniker
-            tvShares.text = StringUtils.pdip2DIP(item.delegator_shares)
+            tvShares.text = item.getDelegatorShares()
             tvAverageYield.text = item.getRate()
         }
     }

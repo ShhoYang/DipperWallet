@@ -22,7 +22,7 @@ class ReceiveRewardVM : BaseViewModel() {
     val resultLD = MutableLiveData<Pair<Boolean, String>>()
 
     fun receiveReward(validatorAddress: String, delegatorAddress: String) {
-        ApiService.getDipApi().account(AccountManager.instance().address).subscribeBy({
+        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             val coins = it?.value?.coins
             if (null != coins && coins.isNotEmpty()) {
                 generateParams(it, validatorAddress, delegatorAddress)
@@ -59,7 +59,7 @@ class ReceiveRewardVM : BaseViewModel() {
     }
 
     private fun doReceiveReward(reqBroadCast: RequestBroadCast) {
-        ApiService.getDipApi().txs(reqBroadCast).subscribeBy2({
+        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
                 resultLD.value = Pair(true, "")
             } else {

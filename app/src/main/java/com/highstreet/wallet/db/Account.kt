@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.hao.library.adapter.PagedAdapterItem
+import com.highstreet.wallet.R
+import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.AES
 import java.io.Serializable
@@ -30,7 +32,10 @@ data class Account(
     var mnemonicSize: Int,
     var fromMnemonic: Boolean,
 
-    val balance: String,
+    var balance: String,
+    val delegateAmount: String,
+    val unbondingAmount: String,
+    val reward: String,
     var sequenceNumber: Int,
     var accountNumber: Int,
 
@@ -79,8 +84,59 @@ data class Account(
         return upperCaseChain!!
     }
 
+    fun isMain(): Boolean {
+        return Chain.DIP_MAIN.chainName == chain || Chain.DIP_MAIN2.chainName == chain
+    }
+
+    fun isTest(): Boolean {
+        return Chain.DIP_TEST.chainName == chain || Chain.DIP_TEST2.chainName == chain
+    }
+
+    fun getIcon(): Int {
+        return if (isMain()) {
+            R.mipmap.dipper_hub
+        } else if (isTest()) {
+            R.mipmap.dipper_test
+        } else {
+            0
+        }
+    }
+
     override fun getKey(): String {
         return uuid
     }
 
+    companion object {
+        fun empty(chain: Chain): Account {
+            return Account(
+                id = null,
+                uuid = "",
+                nickName = "",
+                isValidator = false,
+                address = "",
+                chain = chain.chainName,
+                path = 0,
+                resource = "",
+                spec = "",
+                mnemonicSize = Constant.MNEMONIC_SIZE,
+                fromMnemonic = false,
+                balance = "",
+                delegateAmount = "",
+                unbondingAmount = "",
+                reward = "",
+                sequenceNumber = 0,
+                accountNumber = 0,
+                hasPrivateKey = true,
+                isFavorite = false,
+                isBackup = false,
+                pushAlarm = false,
+                fingerprint = false,
+                isLast = true,
+                createTime = 0,
+                importTime = 0,
+                sort = 0,
+                extension = ""
+            )
+        }
+    }
 }

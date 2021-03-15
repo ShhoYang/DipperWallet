@@ -33,11 +33,19 @@ class InitWalletActivity : BaseActivity<ActivityInitWalletBinding, PlaceholderVi
         }
         viewBinding {
             RxView.click(btnCreate) {
-                CreateWalletActivity.start(this@InitWalletActivity, "", isAdd)
+                WalletTypeActivity.start(
+                    this@InitWalletActivity,
+                    WalletTypeActivity.TO_DO_TYPE_CREATE,
+                    isAdd
+                )
             }
 
             RxView.click(btnImport) {
-                ImportWalletActivity.start(this@InitWalletActivity, "", isAdd)
+                WalletTypeActivity.start(
+                    this@InitWalletActivity,
+                    WalletTypeActivity.TO_DO_TYPE_IMPORT,
+                    isAdd
+                )
             }
         }
     }
@@ -49,13 +57,9 @@ class InitWalletActivity : BaseActivity<ActivityInitWalletBinding, PlaceholderVi
     }
 
     companion object {
-
         /**
-         * 怎么去创建
+         * @param isAdd true添加 false新建
          */
-        const val TO_DO_TYPE_CREATE = 1
-        const val TO_DO_TYPE_IMPORT = 2
-
         fun start(context: Context, isAdd: Boolean = false) {
             val intent = Intent(context, InitWalletActivity::class.java)
             intent.putExtra(ExtraKey.BOOLEAN, isAdd)

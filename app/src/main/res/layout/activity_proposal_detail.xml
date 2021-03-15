@@ -371,7 +371,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="@dimen/activityPadding"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/activityPadding"
             android:layout_marginRight="@dimen/activityPadding"
             android:orientation="horizontal">
 
@@ -383,11 +383,10 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/yes"
-                android:textColor="@color/proposalYes"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
-                app:roundTextViewNormalTextColor="@color/btnTextColor"
+                app:roundTextViewNormalTextColor="@color/proposalYes"
                 app:roundTextViewRadius="@dimen/buttonRadius" />
 
 
@@ -399,21 +398,17 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/no"
-                android:textColor="@color/proposalNo"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
-                app:roundTextViewNormalTextColor="@color/btnTextColor"
+                app:roundTextViewNormalTextColor="@color/proposalNo"
                 app:roundTextViewRadius="@dimen/buttonRadius" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="@dimen/activityPadding"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="@dimen/activityPadding"
-            android:layout_marginBottom="@dimen/activityPadding"
+            android:layout_margin="@dimen/activityPadding"
             android:orientation="horizontal">
 
             <com.hao.library.view.RoundTextView
@@ -425,11 +420,10 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/noWithVote"
-                android:textColor="@color/proposalNoWithVeto"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
-                app:roundTextViewNormalTextColor="@color/btnTextColor"
+                app:roundTextViewNormalTextColor="@color/proposalNoWithVeto"
                 app:roundTextViewRadius="@dimen/buttonRadius" />
 
             <com.hao.library.view.RoundTextView
@@ -440,11 +434,10 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/abstain"
-                android:textColor="@color/proposalAbstain"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
-                app:roundTextViewNormalTextColor="@color/btnTextColor"
+                app:roundTextViewNormalTextColor="@color/proposalAbstain"
                 app:roundTextViewRadius="@dimen/buttonRadius" />
         </LinearLayout>
 

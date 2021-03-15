@@ -9,7 +9,6 @@ import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityTransactionBinding
 import com.highstreet.wallet.extensions.isAddress
@@ -18,6 +17,7 @@ import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.TransactionVM
 import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.utils.ViewUtils
 import com.highstreet.wallet.view.listener.RxView
 
 /**
@@ -74,16 +74,12 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
         ).authenticate()
     }
 
-    private fun updateLineStyle(view: View, hasFocus: Boolean) {
-        view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
-    }
-
     override fun initData() {
         viewModel {
             amountLD.observe(this@TransactionActivity, Observer {
                 it?.apply {
                     longAmount = getLongAmount()
-                    val dip = StringUtils.pdip2DIP(getAmount())
+                    val dip = getAmount()
                     amount = dip.substring(0, dip.length - 3)
                     vb?.tvBalance?.text = "${getString(R.string.balance)} ${amount}DIP"
                 }
@@ -127,9 +123,9 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
     override fun onFocusChange(v: View, hasFocus: Boolean) {
         viewBinding {
             when (v) {
-                etToAddress -> updateLineStyle(toAddressLine.line, hasFocus)
-                etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etRemarks -> updateLineStyle(remarksLine.line, hasFocus)
+                etToAddress -> ViewUtils.updateLineStyle(toAddressLine.line, hasFocus)
+                etAmount -> ViewUtils.updateLineStyle(amountLine.line, hasFocus)
+                etRemarks -> ViewUtils.updateLineStyle(remarksLine.line, hasFocus)
             }
         }
     }

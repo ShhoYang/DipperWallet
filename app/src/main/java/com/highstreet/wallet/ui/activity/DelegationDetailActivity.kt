@@ -37,12 +37,12 @@ class DelegationDetailActivity :
     override fun initData() {
         val isUndelegate = intent.getBooleanExtra(ExtraKey.BOOLEAN, false)
         viewBinding {
-            if(isUndelegate){
+            if (isUndelegate) {
                 llBtn.gone()
-                tvUnDelegateAmount.visible()
-            }else {
+                tvUnbondingDelegationAmount.visible()
+            } else {
                 llBtn.visible()
-                tvUnDelegateAmount.gone()
+                tvUnbondingDelegationAmount.gone()
                 RxView.click(btnRedelegate, this@DelegationDetailActivity)
                 RxView.click(btnUndelegate, this@DelegationDetailActivity)
                 RxView.click(btnReward, this@DelegationDetailActivity)
@@ -55,8 +55,8 @@ class DelegationDetailActivity :
                 validator?.apply {
                     viewBinding {
                         tvName.text = description?.moniker
-                        tvShares.text = StringUtils.pdip2DIP(delegator_shares)
-                        tvSelfShares.text = StringUtils.pdip2DIP(self_delegation)
+                        tvShares.text = getDelegatorShares()
+                        tvSelfShares.text = getSelfDelegation()
                         tvRate.text = getRate()
                     }
                 }
@@ -74,15 +74,12 @@ class DelegationDetailActivity :
                 getReward(validator_address)
             }
             viewBinding {
-                tvAmount.text = StringUtils.pdip2DIP(shares, false)
+                tvAmount.text = getDelegationAmount()
                 tvReward.text = reward
                 if (isUndelegate) {
-                    tvUnDelegateAmount.text =
+                    tvUnbondingDelegationAmount.text =
                         "${
-                            StringUtils.pdip2DIP(
-                                StringUtils.formatDecimal(shares),
-                                true
-                            )
+                            getDelegationAmount(true)
                         } ${getString(R.string.unbond)}\n（${
                             getString(R.string.timeRemaining)
                         } ${StringUtils.timeGap(this@DelegationDetailActivity, completionTime)}）"
@@ -96,12 +93,12 @@ class DelegationDetailActivity :
             when (v) {
                 btnRedelegate -> {
                     if (null != delegationInfo) {
-                        RedelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
+                        RedelegateActivity.start(this@DelegationDetailActivity, delegationInfo!!)
                     }
                 }
                 btnUndelegate -> {
                     if (null != delegationInfo) {
-                        UndelegationActivity.start(this@DelegationDetailActivity, delegationInfo!!)
+                        UndelegateActivity.start(this@DelegationDetailActivity, delegationInfo!!)
                     }
                 }
                 btnReward -> {
@@ -114,7 +111,7 @@ class DelegationDetailActivity :
                                 delegatorAddress
                             )
                         ) {
-                            ReceiveRewardActivity.start(
+                            RedeemRewardActivity.start(
                                 this@DelegationDetailActivity,
                                 validatorAddress!!,
                                 delegatorAddress!!,
@@ -125,7 +122,7 @@ class DelegationDetailActivity :
                 }
                 btnDelegate -> {
                     if (null != validator) {
-                        DelegationActivity.start(this@DelegationDetailActivity, validator!!)
+                        DelegateActivity.start(this@DelegationDetailActivity, validator!!)
                     }
                 }
             }

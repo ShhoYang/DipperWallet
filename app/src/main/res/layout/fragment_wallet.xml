@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -53,7 +52,7 @@
                         android:id="@+id/ivWalletAddress"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/icon_qr"
+                        android:src="@drawable/ic_qr"
                         app:layout_constraintBottom_toBottomOf="@id/_ivKey"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="@id/_ivKey" />
@@ -69,8 +68,7 @@
                         android:textSize="12sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/_ivKey"
-                        tools:text="anioagoannioungaiohaonhgnoai" />
+                        app:layout_constraintTop_toBottomOf="@id/_ivKey" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +85,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ivCoinIcon"
+                            android:id="@+id/ivChainIcon"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@mipmap/logo3"
@@ -101,40 +99,37 @@
                             android:layout_marginLeft="4dp"
                             android:textColor="@color/textDipperGreen"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/ivCoinIcon"
-                            app:layout_constraintStart_toEndOf="@id/ivCoinIcon"
-                            app:layout_constraintTop_toTopOf="@id/ivCoinIcon" />
+                            app:layout_constraintBottom_toBottomOf="@id/ivChainIcon"
+                            app:layout_constraintStart_toEndOf="@id/ivChainIcon"
+                            app:layout_constraintTop_toTopOf="@id/ivChainIcon" />
 
                         <TextView
                             android:id="@+id/tvAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textWhite"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/ivCoinIcon"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@id/ivChainIcon"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/ivCoinIcon" />
+                            app:layout_constraintTop_toTopOf="@id/ivChainIcon" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/tvCash"
                         android:layout_width="match_parent"
-                        android:layout_height="24dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:gravity="right|center_vertical"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/line" />
+                    <include layout="@layout/include_block_line" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="32sp"
-                        android:layout_marginTop="8dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/blockPadding">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -142,7 +137,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/available"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvAvailable"
@@ -155,7 +150,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="32sp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -163,7 +159,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/delegate"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvDelagated"
@@ -177,7 +173,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="32sp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -185,10 +182,10 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/unbonding"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tvUnbonding"
+                            android:id="@+id/tvUnbondingDelegationAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right|center_vertical"
@@ -199,7 +196,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="32sp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -207,7 +205,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/reward"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvReward"
@@ -297,7 +295,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/currentPrice"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvCurrentPrice"
@@ -320,7 +318,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="@string/gecko"
                             android:textColor="@color/textGray"
-                            android:textSize="11sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvGecko"
@@ -344,7 +342,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -369,7 +367,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -400,14 +398,16 @@
                     android:layout_marginTop="@dimen/blockSpace"
                     android:background="@drawable/shape_block"
                     android:orientation="vertical"
-                    android:padding="@dimen/blockPadding">
+                    android:paddingLeft="@dimen/blockPadding"
+                    android:paddingTop="@dimen/blockPadding"
+                    android:paddingRight="@dimen/blockPadding">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/ivChainIcon"
+                            android:id="@+id/_ivChainIcon"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_marginTop="8dp"
@@ -424,8 +424,8 @@
                             android:text="@string/dipperNetwork"
                             android:textColor="@color/textWhite"
                             android:textSize="16sp"
-                            app:layout_constraintStart_toEndOf="@id/ivChainIcon"
-                            app:layout_constraintTop_toTopOf="@id/ivChainIcon" />
+                            app:layout_constraintStart_toEndOf="@id/_ivChainIcon"
+                            app:layout_constraintTop_toTopOf="@id/_ivChainIcon" />
 
                         <TextView
                             android:id="@+id/tvChainDesc"
@@ -441,11 +441,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/line" />
+                    <include layout="@layout/include_block_line" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginBottom="8dp"
+    android:foreground="@drawable/selector_wallet_type"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/ivChainIcon"
+        android:layout_width="48dp"
+        android:layout_height="24dp" />
+
+    <TextView
+        android:id="@+id/tvChainName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/textWhite"
+        android:textSize="8sp" />
+
+</LinearLayout>
+

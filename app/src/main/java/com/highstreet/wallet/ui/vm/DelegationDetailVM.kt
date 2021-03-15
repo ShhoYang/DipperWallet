@@ -19,7 +19,7 @@ class DelegationDetailVM : BaseViewModel() {
     val rewardLD: MutableLiveData<String> = MutableLiveData()
 
     fun getValidator(validatorAddress: String) {
-        ApiService.getDipApi().validatorDetail(validatorAddress).subscribeBy({
+        ApiService.getApi().validatorDetail(validatorAddress).subscribeBy({
             validatorLD.value = it
         }, {
             validatorLD.value = null
@@ -27,14 +27,14 @@ class DelegationDetailVM : BaseViewModel() {
     }
 
     fun getReward(validatorAddress: String) {
-        ApiService.getDipApi().rewardsByValidator(AccountManager.instance().address, validatorAddress).subscribeBy({
+        ApiService.getApi().rewardsByValidator(AccountManager.instance().address, validatorAddress).subscribeBy({
             rewardLD.value = if (it == null || it.isEmpty()) {
                 "0"
             } else {
                 StringUtils.pdip2DIP(it[0], false)
             }
         }, {
-            rewardLD.value = "0"
+            rewardLD.value = ""
         }).add()
     }
 }

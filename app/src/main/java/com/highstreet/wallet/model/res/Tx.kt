@@ -8,6 +8,7 @@ import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.MsgType
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.StdTx
+import com.highstreet.wallet.utils.StringUtils
 import java.lang.Exception
 import java.math.BigDecimal
 import kotlin.collections.ArrayList
@@ -60,13 +61,13 @@ data class Tx(
         if ("pdip" == feeAmount.denom) {
             r = r.divide(BigDecimal(Constant.DIP_RATE))
         }
-        return "${r.setScale(6, BigDecimal.ROUND_DOWN)}DIP"
+        return StringUtils.pdip2DIP(r.toString() + feeAmount.denom, false)
     }
 
     /**
      * 金额
      */
-    fun getAmount(): Coin? {
+    fun getAmount(): String {
         val msgs = tx?.value?.msg
         val msg = if (msgs == null || msgs.isEmpty()) {
             null
@@ -94,11 +95,13 @@ data class Tx(
                 arrayListOf(coin)
             }
         }
-        return if (coins == null || coins.isEmpty()) {
+        val coin = if (coins == null || coins.isEmpty()) {
             null
         } else {
             coins[0]
         }
+
+        return StringUtils.pdip2DIP(coin)
     }
 
     /**

@@ -20,10 +20,10 @@ interface DipApi {
     fun test(@Url url: String): Observable<Any>
 
     /**
-     * 账户信息
+     * 节点信息
      */
-    @GET("auth/accounts/{address}")
-    fun account(@Path("address") address: String): Observable<BaseBean<AccountInfo>>
+    @GET("node_info")
+    fun nodeInfo(): Observable<NodeInfoBean>
 
     /**
      * 转账，委托
@@ -32,48 +32,89 @@ interface DipApi {
     fun txs(@Body ReqBroadCast: RequestBroadCast): Observable<Tx>
 
     /**
+     * 账户信息
+     */
+    @GET("auth/accounts/{address}")
+    fun account(@Path("address") address: String): Observable<BaseBean<AccountInfo>>
+
+    /**
      * 入账记录
      * txs?transfer.recipient=地址page=1&limit=100
      */
     @GET("txs")
-    fun transactionInRecord(@Query("transfer.recipient") address: String, @Query("page") page: Int, @Query("limit") pageSize: Int): Observable<Transaction>
+    fun transactionInRecord(
+        @Query("transfer.recipient") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<Transaction>
 
     /**
      * 出账记录
      * txs?message.action=send&message.sender=地址&page=1&limit=100
      */
     @GET("txs")
-    fun transactionOutRecord(@Query("message.sender") address: String, @Query("page") page: Int, @Query("limit") pageSize: Int, @Query("message.action") action: String = "send"): Observable<Transaction>
+    fun transactionOutRecord(
+        @Query("message.sender") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int,
+        @Query("message.action") action: String = "send"
+    ): Observable<Transaction>
 
     /**
-     * 委托和验证人信息
+     * 查询通胀率
      */
-    @GET("staking/delegators/{address}/delegations")
-    fun delegatorAndValidatorInfo(@Path("address") address: String): Observable<BaseBean<DelegationInfo>>
-
-    /**
-     * 委托信息
-     */
-    @GET("staking/delegators/{address}/delegations")
-    fun delegations(@Path("address") address: String, @Query("page") page: Int, @Query("limit") pageSize: Int): Observable<BaseBean<ArrayList<DelegationInfo>>>
-
-    /**
-     * 正在解除的委托信息
-     */
-    @GET("staking/delegators/{address}/unbonding_delegations")
-    fun unBondingDelegations(@Path("address") address: String, @Query("page") page: Int, @Query("limit") pageSize: Int): Observable<BaseBean<ArrayList<DelegationInfo>>>
+    @GET("minting/inflation")
+    fun getInflation(): Observable<BaseBean<String>>
 
     /**
      * staking交易
      */
     @GET("staking/delegators/{address}/txs")
-    fun delegationTransactionRecord(@Path("address") address: String, @Query("type") type: String, @Query("page") page: Int, @Query("limit") pageSize: Int): Observable<BaseBean<ArrayList<Transaction>>>
+    fun delegationTransactionRecord(
+        @Path("address") address: String,
+        @Query("type") type: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<BaseBean<ArrayList<Transaction>>>
+
+    /**
+     * 委托信息
+     */
+    @GET("staking/delegators/{address}/delegations")
+    fun delegations(
+        @Path("address") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<BaseBean<ArrayList<DelegationInfo>>>
+
+    /**
+     * 正在解除的委托信息
+     */
+    @GET("staking/delegators/{address}/unbonding_delegations")
+    fun unbondingDelegations(
+        @Path("address") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<BaseBean<ArrayList<DelegationInfo>>>
 
     /**
      * 所有验证人
      */
     @GET("staking/validators")
-    fun validators(@Query("page") page: Int, @Query("limit") pageSize: Int): Observable<BaseBean<ArrayList<Validator>>>
+    fun validators(
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<BaseBean<ArrayList<Validator>>>
+
+    /**
+     * 地址绑定的所有验证人
+     */
+    @GET("staking/delegators/{address}/validators")
+    fun validatorsByAddress(
+        @Path("address") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<BaseBean<ArrayList<Validator>>>
 
     /**
      * 获取验证人信息
@@ -91,7 +132,10 @@ interface DipApi {
      * 根据委托人查询收益
      */
     @GET("distribution/delegators/{address}/rewards/{validatorAddress}")
-    fun rewardsByValidator(@Path("address") address: String, @Path("validatorAddress") validatorAddress: String): Observable<BaseBean<ArrayList<Coin>>>
+    fun rewardsByValidator(
+        @Path("address") address: String,
+        @Path("validatorAddress") validatorAddress: String
+    ): Observable<BaseBean<ArrayList<Coin>>>
 
     /**
      * 提案
@@ -112,8 +156,18 @@ interface DipApi {
     fun votingRate(@Path("proposalId") proposalId: String): Observable<BaseBean<FinalTallyResult>>
 
     /**
-     * 我的意见
+     * 我的投票
      */
     @GET("gov/proposals/{proposalId}/votes/{voter}")
-    fun proposalOpinion(@Path("proposalId") proposalId: String, @Path("voter") voter: String): Observable<BaseBean<ProposalOpinion>>
+    fun proposalOpinion(
+        @Path("proposalId") proposalId: String,
+        @Path("voter") voter: String
+    ): Observable<BaseBean<ProposalOpinion>>
 }
+
+//https://rpc.testnet.dippernetwork.com/minting/inflation
+//https://rpc.testnet.dippernetwork.com/minting/parameters
+//https://rpc.testnet.dippernetwork.com/staking/delegators/dip1fl50wmzvpnhtz0f8qdzmhr0lz4gve3qjtyty8k/delegations
+//https://rpc.testnet.dippernetwork.com/staking/delegators/dip1fl50wmzvpnhtz0f8qdzmhr0lz4gve3qjtyty8k/unbonding_delegations
+//https://rpc.testnet.dippernetwork.com/staking/delegators/dip1fl50wmzvpnhtz0f8qdzmhr0lz4gve3qjtyty8k/txs
+//https://rpc.testnet.dippernetwork.com/staking/delegators/dip1fl50wmzvpnhtz0f8qdzmhr0lz4gve3qjtyty8k/validators

@@ -33,8 +33,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivCoinIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="WalletName" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvChainName"
@@ -45,8 +44,7 @@
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvWalletName"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="(Dipper)" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivSwitchWallet"

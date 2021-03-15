@@ -8,7 +8,7 @@ import com.hao.library.extensions.init
 import com.hao.library.ui.BaseFragment
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
-import com.highstreet.wallet.databinding.FragmentDappBinding
+import com.highstreet.wallet.databinding.FragmentListBinding
 import com.highstreet.wallet.model.Menu
 import com.highstreet.wallet.ui.activity.DAppActivity
 import com.highstreet.wallet.ui.adapter.DAppAdapter
@@ -18,7 +18,7 @@ import com.highstreet.wallet.ui.adapter.DAppAdapter
  */
 
 @AndroidEntryPoint(injectViewModel = false)
-class DAppFragment : BaseFragment<FragmentDappBinding, PlaceholderViewModel>(),
+class DAppFragment : BaseFragment<FragmentListBinding, PlaceholderViewModel>(),
     OnItemClickListener<Menu> {
 
     @Inject

@@ -28,8 +28,8 @@ class WalletTypeActivity :
 
     override fun initData() {
         val list = ArrayList<WalletType>()
-        list.add(WalletType(Chain.DIP_MAIN2, R.mipmap.dipper_hub))
-        list.add(WalletType(Chain.DIP_TEST2, R.mipmap.dipper_test))
+        list.add(WalletType(Chain.DIP_MAIN, R.mipmap.dipper_hub))
+        list.add(WalletType(Chain.DIP_TEST, R.mipmap.dipper_test))
         adapter.resetData(list)
     }
 

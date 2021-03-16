@@ -13,6 +13,7 @@ import com.hao.library.view.web.WebViewLoadListener
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.BuildConfig
+import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.dapp.Trust
 import com.highstreet.wallet.dapp.entity.Address
@@ -22,6 +23,7 @@ import com.highstreet.wallet.dapp.entity.TypedData
 import com.highstreet.wallet.dapp.sign.*
 import com.highstreet.wallet.dapp.web3view.*
 import com.highstreet.wallet.databinding.ActivityDappBinding
+import com.highstreet.wallet.http.ApiService
 
 /**
  * @author Yang Shihao
@@ -49,7 +51,7 @@ class DAppActivity : BaseActivity<ActivityDappBinding, PlaceholderViewModel>(), 
             baseWebView.apply {
                 setWebViewLoadListener(this@DAppActivity)
                 chainId = 1
-                setRpcUrl(BuildConfig.BASE_URL)
+                setRpcUrl(Constant.getBaseUrl())
                 setWalletAddress(Address(AccountManager.instance().address))
                 setOnSignTransactionListener { transaction ->
                     callSignTransaction =

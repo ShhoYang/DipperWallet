@@ -7,9 +7,9 @@
     android:overScrollMode="never">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,12 +28,12 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvCash"
+                android:id="@+id/tvAmountValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/textWhite"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,8 +60,7 @@
         <com.hao.library.view.EmptyView
             android:id="@id/baseEmptyView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@id/baseRecyclerView"

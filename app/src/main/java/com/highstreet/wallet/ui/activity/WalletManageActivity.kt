@@ -130,11 +130,11 @@ class WalletManageActivity :
                 testList.add(it)
             }
         }
-        mainList.add(Account.empty(Chain.DIP_MAIN2))
-        testList.add(Account.empty(Chain.DIP_TEST2))
+        mainList.add(Account.empty(Chain.DIP_MAIN))
+        testList.add(Account.empty(Chain.DIP_TEST))
         list.add(WalletType(Chain.ALL, 0, accounts, selected = true, isAll = true))
-        list.add(WalletType(Chain.DIP_MAIN2, R.mipmap.dipper_hub, mainList))
-        list.add(WalletType(Chain.DIP_TEST2, R.mipmap.dipper_test, testList))
+        list.add(WalletType(Chain.DIP_MAIN, R.mipmap.dipper_hub, mainList))
+        list.add(WalletType(Chain.DIP_TEST, R.mipmap.dipper_test, testList))
         leftAdapter.resetData(list)
         resetRightData(list, 0)
     }

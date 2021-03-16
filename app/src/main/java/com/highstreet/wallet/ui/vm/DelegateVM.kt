@@ -18,17 +18,17 @@ import com.highstreet.wallet.utils.MsgGeneratorUtils
  * @Date 2020/10/15
  */
 
-class DelegationVM : BalanceVM() {
+class DelegateVM : BalanceVM() {
 
     val resultLD = MutableLiveData<Pair<Boolean, String>>()
 
-    fun delegate(validationAddress: String, toAmount: String, remarks: String) {
+    fun delegate(validationAddress: String, toAmount: String, memo: String) {
         ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             val coins = it?.value?.coins
             if (null != coins && coins.isNotEmpty()) {
                 val balance = coins[0].amount ?: "0"
                 if (isEnough(balance, toAmount)) {
-                    generateParams(it, validationAddress, toAmount, remarks)
+                    generateParams(it, validationAddress, toAmount, memo)
                 } else {
                     resultLD.value =
                         Pair(false, App.instance.getString(R.string.notEnough))
@@ -47,7 +47,7 @@ class DelegationVM : BalanceVM() {
         accountInfo: AccountInfo,
         validationAddress: String,
         toAmount: String,
-        remarks: String
+        memo: String
     ) {
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
@@ -65,7 +65,7 @@ class DelegationVM : BalanceVM() {
                 account,
                 msg,
                 AmountUtils.generateFee(),
-                remarks,
+                memo,
                 deterministicKey
             )
         )
@@ -74,7 +74,7 @@ class DelegationVM : BalanceVM() {
     private fun doDelegate(reqBroadCast: RequestBroadCast) {
         ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
-                AccountManager.instance().refresh()
+                AccountManager.instance().refreshBalance()
                 resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
             } else {
                 resultLD.value = Pair(false, App.instance.getString(R.string.failed))

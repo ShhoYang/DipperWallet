@@ -135,7 +135,7 @@ object KeyUtils {
     private fun getParentPath(chain: String): List<ChildNumber> {
         return listOf(
             ChildNumber(44, true),
-            ChildNumber(925, true),
+            ChildNumber(118, true),
             ChildNumber.ZERO_HARDENED,
             ChildNumber.ZERO
         )

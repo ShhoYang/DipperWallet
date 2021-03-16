@@ -15,22 +15,27 @@ import com.highstreet.wallet.utils.MsgGeneratorUtils
 
 /**
  * @author Yang Shihao
- * @Date 2020/10/27
+ * @Date 2020/10/28
  */
 
-class UndelegationVM : BaseViewModel() {
+class RedelegateVM : BaseViewModel() {
 
-    val undelegateLD: MutableLiveData<Pair<Boolean, String>> = MutableLiveData()
+    val redelegateLD: MutableLiveData<Pair<Boolean, String>> = MutableLiveData()
 
-    fun undelegate(amount: String, delegationInfo: DelegationInfo) {
+    fun redelegate(
+        amount: String,
+        delegationInfo: DelegationInfo,
+        toValidatorAddress: String,
+        memo: String
+    ) {
         ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (it == null) {
-                undelegateLD.value = Pair(false, "")
+                redelegateLD.value = Pair(false, "")
             } else {
-                generateParams(it, amount, delegationInfo)
+                generateParams(it, amount, delegationInfo, toValidatorAddress, memo)
             }
         }, {
-            undelegateLD.value = Pair(false, "")
+            redelegateLD.value = Pair(false, "")
         }).add()
 
     }
@@ -38,41 +43,44 @@ class UndelegationVM : BaseViewModel() {
     private fun generateParams(
         accountInfo: AccountInfo,
         amount: String,
-        delegationInfo: DelegationInfo
+        delegationInfo: DelegationInfo,
+        toValidatorAddress: String,
+        memo: String
     ) {
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
         val deterministicKey =
             KeyUtils.getDeterministicKey(account.chain, account.getEntropyAsHex(), account.path)
-        val msg = MsgGeneratorUtils.undelegateMsg(
-            delegationInfo.delegator_address,
+        val msg = MsgGeneratorUtils.redelegateMsg(
+            account.address,
             delegationInfo.validator_address,
+            toValidatorAddress,
             AmountUtils.generateCoin(amount),
             account.chain
         )
-        doUndelegate(
+        doRedelegate(
             MsgGeneratorUtils.getBroadCast(
                 account,
                 msg,
                 AmountUtils.generateFee(),
-                "",
+                memo,
                 deterministicKey
             )
         )
     }
 
-    private fun doUndelegate(reqBroadCast: RequestBroadCast) {
+    private fun doRedelegate(reqBroadCast: RequestBroadCast) {
         ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
-                AccountManager.instance().refresh()
-                undelegateLD.value = Pair(true, "")
+                AccountManager.instance().refreshBalance()
+                redelegateLD.value = Pair(true, "")
             } else {
-                undelegateLD.value = Pair(false, "")
+                redelegateLD.value = Pair(false, "")
             }
 
         }, {
-            undelegateLD.value = Pair(false, it.second)
+            redelegateLD.value = Pair(false, it.second)
         }).add()
     }
 }

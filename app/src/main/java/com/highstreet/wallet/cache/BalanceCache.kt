@@ -1,11 +1,11 @@
 package com.highstreet.wallet.cache
 
-import android.util.ArrayMap
 import com.hao.library.utils.CoroutineUtils
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.http.ApiService
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author Yang Shihao
@@ -13,13 +13,13 @@ import com.highstreet.wallet.http.ApiService
  */
 class BalanceCache {
 
-    private val map = ArrayMap<String, String>()
+    private val map = ConcurrentHashMap<String, String>()
 
     fun getBalance(account: Account): String {
         return map[account.chain + account.address] ?: "--"
     }
 
-    fun loadBalances() {
+    fun load() {
         CoroutineUtils.io {
             val accounts = AccountManager.instance().accounts
             accounts.forEach { account ->

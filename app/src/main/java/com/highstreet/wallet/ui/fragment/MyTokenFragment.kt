@@ -8,7 +8,7 @@ import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.ui.adapter.MyTokensAdapter
 import com.highstreet.wallet.ui.vm.TokensVM
-import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.utils.AmountUtils
 
 /**
  * @author Yang Shihao
@@ -22,11 +22,20 @@ class MyTokenFragment :
 
     override fun initData() {
         vm?.amountLD?.observe(this, {
+            val amount = it.getAmount()
             viewBinding {
                 baseRefreshLayout.stopRefresh()
-                tvAmount.text = it.getAmount()
+                tvAmount.text = amount
+                tvAmountValue.text = AmountUtils.getAmountValue(amount)
             }
         })
+
+        AccountManager.instance().balanceLiveData.observe(this) {
+            onRefresh()
+        }
+        AccountManager.instance().currencyLiveData.observe(this) {
+            onRefresh()
+        }
         Db.instance().accountDao().queryFirstUserAsLiveData()
             .observe(this) {
                 account = it
@@ -34,8 +43,10 @@ class MyTokenFragment :
             }
         Db.instance().accountDao().queryAllByChainAsLiveData(AccountManager.instance().chain)
             .observe(this) {
-                adapter.resetData(it)
+//                adapter.resetData(it)
             }
+
+        adapter.resetData(arrayListOf())
     }
 
     override fun onRefresh() {

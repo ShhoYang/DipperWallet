@@ -1,9 +1,13 @@
 package com.highstreet.wallet.model.res
 
 import android.text.TextUtils
+import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.cache.CoinPriceCache
+import com.highstreet.wallet.constant.Currency
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.PublicKey
 import com.highstreet.wallet.utils.StringUtils
+import java.math.BigDecimal
 
 /**
  * @author Yang Shihao
@@ -38,6 +42,8 @@ data class AccountInfo(
         }
         return StringUtils.pdip2DIP(coin, false)
     }
+
+
 
     fun getLongAmount(): Long {
         val coins = value?.coins

@@ -45,7 +45,7 @@
     <string name="mnemonicNotCompleted">24 mnemonic not completed</string>
     <string name="addressAdded">This address has been added</string>
 
-    <string name="backupMnemonic">Backup mnemonic</string>
+    <string name="backupMnemonic">Backup Mnemonic</string>
     <string name="backupTip1">Remember the mnemonics of your wallet and keep them safe</string>
     <string name="backupTip2">Mnemonics are used to restore the wallet or reset the password of the wallet. Please copy them accurately on the paper and keep them properly</string>
     <string name="next">Next</string>
@@ -212,7 +212,7 @@
     <string name="copySuccessful">Copy succeed</string>
 
     <string name="all">All</string>
-    <string name="remarks">Remarks</string>
+    <string name="memo">Memo</string>
 
     <string name="succeed">Succeed</string>
     <string name="failed">Failed</string>
@@ -228,6 +228,12 @@
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
+    <string name="state">State</string>
+    <string name="blockHeight">Block Height</string>
+    <string name="messageSize">Message Size</string>
+    <string name="gasUsedAndWanted">Gas</string>
+    <string name="transactionHash">Transaction Hash</string>
+
     <string name="emptyLoading">Loading...</string>
     <string name="emptyNoData">No data</string>
     <string name="emptyLoadFailed">Load failed</string>
@@ -239,6 +245,7 @@
     <string name="verifyFingerprint">Please verify your fingerprint</string>
     <string name="authenticateSucceed">Authenticate succeed</string>
     <string name="authenticateFailed">Authenticate failed</string>
+
 
     <string name="day">Day</string>
     <string name="hour">Hour</string>

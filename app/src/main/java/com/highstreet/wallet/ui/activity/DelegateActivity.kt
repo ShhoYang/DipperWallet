@@ -17,7 +17,7 @@ import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.model.res.Validator
-import com.highstreet.wallet.ui.vm.DelegationVM
+import com.highstreet.wallet.ui.vm.DelegateVM
 import com.highstreet.wallet.view.listener.RxView
 
 /**
@@ -25,7 +25,7 @@ import com.highstreet.wallet.view.listener.RxView
  * @Date 2020/10/24
  */
 @AndroidEntryPoint
-class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegationVM>(),
+class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>(),
     View.OnFocusChangeListener {
 
     private var amount = 0L
@@ -36,7 +36,7 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegationVM>(),
         setTitle(R.string.delegation)
         viewBinding {
             etAmount.onFocusChangeListener = this@DelegateActivity
-            etRemarks.onFocusChangeListener = this@DelegateActivity
+            etMemo.onFocusChangeListener = this@DelegateActivity
 
             RxView.textChanges(etAmount) {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
@@ -66,7 +66,7 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegationVM>(),
             useFingerprint = null,
             showUserPassword = true, {
                 showLoading()
-                vm!!.delegate(vb!!.etAddress.string(), s, vb!!.etRemarks.string())
+                vm!!.delegate(vb!!.etAddress.string(), s, vb!!.etMemo.string())
             }
         ).authenticate()
     }
@@ -105,7 +105,7 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegationVM>(),
         viewBinding {
             when (v) {
                 etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etRemarks -> updateLineStyle(remarksLine.line, hasFocus)
+                etMemo -> updateLineStyle(memoLine.line, hasFocus)
             }
         }
     }

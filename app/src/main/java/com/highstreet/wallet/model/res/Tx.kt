@@ -9,6 +9,7 @@ import com.highstreet.wallet.constant.MsgType
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.StdTx
 import com.highstreet.wallet.utils.StringUtils
+import java.io.Serializable
 import java.lang.Exception
 import java.math.BigDecimal
 import kotlin.collections.ArrayList
@@ -19,17 +20,28 @@ import kotlin.collections.ArrayList
  */
 data class Tx(
     val gas_used: String?,
+    val gas_wanted: String?,
+    val height: Long,
     val logs: List<Log>?,
     val timestamp: String?,
     val txhash: String?,
     val tx: StdTx?
-) : PagedAdapterItem {
+) : PagedAdapterItem, Serializable {
 
     fun success(): Boolean {
         return if (logs == null || logs.isEmpty()) {
             false
         } else {
             true == logs[0].success
+        }
+    }
+
+    fun getType(): String {
+        val msgs = tx?.value?.msg
+        return if (msgs == null || msgs.isEmpty()) {
+            ""
+        } else {
+            msgs[0].type.replace("dip/Msg", "")
         }
     }
 
@@ -58,9 +70,6 @@ data class Tx(
         }
 
         var r = BigDecimal(feeAmount.amount).divide(BigDecimal(gas)).multiply(BigDecimal(gas_used))
-        if ("pdip" == feeAmount.denom) {
-            r = r.divide(BigDecimal(Constant.DIP_RATE))
-        }
         return StringUtils.pdip2DIP(r.toString() + feeAmount.denom, false)
     }
 
@@ -81,14 +90,14 @@ data class Tx(
             try {
                 Gson().fromJson<ArrayList<Coin>>(
                     Gson().toJson(
-                        msg?.amount
+                        msg.amount
                             ?: "[]"
                     ), object : TypeToken<List<Coin>>() {}.type
                 )
             } catch (e: Exception) {
                 val coin = Gson().fromJson<Coin>(
                     Gson().toJson(
-                        msg?.amount
+                        msg.amount
                             ?: "{}"
                     ), object : TypeToken<Coin>() {}.type
                 )
@@ -154,6 +163,10 @@ data class Tx(
         return msg?.validator_address ?: msg?.validator_dst_address ?: ""
     }
 
+    fun getTime(): String {
+        return StringUtils.utc2String(timestamp)
+    }
+
     override fun getKey(): Any {
         return "$txhash"
     }
@@ -161,4 +174,4 @@ data class Tx(
 
 data class Log(
     val success: Boolean?
-)
+) : Serializable

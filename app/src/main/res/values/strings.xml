@@ -25,7 +25,7 @@
     <string name="transaction">转账</string>
     <string name="AddressTransfer">地址转账</string>
     <string name="transactionRecord">交易记录</string>
-    <string name="transactionDetail">交易明细</string>
+    <string name="transactionDetail">交易详情</string>
     <string name="myAddress">地址</string>
     <string name="available">可用</string>
     <string name="delegated">委托</string>
@@ -173,7 +173,7 @@
 
     <string name="undelegate">取消委托</string>
     <string name="undelegateAmount">解委托数量</string>
-    <string name="remarks">备注</string>
+    <string name="memo">备注</string>
     <string name="inputUndelegateAmount">请输入解委托数量</string>
     <string name="undelegateMaxAmount">最多可解委托</string>
 
@@ -223,6 +223,12 @@
     <string name="withdrawAddress">领取地址</string>
 
     <string name="all">全部</string>
+
+    <string name="state">状态</string>
+    <string name="blockHeight">区块高度</string>
+    <string name="messageSize">消息长度</string>
+    <string name="gasUsedAndWanted">费用</string>
+    <string name="transactionHash">交易Hash</string>
 
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>

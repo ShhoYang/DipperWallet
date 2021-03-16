@@ -18,7 +18,7 @@ import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.model.res.Validator
-import com.highstreet.wallet.ui.vm.RedelegationVM
+import com.highstreet.wallet.ui.vm.RedelegateVM
 import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.view.listener.RxView
@@ -30,7 +30,7 @@ import com.highstreet.wallet.view.listener.RxView
  * 转委托
  */
 @AndroidEntryPoint
-class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegationVM>(),
+class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>(),
     View.OnClickListener, View.OnFocusChangeListener {
 
     private var amount = "0"
@@ -42,7 +42,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegationV
         setTitle(R.string.redelegate)
         viewBinding {
             etAmount.onFocusChangeListener = this@RedelegateActivity
-            etRemarks.onFocusChangeListener = this@RedelegateActivity
+            etMemo.onFocusChangeListener = this@RedelegateActivity
 
             RxView.textChanges(etAmount) {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
@@ -101,7 +101,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegationV
             true,
             {
                 showLoading()
-                vm?.redelegate(s, delegationInfo!!, address)
+                vm?.redelegate(s, delegationInfo!!, address, vb?.etAmount?.string() ?: "")
             },
         ).authenticate()
     }
@@ -123,7 +123,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegationV
         viewBinding {
             when (v) {
                 etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etRemarks -> updateLineStyle(remarksLine.line, hasFocus)
+                etMemo -> updateLineStyle(memoLine.line, hasFocus)
             }
         }
     }

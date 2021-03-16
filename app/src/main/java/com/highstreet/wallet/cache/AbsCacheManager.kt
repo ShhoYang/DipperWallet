@@ -12,7 +12,7 @@ abstract class AbsCacheManager<T> {
 
     private var cacheCallback: CacheCallback<T>? = null
 
-    fun loadData() {
+    fun load() {
         if (loading) {
             return
         }
@@ -23,7 +23,7 @@ abstract class AbsCacheManager<T> {
     fun getCache(cacheCallback: CacheCallback<T>) {
         if (list.isEmpty()) {
             this.cacheCallback = cacheCallback
-            loadData()
+            load()
         } else {
             cacheCallback.response(list)
         }

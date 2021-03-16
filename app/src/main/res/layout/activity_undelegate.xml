@@ -65,18 +65,18 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="@string/remarks" />
+        android:text="@string/memo" />
 
     <EditText
-        android:id="@+id/etRemarks"
+        android:id="@+id/etMemo"
         style="@style/InputViewContent"
         android:layout_marginTop="8dp"
-        android:hint="@string/remarks"
+        android:hint="@string/memo"
         android:inputType="text"
         android:maxLength="100" />
 
     <include
-        android:id="@+id/remarksLine"
+        android:id="@+id/memoLine"
         layout="@layout/include_input_line" />
 
     <com.hao.library.view.RoundTextView

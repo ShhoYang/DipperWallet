@@ -4,7 +4,6 @@ import android.text.TextUtils
 import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.utils.StringUtils
 import java.io.Serializable
-import java.text.DecimalFormat
 
 /**
  * @author Yang Shihao

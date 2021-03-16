@@ -1,17 +1,14 @@
 package com.highstreet.wallet.model
 
-import android.app.Activity
-
 /**
  * @author Yang Shihao
  * @Date 2020/10/20
  */
 data class Menu(
+    val icon: Int = 0,
     val title: String = "",
     val desc: String? = null,
-    val icon: Any? = null,
-    val action: Class<out Activity>? = null,
-    val data: String? = null,
+    val action: Int = -1,
     val type: Int = TYPE_NORMAL
 ) {
 

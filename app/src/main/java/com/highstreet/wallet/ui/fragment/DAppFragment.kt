@@ -28,23 +28,20 @@ class DAppFragment : BaseFragment<FragmentListBinding, PlaceholderViewModel>(),
         val list = ArrayList<Menu>()
         list.add(
             Menu(
+                icon = R.mipmap.ic_app_launcher,
                 title = getString(R.string.dipsyn),
-                icon = R.mipmap.ic_launcher,
-                data = ""
             )
         )
         list.add(
             Menu(
+                icon = R.mipmap.ic_app_launcher,
                 title = getString(R.string.dipdex),
-                icon = R.mipmap.ic_launcher,
-                data = ""
             )
         )
         list.add(
             Menu(
+                icon = R.mipmap.ic_app_launcher,
                 title = getString(R.string.dipbank),
-                icon = R.mipmap.ic_launcher,
-                data = ""
             )
         )
         adapter.setOnItemClickListener(this)

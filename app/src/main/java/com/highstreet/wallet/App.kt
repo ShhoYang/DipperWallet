@@ -6,6 +6,7 @@ import com.hao.library.HaoLibrary
 import com.hao.library.extensions.notNullSingleValue
 import com.hao.library.utils.L
 import com.highstreet.wallet.backup.BaseData
+import com.highstreet.wallet.cache.CacheManager
 import com.highstreet.wallet.ui.activity.CrashActivity
 import com.highstreet.wallet.ui.activity.WelcomeActivity
 import com.tencent.bugly.crashreport.CrashReport
@@ -29,10 +30,9 @@ class App : MultiDexApplication() {
         super.onCreate()
         instance = this
         HaoLibrary.init(this, LibraryConfig())
-        if (!BuildConfig.testnet) {
-            CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
-        }
+        CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
         initX5()
+        CacheManager.instance().load()
         CaocConfig.Builder
             .create()
             .errorActivity(CrashActivity::class.java)

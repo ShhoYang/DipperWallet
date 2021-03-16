@@ -12,10 +12,10 @@
         android:id="@+id/tabHistory"
         android:icon="@mipmap/tab_history"
         android:title="@string/tabHistory" />
-    <item
-        android:id="@+id/tabDapp"
-        android:icon="@mipmap/tab_tokens"
-        android:title="@string/tabDApp" />
+<!--    <item-->
+<!--        android:id="@+id/tabDapp"-->
+<!--        android:icon="@mipmap/tab_tokens"-->
+<!--        android:title="@string/tabDApp" />-->
     <item
         android:id="@+id/tabSetting"
         android:icon="@mipmap/tab_setting"

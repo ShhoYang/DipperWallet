@@ -85,11 +85,11 @@ data class Account(
     }
 
     fun isMain(): Boolean {
-        return Chain.DIP_MAIN.chainName == chain || Chain.DIP_MAIN2.chainName == chain
+        return Chain.DIP_MAIN.chainName == chain
     }
 
     fun isTest(): Boolean {
-        return Chain.DIP_TEST.chainName == chain || Chain.DIP_TEST2.chainName == chain
+        return Chain.DIP_TEST.chainName == chain
     }
 
     fun getIcon(): Int {

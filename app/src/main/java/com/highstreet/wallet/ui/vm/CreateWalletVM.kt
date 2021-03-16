@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.BuildConfig
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.AES
 import com.highstreet.wallet.db.Account
@@ -86,11 +85,6 @@ class CreateWalletVM : BaseViewModel() {
      * 水龙头
      */
     private fun test() {
-        if (!BuildConfig.testnet) {
-            resultLD.value = true
-            return
-        }
-
         ApiService.getApi()
             .test("https://faucet.testnet.dippernetwork.com/get_token?" + accountManager.address)
             .subscribeBy2({

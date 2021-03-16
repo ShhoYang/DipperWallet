@@ -23,7 +23,7 @@ class Proposal(
     val voting_start_time: String?
 ) : PagedAdapterItem, Serializable {
 
-    fun getStatus(context: Context): String {
+    fun getState(context: Context): String {
         return when (proposal_status) {
             "Nil" -> ""
             "DepositPeriod" -> context.getString(R.string.proposalDepositPeriod)

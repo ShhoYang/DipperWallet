@@ -1,9 +1,10 @@
 package com.highstreet.wallet
 
+import androidx.lifecycle.MutableLiveData
 import com.hao.library.utils.SPUtils
 import com.highstreet.wallet.cache.BalanceCache
-import com.highstreet.wallet.constant.Chain
 import com.highstreet.wallet.constant.Constant
+import com.highstreet.wallet.constant.Currency
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.db.Password
@@ -17,7 +18,11 @@ class AccountManager private constructor() {
     /**
      * 余额变动
      */
-    var refresh = 0
+    private var refresh = 0
+    val balanceLiveData = MutableLiveData<Int>()
+
+    var currencyType = Currency.CNY.type
+    val currencyLiveData = MutableLiveData<String>()
 
     /**
      * 所有账户
@@ -65,6 +70,7 @@ class AccountManager private constructor() {
      * 子线程执行
      */
     fun init(): Account? {
+        currencyType = SPUtils.get(App.instance, KEY_CURRENCY, Currency.CNY.type)
         copy13()
         password = Db.instance().passwordDao().queryById(Constant.PASSWORD_DEFAULT_ID)
         getFirstAccount()
@@ -112,7 +118,7 @@ class AccountManager private constructor() {
         } else {
             account = null
         }
-        BalanceCache.instance().loadBalances()
+        BalanceCache.instance().load()
     }
 
 
@@ -120,6 +126,10 @@ class AccountManager private constructor() {
         this.password = password
         val dao = Db.instance().passwordDao()
         return dao.insert(password) > 0
+    }
+
+    fun changeCurrentAccount(account: Account) {
+        this.account = account
     }
 
     /**
@@ -144,13 +154,6 @@ class AccountManager private constructor() {
         }
         val newData = ArrayList<Account>(oldData.size)
         oldData.forEach {
-            val c = if (Chain.DIP_MAIN.chainName == it.baseChain) {
-                Chain.DIP_MAIN2.chainName
-            } else if (Chain.DIP_TEST.chainName == it.baseChain) {
-                Chain.DIP_TEST2.chainName
-            } else {
-                it.baseChain
-            }
             newData.add(
                 Account(
                     id = it.id,
@@ -158,7 +161,7 @@ class AccountManager private constructor() {
                     nickName = it.nickName,
                     isValidator = false,
                     address = it.address,
-                    chain = c,
+                    chain = it.baseChain,
                     path = it.path.toInt(),
                     resource = it.resource,
                     spec = it.spec,
@@ -215,13 +218,20 @@ class AccountManager private constructor() {
         }
     }
 
-    fun refresh() {
-        BalanceCache.instance().loadBalances()
-        refresh++
+    fun refreshBalance() {
+        BalanceCache.instance().load()
+        balanceLiveData.value = refresh++
+    }
+
+    fun refreshCurrency(type: String) {
+        currencyType = type
+        SPUtils.put(App.instance, KEY_CURRENCY, type)
+        currencyLiveData.value = currencyType
     }
 
     companion object {
         private const val KEY_FINGERPRINT = "KEY_FINGERPRINT"
+        private const val KEY_CURRENCY = "KEY_CURRENCY"
         private var instance: AccountManager? = null
 
         @Synchronized

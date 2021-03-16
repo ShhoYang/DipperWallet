@@ -2,6 +2,7 @@ package com.highstreet.wallet.ui.vm
 
 import com.hao.library.utils.CoroutineUtils
 import com.hao.library.viewmodel.BaseViewModel
+import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.model.WalletType
@@ -52,6 +53,7 @@ class WalletManageVM : BaseViewModel() {
                 account.sort = index
             }
             CoroutineUtils.io {
+                AccountManager.instance().changeCurrentAccount(sortedList[0])
                 Db.instance().accountDao().updateAll(sortedList)
             }
         }

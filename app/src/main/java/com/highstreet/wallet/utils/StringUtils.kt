@@ -25,8 +25,8 @@ object StringUtils {
     private const val DIP = "DIP"
     private const val DIP_RATE = 1_000_000_000_000
 
-    private const val ZERO = "0.000000"
-    private const val UNIT_ZERO = "0.000000DIP"
+    const val ZERO = "0.000000"
+    const val UNIT_ZERO = "0.000000DIP"
 
     private val df = DecimalFormat("0.000000")
     private val df2 = DecimalFormat("0.00%")

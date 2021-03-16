@@ -1,12 +1,14 @@
 package com.highstreet.wallet.model.req
 
+import java.io.Serializable
+
 
 data class Msg(
-        val type: String,
-        val value: MsgValue
-)
+    val type: String,
+    val value: MsgValue
+) : Serializable
 
-class MsgValue {
+class MsgValue : Serializable {
     var from_address: String? = null
     var to_address: String? = null
     var value: Coin? = null

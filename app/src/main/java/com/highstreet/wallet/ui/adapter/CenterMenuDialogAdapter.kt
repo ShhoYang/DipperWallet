@@ -4,30 +4,29 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hao.library.adapter.BaseNormalAdapter
 import com.hao.library.adapter.ViewHolder
-import com.highstreet.wallet.databinding.ItemWalletTypeBinding
-import com.highstreet.wallet.model.WalletType
+import com.hao.library.extensions.visibility
+import com.highstreet.wallet.databinding.DialogCenterMenuItemBinding
 
 /**
  * @author Yang Shihao
- * @Date 2020/10/22
+ * @Date 3/6/21
  */
-
-class WalletTypeAdapter : BaseNormalAdapter<ItemWalletTypeBinding, WalletType>() {
+class CenterMenuDialogAdapter : BaseNormalAdapter<DialogCenterMenuItemBinding, String>() {
 
     override fun getViewBinding(
         layoutInflater: LayoutInflater,
         parent: ViewGroup
-    ) = ItemWalletTypeBinding.inflate(layoutInflater, parent, false)
+    ) = DialogCenterMenuItemBinding.inflate(layoutInflater, parent, false)
 
     override fun bindViewHolder(
-        viewHolder: ViewHolder<ItemWalletTypeBinding>,
-        item: WalletType,
+        viewHolder: ViewHolder<DialogCenterMenuItemBinding>,
+        item: String,
         position: Int,
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            ivChainIcon.setImageResource(item.chainIcon)
-            tvChainName.text = item.chain.chainName
+            tvText.text = item
+            line.visibility(position != 0)
         }
     }
 }

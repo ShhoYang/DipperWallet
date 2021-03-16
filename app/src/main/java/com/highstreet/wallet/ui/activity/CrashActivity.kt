@@ -18,7 +18,11 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 class CrashActivity : BaseActivity<ActivityCarshBinding, PlaceholderViewModel>() {
 
     override fun initView() {
-        title = "SORRY"
+        toolbarLayout {
+            setTitleText("SORRY")
+            showBack(false)
+        }
+
         var error = CustomActivityOnCrash.getStackTraceFromIntent(intent)
         val rxPermissions = RxPermissions(this)
         if (rxPermissions.isGranted(android.Manifest.permission.READ_PHONE_STATE)) {

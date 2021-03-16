@@ -86,7 +86,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
     }
 
     override fun initData() {
-        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST2.chainName
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST.chainName
         vm?.resultLD?.observe(this, Observer {
             hideLoading()
             if (true == it) {

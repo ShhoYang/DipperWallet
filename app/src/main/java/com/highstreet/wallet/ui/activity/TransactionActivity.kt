@@ -16,7 +16,6 @@ import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.TransactionVM
-import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.utils.ViewUtils
 import com.highstreet.wallet.view.listener.RxView
 
@@ -37,7 +36,7 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
         viewBinding {
             etToAddress.onFocusChangeListener = this@TransactionActivity
             etAmount.onFocusChangeListener = this@TransactionActivity
-            etRemarks.onFocusChangeListener = this@TransactionActivity
+            etMemo.onFocusChangeListener = this@TransactionActivity
 
             RxView.click(ivScan, this@TransactionActivity)
             RxView.click(btnConfirm, this@TransactionActivity)
@@ -68,7 +67,7 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
                     s,
                     longAmount,
                     s == amount,
-                    vb?.etRemarks?.string() ?: ""
+                    vb?.etMemo?.string() ?: ""
                 )
             },
         ).authenticate()
@@ -125,7 +124,7 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
             when (v) {
                 etToAddress -> ViewUtils.updateLineStyle(toAddressLine.line, hasFocus)
                 etAmount -> ViewUtils.updateLineStyle(amountLine.line, hasFocus)
-                etRemarks -> ViewUtils.updateLineStyle(remarksLine.line, hasFocus)
+                etMemo -> ViewUtils.updateLineStyle(memoLine.line, hasFocus)
             }
         }
     }

@@ -81,8 +81,8 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
     private fun setData(proposal: Proposal?) {
         proposal?.apply {
             viewBinding {
-                statusPoint.setBackgroundResource(if (isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
-                tvStatus.text = getStatus(this@ProposalDetailActivity)
+                statePoint.setBackgroundResource(if (isPassed()) R.drawable.shape_circle_green else R.drawable.shape_circle_red)
+                tvState.text = getState(this@ProposalDetailActivity)
                 tvTitle.text = "# ${id}.${content?.value?.title}"
                 tvDesc.text = content?.value?.description
                 tvProposer.text = proposer

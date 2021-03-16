@@ -28,7 +28,7 @@ class TransactionVM : BalanceVM() {
         toAmount: String,
         allAmount: Long,
         isAll: Boolean,
-        remarks: String
+        memo: String
     ) {
         ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
             if (isAll) {
@@ -36,7 +36,7 @@ class TransactionVM : BalanceVM() {
                     it,
                     toAddress,
                     AmountUtils.generateCoin(allAmount, true),
-                    remarks
+                    memo
                 )
             } else {
                 val coins = it?.value?.coins
@@ -52,7 +52,7 @@ class TransactionVM : BalanceVM() {
                     it,
                     toAddress,
                     AmountUtils.generateCoin(toAmount),
-                    remarks
+                    memo
                 )
             }
         }, {
@@ -64,7 +64,7 @@ class TransactionVM : BalanceVM() {
         accountInfo: AccountInfo?,
         toAddress: String,
         coin: Coin,
-        remarks: String
+        memo: String
     ) {
         if (accountInfo == null) {
             resultLD.value = Pair(false, App.instance.getString(R.string.failed))
@@ -88,7 +88,7 @@ class TransactionVM : BalanceVM() {
                 account,
                 msg,
                 AmountUtils.generateFee(),
-                remarks,
+                memo,
                 deterministicKey
             )
         )
@@ -97,7 +97,7 @@ class TransactionVM : BalanceVM() {
     private fun doTransact(reqBroadCast: RequestBroadCast) {
         ApiService.getApi().txs(reqBroadCast).subscribeBy2({
             if (true == it?.success()) {
-                AccountManager.instance().refresh()
+                AccountManager.instance().refreshBalance()
                 resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
             } else {
                 resultLD.value = Pair(false, App.instance.getString(R.string.failed))

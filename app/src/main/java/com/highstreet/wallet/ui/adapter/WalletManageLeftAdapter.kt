@@ -38,7 +38,7 @@ class WalletManageLeftAdapter : BaseMultiTypeNormalAdapter<WalletType>() {
         ) {
             viewHolder.viewBinding {
                 ivChainIcon.setImageResource(item.chainIcon)
-                tvChainName.text = item.chain.chainName.replace("_", "")
+                tvChainName.text = item.chain.chainName
                 root.isSelected = item.selected
                 root.setOnClickListener {
                     itemClickListener?.itemClicked(it, item, position)

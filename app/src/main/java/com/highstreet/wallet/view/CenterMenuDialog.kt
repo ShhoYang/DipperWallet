@@ -6,44 +6,41 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hao.library.utils.DisplayUtils
 import com.hao.library.view.dialog.BaseDialog
 import com.highstreet.wallet.R
-import com.highstreet.wallet.databinding.DialogBottomMenuBinding
+import com.highstreet.wallet.databinding.DialogCenterMenuBinding
 
 /**
  * @author Yang Shihao
  * @Date 3/6/21
  */
-class BottomMenuDialog(activity: Activity) :
-    BaseDialog<DialogBottomMenuBinding>(activity = activity) {
+class CenterMenuDialog(activity: Activity) :
+    BaseDialog<DialogCenterMenuBinding>(activity = activity) {
 
-    override fun getVB() = DialogBottomMenuBinding.inflate(layoutInflater)
+    override fun getVB() = DialogCenterMenuBinding.inflate(layoutInflater)
 
     override fun setWindowParams(window: Window) {
         val attributes = window.attributes
-        attributes.width = WindowManager.LayoutParams.MATCH_PARENT
+        val w = DisplayUtils.getScreenWidth(activity) / 5 * 3
+        attributes.width = w
         attributes.height = WindowManager.LayoutParams.WRAP_CONTENT
-        attributes.gravity = Gravity.BOTTOM
+        attributes.gravity = Gravity.CENTER
         window.attributes = attributes
-        window.setWindowAnimations(R.style.BottomDialogAnimation)
         setCancelable(true)
         setCanceledOnTouchOutside(true)
     }
 
     override fun initView() {
         viewBinding {
-            tvCancel.setOnClickListener {
-                dismiss()
-            }
             rv.layoutManager = LinearLayoutManager(activity)
         }
     }
 
-    fun setAdapter(adapter: RecyclerView.Adapter<*>): BottomMenuDialog {
+    fun setAdapter(adapter: RecyclerView.Adapter<*>): CenterMenuDialog {
         viewBinding {
             rv.adapter = adapter
         }
-
         return this
     }
 }

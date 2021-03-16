@@ -2,14 +2,18 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
+import com.hao.library.extensions.gone
+import com.hao.library.extensions.visible
 import com.hao.library.ui.BaseActivity
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityValidatorDetailBinding
 import com.highstreet.wallet.model.res.Validator
+import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao

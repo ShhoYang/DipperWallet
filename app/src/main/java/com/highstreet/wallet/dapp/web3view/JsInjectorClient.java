@@ -7,8 +7,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 
-import com.highstreet.wallet.BuildConfig;
 import com.highstreet.wallet.R;
+import com.highstreet.wallet.constant.Constant;
 import com.highstreet.wallet.dapp.entity.Address;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ class JsInjectorClient {
 
     private int chainId = 1;
     private Address walletAddress;
-    private String rpcUrl = BuildConfig.BASE_URL;
+    private String rpcUrl = Constant.BASE_URL_MAIN;
 
     JsInjectorClient(Context context) {
         this.context = context;

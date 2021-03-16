@@ -2,10 +2,10 @@ package com.highstreet.wallet.ui.fragment
 
 import android.text.TextUtils
 import android.view.View
-import androidx.lifecycle.Observer
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseFragment
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.cache.CoinPriceCache
 import com.highstreet.wallet.databinding.FragmentWalletBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.db.Db
@@ -13,10 +13,10 @@ import com.highstreet.wallet.ui.activity.ProposalActivity
 import com.highstreet.wallet.ui.activity.TransactionActivity
 import com.highstreet.wallet.ui.activity.ValidatorListActivity
 import com.highstreet.wallet.ui.vm.WalletVM
+import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.JumpUtils
 import com.highstreet.wallet.view.QRDialog
 import com.highstreet.wallet.view.listener.RxView
-import kotlin.properties.Delegates
 
 /**
  * @author Yang Shihao
@@ -33,17 +33,6 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>(), View.OnC
     private var rewardAmount = ""
     private var inflation = ""
 
-    private var refresh: Int by Delegates.observable(0) { _, old, new ->
-        if (old != new) {
-            loadData()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        refresh = AccountManager.instance().refresh
-    }
-
     override fun initView() {
         viewBinding {
             RxView.click(ivWalletAddress, this@WalletFragment)
@@ -52,52 +41,59 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>(), View.OnC
             RxView.click(tvHome, this@WalletFragment)
             RxView.click(tvMedium, this@WalletFragment)
             RxView.click(cvTransaction, this@WalletFragment)
-            baseRefreshLayout.setOnRefreshListener {
-                loadData()
-            }
             baseRefreshLayout.isRefreshing = true
             tvCoinUnit.text = "DIP"
             tvAverageYield.text = "95.29%"
+
+            baseRefreshLayout.setOnRefreshListener {
+                loadData()
+            }
         }
     }
 
     override fun initData() {
+        AccountManager.instance().balanceLiveData.observe(this) {
+            loadData()
+        }
+        AccountManager.instance().currencyLiveData.observe(this) {
+            updateUIStyle()
+        }
+        Db.instance().accountDao().queryFirstUserAsLiveData().observe(this) {
+            account = it
+            loadData()
+        }
         viewModel {
-            amountLD.observe(this@WalletFragment, Observer {
+            amountLD.observe(this@WalletFragment) {
                 val a = it?.getAmount()
                 if (!TextUtils.isEmpty(a)) {
                     amount = a!!
                     updateUIStyle()
                 }
                 vb?.baseRefreshLayout?.stopRefresh()
-            })
-            delegationAmountLD.observe(this@WalletFragment, Observer {
+            }
+            delegationAmountLD.observe(this@WalletFragment) {
                 delegationAmount = it
                 updateUIStyle()
                 vb?.baseRefreshLayout?.stopRefresh()
-            })
-            undelegationAmountLD.observe(this@WalletFragment, Observer {
+            }
+            undelegationAmountLD.observe(this@WalletFragment) {
                 undelegationAmount = it
                 updateUIStyle()
                 vb?.baseRefreshLayout?.stopRefresh()
-            })
-            rewardD.observe(this@WalletFragment, Observer {
+            }
+            rewardD.observe(this@WalletFragment) {
                 rewardAmount = it
                 updateUIStyle()
                 vb?.baseRefreshLayout?.stopRefresh()
-            })
-            inflationD.observe(this@WalletFragment, Observer {
+            }
+            inflationD.observe(this@WalletFragment) {
                 if (!TextUtils.isEmpty(it)) {
                     inflation = it
                     updateUIStyle()
                 }
                 vb?.baseRefreshLayout?.stopRefresh()
-            })
+            }
         }
-        Db.instance().accountDao().queryFirstUserAsLiveData().observe(this, Observer {
-            account = it
-            loadData()
-        })
     }
 
     private fun loadData() {
@@ -110,12 +106,13 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>(), View.OnC
         viewBinding {
             tvWalletAddress.text = account?.address
             tvAmount.text = amount
-            tvCash.text = amount
             tvAvailable.text = amount
             tvDelagated.text = delegationAmount
             tvUnbondingDelegationAmount.text = undelegationAmount
             tvReward.text = rewardAmount
             tvInflation.text = inflation
+            tvCurrentPrice.text = AmountUtils.getPrice()
+            tvAmountValue.text = AmountUtils.getAmountValue(amount)
         }
     }
 

@@ -20,6 +20,12 @@ interface DipApi {
     fun test(@Url url: String): Observable<Any>
 
     /**
+     * 价格
+     */
+    @GET("https://api.coingecko.com/api/v3/simple/price?ids=dipper-network&vs_currencies=usd,eur,krw,jpy,cny,btc")
+    fun price(): Observable<CoinPrice>
+
+    /**
      * 节点信息
      */
     @GET("node_info")
@@ -35,7 +41,23 @@ interface DipApi {
      * 账户信息
      */
     @GET("auth/accounts/{address}")
+    fun balance(@Path("address") address: String): Observable<BaseBean<AccountInfo>>
+
+    /**
+     * 账户信息
+     */
+    @GET("auth/accounts/{address}")
     fun account(@Path("address") address: String): Observable<BaseBean<AccountInfo>>
+
+    /**
+     * 历史记录
+     */
+    @GET("https://api.dippernetwork.com/v1/account/txs/{address}")
+    fun txHistory(
+        @Path("address") address: String,
+        @Query("page") page: Int,
+        @Query("limit") pageSize: Int
+    ): Observable<ArrayList<Tx>>
 
     /**
      * 入账记录

@@ -33,7 +33,7 @@ class LibraryConfig : HaoLibraryConfig() {
     }
 
     override fun getBaseUrl(): String {
-        return BuildConfig.BASE_URL
+        return ""
     }
 
     override fun <T : HttpResponseModel<*>> handleResponse(t: T): Boolean {

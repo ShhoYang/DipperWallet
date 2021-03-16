@@ -8,15 +8,13 @@ package com.highstreet.wallet.constant
 enum class Chain(val chainName: String) {
     ALL("ALL"),
     DIP_TEST("dip-testnet"),
-    DIP_MAIN("dipperhub"),
-    DIP_TEST2("DIPPER_TEST"),
-    DIP_MAIN2("DIPPER_HUB");
+    DIP_MAIN("dipperhub");
 
     companion object {
         fun getChain(chainName: String): Chain {
             return when (chainName) {
-                DIP_MAIN.chainName, DIP_MAIN2.chainName -> DIP_MAIN2
-                else -> DIP_TEST2
+                DIP_MAIN.chainName -> DIP_MAIN
+                else -> DIP_TEST
             }
         }
     }

@@ -47,7 +47,7 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
     }
 
     override fun initData() {
-        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST2.chainName
+        chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST.chainName
         walletParams = WalletParams.create(chain)
         vb!!.etAddress.setText(walletParams.address)
         vm!!.resultLD.observe(this, Observer {

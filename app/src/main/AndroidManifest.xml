@@ -24,7 +24,7 @@
         android:name=".App"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="${APP_ICON}"
+        android:icon="@mipmap/ic_app_launcher"
         android:label="@string/wallet_app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
@@ -115,13 +115,12 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.StakingActivity"
-            android:launchMode="singleTask"
+            android:name=".ui.activity.ProposalActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.ProposalActivity"
+            android:name=".ui.activity.TxDetailActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -146,22 +145,7 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.TransactionRecordActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
-            android:name=".ui.activity.DelegationTransactionRecordActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
             android:name=".ui.activity.ValidatorListActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
-            android:name=".ui.activity.ValidatorList2Activity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 

@@ -35,12 +35,12 @@
                     android:orientation="horizontal">
 
                     <View
-                        android:id="@+id/statusPoint"
+                        android:id="@+id/statePoint"
                         android:layout_width="6dp"
                         android:layout_height="6dp" />
 
                     <TextView
-                        android:id="@+id/tvStatus"
+                        android:id="@+id/tvState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"

@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
+import com.highstreet.wallet.cache.CoinPriceCache
 import com.highstreet.wallet.databinding.ActivityMainBinding
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.ui.adapter.FragmentAdapter
@@ -20,7 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
             Pair("", WalletFragment()),
             Pair("", MyTokenFragment()),
             Pair("", HistoryFragment()),
-            Pair("", DAppFragment()),
+//            Pair("", DAppFragment()),
             Pair("", SettingFragment())
         )
 
@@ -36,8 +38,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
                     when (item.itemId) {
                         R.id.tabTokens -> 1
                         R.id.tabHistory -> 2
-                        R.id.tabDapp -> 3
-                        R.id.tabSetting -> 4
+//                        R.id.tabDapp -> 3
+                        R.id.tabSetting -> 3
                         else -> 0
                     }, false
                 )
@@ -51,9 +53,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        CoinPriceCache.instance().load()
+    }
+
     override fun initData() {
         Db.instance().accountDao().queryFirstUserAsLiveData().observe(this, {
             it?.apply {
+                AccountManager.instance().changeCurrentAccount(it)
+                vm?.getNodeInfo()
                 viewBinding {
                     tvWalletName.text = nickName
                 }

@@ -3,6 +3,7 @@ package com.highstreet.wallet.http
 import com.hao.library.utils.L
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Chain
+import com.highstreet.wallet.constant.Constant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -19,12 +20,11 @@ import java.util.concurrent.TimeUnit
  */
 object ApiService {
 
-    private const val BASE_URL_MAIN = "https://rpc.dippernetwork.com/"
-    private const val BASE_URL_TEST = "https://rpc.testnet.dippernetwork.com/"
 
     fun getApi(chain: Chain? = null): DipApi {
+
         return when (chain ?: Chain.getChain(AccountManager.instance().chain)) {
-            Chain.DIP_MAIN, Chain.DIP_MAIN2 -> getDipperMainApi()
+            Chain.DIP_MAIN -> getDipperMainApi()
             else -> getDipperTestApi()
         }
     }
@@ -34,7 +34,7 @@ object ApiService {
         if (dipperTestApi == null) {
             synchronized(ApiService::class.java) {
                 val retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL_TEST)
+                    .baseUrl(Constant.BASE_URL_TEST)
                     .client(getOkHttp())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -50,7 +50,7 @@ object ApiService {
         if (dipperMainApi == null) {
             synchronized(ApiService::class.java) {
                 val retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL_MAIN)
+                    .baseUrl(Constant.BASE_URL_MAIN)
                     .client(getOkHttp())
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

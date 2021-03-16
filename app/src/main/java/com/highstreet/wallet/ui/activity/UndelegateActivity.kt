@@ -16,7 +16,7 @@ import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.model.res.DelegationInfo
-import com.highstreet.wallet.ui.vm.UndelegationVM
+import com.highstreet.wallet.ui.vm.UndelegateVM
 import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.view.listener.RxView
@@ -26,7 +26,7 @@ import com.highstreet.wallet.view.listener.RxView
  * @Date 2020/10/27
  */
 @AndroidEntryPoint
-class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegationVM>(),
+class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegateVM>(),
     View.OnFocusChangeListener {
 
     private var amount = "0"
@@ -37,7 +37,7 @@ class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegationV
         setTitle(R.string.undelegate)
         viewBinding {
             etAmount.onFocusChangeListener = this@UndelegateActivity
-            etRemarks.onFocusChangeListener = this@UndelegateActivity
+            etMemo.onFocusChangeListener = this@UndelegateActivity
 
             RxView.textChanges(etAmount) {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
@@ -97,7 +97,7 @@ class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegationV
             true,
             {
                 showLoading()
-                vm?.undelegate(s, delegationInfo!!)
+                vm?.undelegate(s, delegationInfo!!, vb?.etMemo?.string() ?: "")
             },
         ).authenticate()
     }
@@ -106,7 +106,7 @@ class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegationV
         viewBinding {
             when (v) {
                 etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etRemarks -> updateLineStyle(remarksLine.line, hasFocus)
+                etMemo -> updateLineStyle(memoLine.line, hasFocus)
             }
         }
     }

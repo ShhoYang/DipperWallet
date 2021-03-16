@@ -37,7 +37,7 @@ class WalletVM : BalanceVM() {
 
     private fun processDelegations(list: ArrayList<DelegationInfo>?) {
         if (list == null || list.isEmpty()) {
-            delegationAmountLD.value = "0"
+            delegationAmountLD.value = StringUtils.ZERO
             return
         }
         var amount = 0L
@@ -60,7 +60,7 @@ class WalletVM : BalanceVM() {
 
     private fun processUnbondingDelegations(list: ArrayList<DelegationInfo>?) {
         if (list == null || list.isEmpty()) {
-            undelegationAmountLD.value = "0"
+            undelegationAmountLD.value = StringUtils.ZERO
             return
         }
         var amount = 0L

@@ -12,14 +12,15 @@ android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
     defaultConfig {
+        applicationId 'com.highstreet.wallet'
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode 15
-        versionName "1.1.2"
+        versionCode 14
+        versionName "1.1.1"
 
         multiDexEnabled true
-        flavorDimensions "default"
-        consumerProguardFiles 'consumer-rules.pro'
+//        flavorDimensions "default"
+//        consumerProguardFiles 'consumer-rules.pro'
     }
 
     signingConfigs {
@@ -46,24 +47,24 @@ android {
         }
     }
 
-    productFlavors {
-        product {
-            applicationId 'com.highstreet.wallet'
-            manifestPlaceholders = [
-                    APP_ICON: '@mipmap/ic_launcher'
-            ]
-            buildConfigField 'String', 'BASE_URL', '"https://rpc.dippernetwork.com/"'
-            buildConfigField 'Boolean', 'testnet', 'false'
-        }
-        dev {
-            applicationId = 'com.highstreet.wallet.test'
-            manifestPlaceholders = [
-                    APP_ICON: '@mipmap/ic_launcher_2'
-            ]
-            buildConfigField 'String', 'BASE_URL', '"https://rpc.testnet.dippernetwork.com/"'
-            buildConfigField 'Boolean', 'testnet', 'true'
-        }
-    }
+//    productFlavors {
+//        product {
+//            applicationId 'com.highstreet.wallet'
+//            manifestPlaceholders = [
+//                    APP_ICON: '@mipmap/ic_launcher'
+//            ]
+//            buildConfigField 'String', 'BASE_URL', '"https://rpc.dippernetwork.com/"'
+//            buildConfigField 'Boolean', 'testnet', 'false'
+//        }
+//        dev {
+//            applicationId = 'com.highstreet.wallet.test'
+//            manifestPlaceholders = [
+//                    APP_ICON: '@mipmap/ic_launcher_2'
+//            ]
+//            buildConfigField 'String', 'BASE_URL', '"https://rpc.testnet.dippernetwork.com/"'
+//            buildConfigField 'Boolean', 'testnet', 'true'
+//        }
+//    }
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->

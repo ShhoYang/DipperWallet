@@ -8,4 +8,6 @@ package com.highstreet.wallet.constant
 object Colors {
     const val editLineFocus = 0xFFFFFFFF.toInt()
     const val editLineBlur = 0xFFD4DAED.toInt()
+    const val textRed = 0xFFF4425F.toInt()
+    const val textGreen = 0xFF76C197.toInt()
 }

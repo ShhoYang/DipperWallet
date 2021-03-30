@@ -79,7 +79,7 @@ object FingerprintUtils {
                     }
                 }
 
-                override fun usePassword(password: String): Boolean? {
+                override fun usePassword(password: String): Boolean {
                     if (showUserPassword && AccountManager.instance().password!!.verify(password)) {
                         succeed()
                         return true

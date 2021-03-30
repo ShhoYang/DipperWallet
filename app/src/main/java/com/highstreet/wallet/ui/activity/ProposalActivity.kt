@@ -19,7 +19,7 @@ class ProposalActivity :
     BaseListActivity<ActivityBaseListBinding, Proposal, ProposalVM, ProposalAdapter>() {
 
     override fun initView() {
-        setTitle(R.string.proposalList)
+        setTitle(R.string.pa_proposalList)
         super.initView()
     }
 

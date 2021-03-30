@@ -6,11 +6,9 @@ import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityTxDetailBinding
 import com.highstreet.wallet.model.res.Tx
-import com.highstreet.wallet.utils.StringUtils
 
 /**
  * @author Yang Shihao
@@ -20,7 +18,7 @@ import com.highstreet.wallet.utils.StringUtils
 class TxDetailActivity : BaseActivity<ActivityTxDetailBinding, PlaceholderViewModel>() {
 
     override fun initView() {
-        setTitle(R.string.transactionDetail)
+        setTitle(R.string.tda_transactionDetail)
     }
 
     override fun initData() {
@@ -40,7 +38,7 @@ class TxDetailActivity : BaseActivity<ActivityTxDetailBinding, PlaceholderViewMo
                 tvFee.text = it.getFee()
                 tvTime.text = it.getTime()
                 tvTransactionHash.text = it.txhash
-                tvMemo.text = it?.tx?.value?.memo
+                tvMemo.text = it.tx?.value?.memo
             }
         }
     }

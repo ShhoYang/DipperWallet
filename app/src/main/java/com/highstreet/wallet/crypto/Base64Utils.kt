@@ -12,7 +12,7 @@ object Base64Utils {
         return Base64.decode(content, Base64.DEFAULT)
     }
 
-    fun encodeToString(data: ByteArray): String {
+    fun encode(data: ByteArray): String {
         return Base64.encodeToString(data, Base64.DEFAULT)
     }
 }

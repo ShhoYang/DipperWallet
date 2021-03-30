@@ -1,12 +1,15 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.hao.library.http.subscribeBy
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
+import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.DelegationInfo
@@ -23,24 +26,32 @@ class UndelegateVM : BaseViewModel() {
     val undelegateLD: MutableLiveData<Pair<Boolean, String>> = MutableLiveData()
 
     fun undelegate(amount: String, delegationInfo: DelegationInfo, memo: String) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            if (it == null) {
-                undelegateLD.value = Pair(false, "")
-            } else {
-                generateParams(it, amount, delegationInfo, memo)
-            }
-        }, {
-            undelegateLD.value = Pair(false, "")
-        }).add()
-
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(generateParams(it.result, amount, delegationInfo, memo))
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    AccountManager.instance().refreshBalance()
+                    undelegateLD.value = Pair(true,  App.instance.getString(R.string.succeed))
+                } else {
+                    undelegateLD.value = Pair(false,  App.instance.getString(R.string.failed))
+                }
+            }, {
+                undelegateLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
+    @Throws(CustomException::class)
     private fun generateParams(
-        accountInfo: AccountInfo,
+        accountInfo: AccountInfo?,
         amount: String,
         delegationInfo: DelegationInfo,
         memo: String
-    ) {
+    ): RequestBroadCast {
+        if (accountInfo == null) {
+            throw   CustomException(R.string.failed)
+        }
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
@@ -49,31 +60,15 @@ class UndelegateVM : BaseViewModel() {
         val msg = MsgGeneratorUtils.undelegateMsg(
             delegationInfo.delegator_address,
             delegationInfo.validator_address,
-            AmountUtils.generateCoin(amount),
+            Coin.generateCoin(amount),
             account.chain
         )
-        doUndelegate(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                memo,
-                deterministicKey
-            )
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            memo,
+            deterministicKey
         )
-    }
-
-    private fun doUndelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                AccountManager.instance().refreshBalance()
-                undelegateLD.value = Pair(true, "")
-            } else {
-                undelegateLD.value = Pair(false, "")
-            }
-
-        }, {
-            undelegateLD.value = Pair(false, it.second)
-        }).add()
     }
 }

@@ -6,13 +6,13 @@ import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.annotation.Inject
 import com.hao.library.extensions.init
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityBackupBinding
 import com.highstreet.wallet.db.Account
 import com.highstreet.wallet.ui.adapter.MnemonicAdapter
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -27,7 +27,7 @@ class BackupActivity : BaseActivity<ActivityBackupBinding, PlaceholderViewModel>
     lateinit var adapter: MnemonicAdapter
 
     override fun initView() {
-        setTitle(R.string.backupMnemonic)
+        setTitle(R.string.ba_backupMnemonic)
     }
 
     override fun initData() {

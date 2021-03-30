@@ -1,10 +1,12 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.hao.library.http.subscribeBy
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
@@ -22,21 +24,30 @@ class ReceiveRewardVM : BaseViewModel() {
     val resultLD = MutableLiveData<Pair<Boolean, String>>()
 
     fun receiveReward(validatorAddress: String, delegatorAddress: String) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            val coins = it?.value?.coins
-            if (null != coins && coins.isNotEmpty()) {
-                generateParams(it, validatorAddress, delegatorAddress)
-            }
-        }, {
-            resultLD.value = Pair(false, "")
-        }).add()
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(generateParams(it.result, validatorAddress, delegatorAddress))
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
+                } else {
+                    resultLD.value = Pair(false, App.instance.getString(R.string.failed))
+                }
+            }, {
+                resultLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
+    @Throws(CustomException::class)
     private fun generateParams(
-        accountInfo: AccountInfo,
+        accountInfo: AccountInfo?,
         validatorAddress: String,
         delegatorAddress: String
-    ) {
+    ): RequestBroadCast {
+        if (accountInfo == null) {
+            throw   CustomException(R.string.failed)
+        }
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
@@ -47,26 +58,12 @@ class ReceiveRewardVM : BaseViewModel() {
             delegatorAddress,
             account.chain
         )
-        doReceiveReward(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                "",
-                deterministicKey
-            )
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            "",
+            deterministicKey
         )
-    }
-
-    private fun doReceiveReward(reqBroadCast: RequestBroadCast) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                resultLD.value = Pair(true, "")
-            } else {
-                resultLD.value = Pair(false, "")
-            }
-        }, {
-            resultLD.value = Pair(false, it.second)
-        }).add()
     }
 }

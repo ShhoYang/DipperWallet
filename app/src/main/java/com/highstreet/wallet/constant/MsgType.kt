@@ -14,4 +14,5 @@ object MsgType {
     const val REDELEGATE = "dip/MsgBeginRedelegate"
     const val VOTE = "dip/MsgVote"
     const val RECEIVE_REWARD = "dip/MsgWithdrawDelegationReward"
+    const val CONTRACT = "dip/MsgContract"
 }

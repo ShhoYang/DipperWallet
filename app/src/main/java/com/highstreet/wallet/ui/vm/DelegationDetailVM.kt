@@ -2,11 +2,12 @@ package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
 import com.hao.library.http.subscribeBy
+import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.model.res.Validator
-import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.utils.AmountUtils
 
 /**
  * @author Yang Shihao
@@ -27,14 +28,19 @@ class DelegationDetailVM : BaseViewModel() {
     }
 
     fun getReward(validatorAddress: String) {
-        ApiService.getApi().rewardsByValidator(AccountManager.instance().address, validatorAddress).subscribeBy({
-            rewardLD.value = if (it == null || it.isEmpty()) {
-                "0"
-            } else {
-                StringUtils.pdip2DIP(it[0], false)
+        ApiService.getApi().rewardsByValidator(AccountManager.instance().address, validatorAddress)
+            .map {
+                val result = it.result
+                return@map if (result == null || result.isEmpty()) {
+                    AmountUtils.ZERO
+                } else {
+                    AmountUtils.pdip2DIP(result[0], false)
+                }
             }
-        }, {
-            rewardLD.value = ""
-        }).add()
+            .subscribeBy2({
+                rewardLD.value = it
+            }, {
+                rewardLD.value = "0"
+            }).add()
     }
 }

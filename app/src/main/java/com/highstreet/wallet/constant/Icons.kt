@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
  * @Date 2/25/21
  */
 object Icons {
-    const val QINIU_URL = "http://dev-p7-supplychain.highstreet.top/"
+    private const val QINIU_URL = "http://dev-p7-supplychain.highstreet.top/"
     val list = arrayOf(
         "ADA.png",
         "BCH.png",

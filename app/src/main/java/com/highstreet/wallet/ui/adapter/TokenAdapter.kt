@@ -7,7 +7,7 @@ import com.hao.library.adapter.ViewHolder
 import com.hao.library.extensions.load
 import com.highstreet.wallet.constant.Icons
 import com.highstreet.wallet.databinding.ItemTokenBinding
-import com.highstreet.wallet.model.res.Token
+import com.highstreet.wallet.db.Token
 
 /**
  * @author Yang Shihao

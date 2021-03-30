@@ -1,24 +1,22 @@
 package com.highstreet.wallet.ui.activity
 
 import android.app.Activity
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Chain
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityCreateWalletBinding
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isName
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.model.WalletParams
 import com.highstreet.wallet.ui.vm.CreateWalletVM
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -31,10 +29,9 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
     private var chain = ""
 
     override fun initView() {
-        setTitle(R.string.createWallet)
+        setTitle(R.string.cwa_createWallet)
         viewBinding {
-            etName.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus -> nameLine.line.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
+            etName.focusListener(nameLine.line)
 
             RxView.textChanges(etName) {
                 btnCreate.isEnabled = etName.string().isNotEmpty()
@@ -50,7 +47,7 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
         chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST.chainName
         walletParams = WalletParams.create(chain)
         vb!!.etAddress.setText(walletParams.address)
-        vm!!.resultLD.observe(this, Observer {
+        vm!!.resultLD.observe(this) {
             hideLoading()
             if (true == it) {
                 AppManager.instance().finishActivity(InitWalletActivity::class.java)
@@ -65,12 +62,12 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
             } else {
                 toast(R.string.failed)
             }
-        })
+        }
     }
 
     private fun createWallet() {
         if (null == AccountManager.instance().password) {
-            toast(R.string.setPassword)
+            toast(R.string.cwa_setPassword)
             CreatePasswordActivity.start(this)
             return
         }
@@ -78,7 +75,7 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
         val name = vb?.etName?.string() ?: ""
 
         if (!name.isName()) {
-            toast(R.string.walletNameFormatError)
+            toast(R.string.cwa_walletNameFormatError)
             return
         }
         walletParams.nickName = name

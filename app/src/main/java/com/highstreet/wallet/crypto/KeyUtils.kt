@@ -1,7 +1,9 @@
 package com.highstreet.wallet.crypto
 
+import org.bitcoinj.core.Bech32
 import org.bitcoinj.crypto.*
 import org.bouncycastle.crypto.digests.RIPEMD160Digest
+import org.web3j.crypto.Keys
 import java.io.ByteArrayOutputStream
 import java.security.SecureRandom
 
@@ -10,8 +12,6 @@ import java.security.SecureRandom
  * @Date 1/18/21
  */
 object KeyUtils {
-
-    private const val CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
     /**
      * 生成熵
@@ -135,7 +135,7 @@ object KeyUtils {
     private fun getParentPath(chain: String): List<ChildNumber> {
         return listOf(
             ChildNumber(44, true),
-            ChildNumber(118, true),
+            ChildNumber(925, true),
             ChildNumber.ZERO_HARDENED,
             ChildNumber.ZERO
         )
@@ -146,16 +146,13 @@ object KeyUtils {
      */
     fun getPubKeyValue(key: DeterministicKey): String {
         return try {
-            Base64Utils.encodeToString(key.pubKey).replace("\n", "")
+            Base64Utils.encode(key.pubKey).replace("\n", "")
         } catch (e: Exception) {
             e.printStackTrace()
             ""
         }
     }
 
-    /**
-     * getDpAddress
-     */
     fun getAddress(chain: String, mnemonic: List<String>, path: Int): String {
         val dKey: DeterministicKey = getDeterministicKey(chain, mnemonic, path)
         val hash = SHA.hash(HexUtils.hexStringToBytes(dKey.publicKeyAsHex))
@@ -165,15 +162,26 @@ object KeyUtils {
         digest.doFinal(hash2, 0)
         return try {
             val converted = convertBits(hash2, 8, 5, true)
-            bech32Encode("dip".toByteArray(), converted)
+            Bech32.encode("dip", converted)
         } catch (e: Exception) {
             e.printStackTrace()
             ""
         }
     }
 
+    fun getEip55Address(address: String): String {
+        var bech32 = Bech32.decode(address)
+        val converted = convertBits(bech32.data, 5, 8, false)
+        val hex = HexUtils.bytesToHexString(converted)
+        return Keys.toChecksumAddress(hex)
+    }
 
-    private fun convertBits(data: ByteArray, fromBits: Int, toBits: Int, pad: Boolean): ByteArray {
+    private fun convertBits(
+        data: ByteArray,
+        fromBits: Int,
+        toBits: Int,
+        padding: Boolean
+    ): ByteArray {
         var acc = 0
         var bits = 0
         val baos = ByteArrayOutputStream()
@@ -190,7 +198,7 @@ object KeyUtils {
                 baos.write(acc ushr bits and maxv)
             }
         }
-        if (pad) {
+        if (padding) {
             if (bits > 0) {
                 baos.write(acc shl toBits - bits and maxv)
             }
@@ -206,68 +214,6 @@ object KeyUtils {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return ret
-    }
-
-    private fun bech32Encode(hrp: ByteArray, data: ByteArray): String {
-        val chk = createChecksum(hrp, data)
-        val combined = ByteArray(chk.size + data.size)
-        System.arraycopy(data, 0, combined, 0, data.size)
-        System.arraycopy(chk, 0, combined, data.size, chk.size)
-        val xlat = ByteArray(combined.size)
-        for (i in combined.indices) {
-            xlat[i] = CHARSET[combined[i].toInt()].toByte()
-        }
-        val ret = ByteArray(hrp.size + xlat.size + 1)
-        System.arraycopy(hrp, 0, ret, 0, hrp.size)
-        System.arraycopy(byteArrayOf(0x31), 0, ret, hrp.size, 1)
-        System.arraycopy(xlat, 0, ret, hrp.size + 1, xlat.size)
-        return String(ret)
-    }
-
-    private fun createChecksum(hrp: ByteArray, data: ByteArray): ByteArray {
-        val zeroes = byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
-        val expanded = hrpExpand(hrp)
-        val values = ByteArray(zeroes.size + expanded.size + data.size)
-        System.arraycopy(expanded, 0, values, 0, expanded.size)
-        System.arraycopy(data, 0, values, expanded.size, data.size)
-        System.arraycopy(zeroes, 0, values, expanded.size + data.size, zeroes.size)
-        val polymod = polymod(values) xor 1
-        val ret = ByteArray(6)
-        for (i in ret.indices) {
-            ret[i] = (polymod shr 5 * (5 - i) and 0x1f).toByte()
-        }
-        return ret
-    }
-
-    private fun polymod(values: ByteArray): Int {
-        val GENERATORS = intArrayOf(0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3)
-        var chk = 1
-        for (b in values) {
-            val top = (chk shr 0x19).toByte()
-            chk = b.toInt() xor (chk and 0x1ffffff shl 5)
-            for (i in 0..4) {
-                chk = chk xor if (top.toInt() shr i and 1 == 1) GENERATORS[i] else 0
-            }
-        }
-        return chk
-    }
-
-    private fun hrpExpand(hrp: ByteArray): ByteArray {
-        val buf1 = ByteArray(hrp.size)
-        val buf2 = ByteArray(hrp.size)
-        val mid = ByteArray(1)
-        for (i in hrp.indices) {
-            buf1[i] = (hrp[i].toInt() shr 5).toByte()
-        }
-        mid[0] = 0x00
-        for (i in hrp.indices) {
-            buf2[i] = (hrp[i].toInt() and 0x1f).toByte()
-        }
-        val ret = ByteArray(hrp.size * 2 + 1)
-        System.arraycopy(buf1, 0, ret, 0, buf1.size)
-        System.arraycopy(mid, 0, ret, buf1.size, mid.size)
-        System.arraycopy(buf2, 0, ret, buf1.size + mid.size, buf2.size)
         return ret
     }
 }

@@ -38,7 +38,7 @@ class WalletManageLeftAdapter : BaseMultiTypeNormalAdapter<WalletType>() {
         ) {
             viewHolder.viewBinding {
                 ivChainIcon.setImageResource(item.chainIcon)
-                tvChainName.text = item.chain.chainName
+                tvChainName.text = item.chain.showName
                 root.isSelected = item.selected
                 root.setOnClickListener {
                     itemClickListener?.itemClicked(it, item, position)
@@ -63,7 +63,7 @@ class WalletManageLeftAdapter : BaseMultiTypeNormalAdapter<WalletType>() {
             payloads: MutableList<Any>
         ) {
             viewHolder.viewBinding {
-                tvChainName.text = item.chain.chainName
+                tvChainName.text = item.chain.showName
                 root.isSelected = item.selected
                 root.setOnClickListener {
                     itemClickListener?.itemClicked(it, item, position)

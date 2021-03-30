@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/delegateTotalAmount"
+                android:text="@string/dda_delegateTotalAmount"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/waitReceiveReward"
+                android:text="@string/dda_waitReceiveReward"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/selfShares"
+                android:text="@string/dda_selfShares"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -214,7 +214,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/redelegate"
+                android:text="@string/dda_redelegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -229,7 +229,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/undelegate"
+                android:text="@string/dda_undelegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -245,14 +245,14 @@
 
 
             <com.hao.library.view.RoundTextView
-                android:id="@+id/btnReward"
+                android:id="@+id/btnRedeemReward"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@string/receiveReward"
+                android:text="@string/dda_receiveReward"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -266,7 +266,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/delegate"
+                android:text="@string/dda_delegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"

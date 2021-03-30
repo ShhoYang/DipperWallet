@@ -5,7 +5,7 @@ ext {
             minSdk    : 23,
             targetSdk : 30,
 
-            haolibrary: '0.0.13',
-            kotlin    : '1.4.30'
+            haolibrary: '0.0.16',
+            kotlin    : '1.4.31'
     ]
 }

@@ -4,15 +4,13 @@ import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hao.library.adapter.PagedAdapterItem
-import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.MsgType
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.StdTx
+import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.StringUtils
 import java.io.Serializable
-import java.lang.Exception
 import java.math.BigDecimal
-import kotlin.collections.ArrayList
 
 /**
  * @author Yang Shihao
@@ -69,8 +67,8 @@ data class Tx(
             return ""
         }
 
-        var r = BigDecimal(feeAmount.amount).divide(BigDecimal(gas)).multiply(BigDecimal(gas_used))
-        return StringUtils.pdip2DIP(r.toString() + feeAmount.denom, false)
+        val r = BigDecimal(feeAmount.amount).divide(BigDecimal(gas)).multiply(BigDecimal(gas_used))
+        return AmountUtils.pdip2DIP(r.toString() + feeAmount.denom, false)
     }
 
     /**
@@ -84,7 +82,7 @@ data class Tx(
             msgs[0].value
         }
 
-        var coins = if (msg?.amount == null) {
+        val coins = if (msg?.amount == null) {
             null
         } else {
             try {
@@ -110,7 +108,7 @@ data class Tx(
             coins[0]
         }
 
-        return StringUtils.pdip2DIP(coin)
+        return AmountUtils.pdip2DIP(coin)
     }
 
     /**

@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import com.hao.library.adapter.BaseNormalAdapter
 import com.hao.library.adapter.ViewHolder
 import com.highstreet.wallet.databinding.DialogBottomMenuItemBinding
+import com.highstreet.wallet.view.IOptionItem
 
 /**
  * @author Yang Shihao
  * @Date 3/6/21
  */
-class BottomMenuDialogAdapter : BaseNormalAdapter<DialogBottomMenuItemBinding, String>() {
+class BottomMenuDialogAdapter<T : IOptionItem> :
+    BaseNormalAdapter<DialogBottomMenuItemBinding, T>() {
 
     override fun getViewBinding(
         layoutInflater: LayoutInflater,
@@ -19,12 +21,12 @@ class BottomMenuDialogAdapter : BaseNormalAdapter<DialogBottomMenuItemBinding, S
 
     override fun bindViewHolder(
         viewHolder: ViewHolder<DialogBottomMenuItemBinding>,
-        item: String,
+        item: T,
         position: Int,
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            tvText.text = item
+            tvText.text = item.getShowText()
         }
     }
 }

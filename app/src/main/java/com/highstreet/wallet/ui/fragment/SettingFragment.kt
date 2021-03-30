@@ -18,6 +18,7 @@ import com.highstreet.wallet.ui.activity.*
 import com.highstreet.wallet.ui.adapter.CenterMenuDialogAdapter
 import com.highstreet.wallet.ui.adapter.SettingAdapter
 import com.highstreet.wallet.view.CenterMenuDialog
+import com.highstreet.wallet.view.OptionItem
 
 /**
  * @author Yang Shihao
@@ -28,7 +29,7 @@ class SettingFragment :
     BaseNormalListFragment<FragmentListBinding, Menu, PlaceholderViewModel, SettingAdapter>() {
 
 
-    private var centerMenuDialogAdapter: CenterMenuDialogAdapter? = null
+    private var centerMenuDialogAdapter: CenterMenuDialogAdapter<OptionItem>? = null
 
     private var centerMenuDialog: CenterMenuDialog? = null
 
@@ -43,20 +44,20 @@ class SettingFragment :
 
     private fun initMenu() {
         val list = ArrayList<Menu>()
-        list.add(Menu.group(getString(R.string.wallet)))
+        list.add(Menu.group(getString(R.string.sf_wallet)))
         list.add(
             Menu(
-                title = getString(R.string.walletManage),
+                title = getString(R.string.sf_walletManage),
                 action = ACTION_WALLET_MANGER
             )
         )
         list.add(Menu.space())
-        list.add(Menu.group(getString(R.string.general)))
+        list.add(Menu.group(getString(R.string.sf_general)))
         list.add(
             Menu(
-                title = getString(R.string.appLock),
-                desc = if (AccountManager.instance().fingerprint) getString(R.string.open) else getString(
-                    R.string.close
+                title = getString(R.string.sf_appLock),
+                desc = if (AccountManager.instance().fingerprint) getString(R.string.sf_open) else getString(
+                    R.string.sf_close
                 ),
                 action = ACTION_APP_LOCK
             )
@@ -64,7 +65,7 @@ class SettingFragment :
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.currency),
+                title = getString(R.string.sf_currency),
                 desc = AccountManager.instance().currencyType,
                 action = ACTION_CURRENCY
             )
@@ -72,59 +73,59 @@ class SettingFragment :
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.basePrice),
-                desc = getString(R.string.gecko),
+                title = getString(R.string.sf_basePrice),
+                desc = getString(R.string.sf_gecko),
                 action = ACTION_BASE_PRICE
             )
         )
         list.add(Menu.space())
-        list.add(Menu.group(getString(R.string.support)))
+        list.add(Menu.group(getString(R.string.sf_support)))
         list.add(
             Menu(
-                title = getString(R.string.faq),
+                title = getString(R.string.sf_faq),
                 action = ACTION_FAQ
             )
         )
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.telegram),
+                title = getString(R.string.sf_telegram),
                 action = ACTION_TELEGRAM
             )
         )
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.explorer),
+                title = getString(R.string.sf_explorer),
                 action = ACTION_EXPLORER
             )
         )
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.dipperNetwork),
+                title = getString(R.string.sf_dipperNetwork),
                 action = ACTION_DIPPER_NETWORK
             )
         )
         list.add(Menu.space())
-        list.add(Menu.group(getString(R.string.appInfo)))
+        list.add(Menu.group(getString(R.string.sf_appInfo)))
         list.add(
             Menu(
-                title = getString(R.string.terms),
+                title = getString(R.string.sf_terms),
                 action = ACTION_TEAMS
             )
         )
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.openSource),
+                title = getString(R.string.sf_openSource),
                 action = ACTION_OPEN_SOURCE
             )
         )
         list.add(Menu.space())
         list.add(
             Menu(
-                title = getString(R.string.version),
+                title = getString(R.string.sf_version),
                 desc = "v${AppUtils.getVersionName(App.instance)}",
                 action = ACTION_OPEN_VERSION
             )
@@ -140,17 +141,17 @@ class SettingFragment :
             if (centerMenuDialog == null) {
                 centerMenuDialogAdapter = CenterMenuDialogAdapter()
                 centerMenuDialogAdapter!!.setOnItemClickListener(object :
-                    OnItemClickListener<String> {
-                    override fun itemClicked(view: View, item: String, position: Int) {
-                        AccountManager.instance().refreshCurrency(item)
+                    OnItemClickListener<OptionItem> {
+                    override fun itemClicked(view: View, item: OptionItem, position: Int) {
+                        AccountManager.instance().refreshCurrency(item.text)
                         initMenu()
                         centerMenuDialog?.dismiss()
                     }
                 })
 
-                val optionList = ArrayList<String>()
+                val optionList = ArrayList<OptionItem>()
                 Currency.values().forEach { c ->
-                    optionList.add(c.type)
+                    optionList.add(OptionItem(c.type))
                 }
 
                 centerMenuDialogAdapter!!.resetData(optionList)

@@ -1,7 +1,7 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.hao.library.http.subscribeBy
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy2
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.App
@@ -26,55 +26,42 @@ class TransactionVM : BalanceVM() {
     fun transact(
         toAddress: String,
         toAmount: String,
-        allAmount: Long,
         isAll: Boolean,
         memo: String
     ) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            if (isAll) {
-                generateParams(
-                    it,
-                    toAddress,
-                    AmountUtils.generateCoin(allAmount, true),
-                    memo
-                )
-            } else {
-                val coins = it?.value?.coins
-                if (null != coins && coins.isNotEmpty()) {
-                    val balance = coins[0].amount ?: "0"
-                    if (!AmountUtils.isEnough(balance, toAmount)) {
-                        resultLD.value =
-                            Pair(false, App.instance.getString(R.string.notEnoughToTransfer))
-                        return@subscribeBy
-                    }
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(generateParams(it.result, toAddress, toAmount, isAll, memo))
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    AccountManager.instance().refreshBalance()
+                    resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
+                } else {
+                    resultLD.value = Pair(false, App.instance.getString(R.string.failed))
                 }
-                generateParams(
-                    it,
-                    toAddress,
-                    AmountUtils.generateCoin(toAmount),
-                    memo
-                )
-            }
-        }, {
-            resultLD.value = Pair(false, App.instance.getString(R.string.failed))
-        }).add()
+            }, {
+                resultLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
+    @Throws(CustomException::class)
     private fun generateParams(
         accountInfo: AccountInfo?,
         toAddress: String,
-        coin: Coin,
+        toAmount: String,
+        isAll: Boolean,
         memo: String
-    ) {
+    ): RequestBroadCast {
         if (accountInfo == null) {
-            resultLD.value = Pair(false, App.instance.getString(R.string.failed))
-            return
+            throw   CustomException(R.string.failed)
         }
+        var amount = AmountUtils.checkAmount(accountInfo, toAmount, isAll)
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
         val coinList = ArrayList<Coin>()
-        coinList.add(coin)
+        coinList.add(amount)
         val deterministicKey =
             KeyUtils.getDeterministicKey(account.chain, account.getEntropyAsHex(), account.path)
         val msg = MsgGeneratorUtils.sendMsg(
@@ -83,28 +70,12 @@ class TransactionVM : BalanceVM() {
             coinList,
             account.chain
         )
-        doTransact(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                memo,
-                deterministicKey
-            )
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            memo,
+            deterministicKey
         )
-    }
-
-    private fun doTransact(reqBroadCast: RequestBroadCast) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                AccountManager.instance().refreshBalance()
-                resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
-            } else {
-                resultLD.value = Pair(false, App.instance.getString(R.string.failed))
-            }
-
-        }, {
-            resultLD.value = Pair(false, it.second)
-        }).add()
     }
 }

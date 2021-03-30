@@ -1,7 +1,7 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.hao.library.http.subscribeBy
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy2
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.App
@@ -23,32 +23,33 @@ class DelegateVM : BalanceVM() {
     val resultLD = MutableLiveData<Pair<Boolean, String>>()
 
     fun delegate(validationAddress: String, toAmount: String, memo: String) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            val coins = it?.value?.coins
-            if (null != coins && coins.isNotEmpty()) {
-                val balance = coins[0].amount ?: "0"
-                if (isEnough(balance, toAmount)) {
-                    generateParams(it, validationAddress, toAmount, memo)
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(generateParams(it.result, validationAddress, toAmount, memo))
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    AccountManager.instance().refreshBalance()
+                    resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
                 } else {
-                    resultLD.value =
-                        Pair(false, App.instance.getString(R.string.notEnough))
+                    resultLD.value = Pair(false, App.instance.getString(R.string.failed))
                 }
-            }
-        }, {
-            resultLD.value = Pair(false, App.instance.getString(R.string.failed))
-        }).add()
+            }, {
+                resultLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
-    private fun isEnough(balance: String, toAmount: String): Boolean {
-        return balance.toLong() > toAmount.toLong()
-    }
-
+    @Throws(CustomException::class)
     private fun generateParams(
-        accountInfo: AccountInfo,
+        accountInfo: AccountInfo?,
         validationAddress: String,
         toAmount: String,
         memo: String
-    ) {
+    ): RequestBroadCast {
+        if (accountInfo == null) {
+            throw   CustomException(R.string.failed)
+        }
+        var amount = AmountUtils.checkAmount(accountInfo, toAmount)
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
@@ -57,31 +58,15 @@ class DelegateVM : BalanceVM() {
         val msg = MsgGeneratorUtils.delegateMsg(
             account.address,
             validationAddress,
-            AmountUtils.generateCoin(toAmount),
+            amount,
             account.chain
         )
-        doDelegate(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                memo,
-                deterministicKey
-            )
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            memo,
+            deterministicKey
         )
-    }
-
-    private fun doDelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                AccountManager.instance().refreshBalance()
-                resultLD.value = Pair(true, App.instance.getString(R.string.succeed))
-            } else {
-                resultLD.value = Pair(false, App.instance.getString(R.string.failed))
-            }
-
-        }, {
-            resultLD.value = Pair(false, it.second)
-        }).add()
     }
 }

@@ -12,5 +12,5 @@ interface FingerprintCallback {
 
     fun onFingerprintCancel()
 
-    fun usePassword(password: String): Boolean?
+    fun usePassword(password: String): Boolean
 }

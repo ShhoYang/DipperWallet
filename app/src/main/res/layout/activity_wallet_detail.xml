@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/walletAddress"
+            android:text="@string/wda_walletAddress"
             android:textColor="@color/textGray"
             android:textSize="12sp" />
 
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/chainInfo"
+                android:text="@string/wda_chainInfo"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/importTime"
+                android:text="@string/wda_importTime"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/importState"
+                android:text="@string/wda_importState"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/chainPath"
+                android:text="@string/wda_chainPath"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -192,7 +192,7 @@
         android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
         android:gravity="center"
-        android:text="@string/backupMnemonic"
+        android:text="@string/wda_backupMnemonic"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -205,7 +205,7 @@
         android:layout_height="@dimen/buttonHeight"
         android:layout_margin="@dimen/activityPadding"
         android:gravity="center"
-        android:text="@string/deleteWallet"
+        android:text="@string/wda_deleteWallet"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"

@@ -22,13 +22,13 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="16dp"
-        android:text="@string/receiveAddress" />
+        android:text="@string/ta_receiveAddress" />
 
     <EditText
         android:id="@+id/etToAddress"
         style="@style/InputViewContent"
         android:digits="@string/digits"
-        android:hint="@string/inputToAddress" />
+        android:hint="@string/ta_inputToAddress" />
 
     <include
         android:id="@+id/toAddressLine"
@@ -37,7 +37,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="@string/amountDip" />
+        android:text="@string/ta_amountDip" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_marginTop="0dp"
             android:layout_weight="1"
             android:digits="0123456789."
-            android:hint="@string/inputAmount"
+            android:hint="@string/ta_inputAmount"
             android:inputType="numberDecimal"
             android:maxLength="19"
             android:singleLine="true" />

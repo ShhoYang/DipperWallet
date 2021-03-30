@@ -1,38 +1,37 @@
 package com.highstreet.wallet.ui.activity
 
 import android.app.Activity
-import androidx.lifecycle.Observer
 import android.content.Intent
 import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.view.dialog.ConfirmDialog
 import com.hao.library.view.dialog.ConfirmDialogListener
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.databinding.ActivityCreatePasswordBinding
 import com.highstreet.wallet.db.Password
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isPassword
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.CreatePasswordVM
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/22
  */
 @AndroidEntryPoint
-class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, CreatePasswordVM>(),
-    View.OnFocusChangeListener {
+class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, CreatePasswordVM>() {
 
     private var password: Password? = null
 
     override fun initView() {
-        setTitle(R.string.createPassword)
+        setTitle(R.string.cpa_createPassword)
         viewBinding {
-            etPassword.onFocusChangeListener = this@CreatePasswordActivity
-            etConfirmPassword.onFocusChangeListener = this@CreatePasswordActivity
+            etPassword.focusListener(passwordLine.line)
+            etConfirmPassword.focusListener(confirmPasswordLine.line)
             RxView.textChanges(etPassword, etConfirmPassword) {
                 btnCreate.isEnabled = etPassword.string().isNotEmpty()
                         && etConfirmPassword.string().isNotEmpty()
@@ -50,7 +49,7 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
 
     override fun initData() {
         viewModel {
-            createPasswordLD.observe(this@CreatePasswordActivity, Observer {
+            createPasswordLD.observe(this@CreatePasswordActivity) {
                 hideLoading()
                 if (null == it) {
                     toast(R.string.failed)
@@ -59,16 +58,16 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
                     toast(R.string.succeed)
                     setFingerprint()
                 }
-            })
+            }
 
-            fingerprintLD.observe(this@CreatePasswordActivity, Observer {
+            fingerprintLD.observe(this@CreatePasswordActivity) {
                 hideLoading()
                 if (true == it) {
                     back()
                 } else {
-                    toast(R.string.saveFingerprintFailed)
+                    toast(R.string.cpa_saveFingerprintFailed)
                 }
-            })
+            }
         }
     }
 
@@ -77,12 +76,12 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
         val confirmPassword = vb!!.etConfirmPassword.string()
 
         if (!password.isPassword()) {
-            toast(R.string.passwordFormatError)
+            toast(R.string.cpa_passwordFormatError)
             return
         }
 
         if (password != confirmPassword) {
-            toast(R.string.passwordNotEqual)
+            toast(R.string.cpa_passwordNotEqual)
             return
         }
         showLoading()
@@ -92,7 +91,7 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
     private fun setFingerprint() {
         if (FingerprintUtils.isAvailable(this)) {
             ConfirmDialog.Builder(this)
-                .setMessage(getString(R.string.addFingerprintVerification))
+                .setMessage(getString(R.string.cpa_addFingerprintVerification))
                 .setListener(object : ConfirmDialogListener {
                     override fun confirm() {
                         authenticateFingerprint()
@@ -123,15 +122,6 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
     private fun back() {
         setResult(RESULT_OK)
         finish()
-    }
-
-    override fun onFocusChange(v: View, hasFocus: Boolean) {
-        viewBinding {
-            when (v) {
-                etPassword -> updateLineStyle(passwordLine.line, hasFocus)
-                etConfirmPassword -> updateLineStyle(confirmPasswordLine.line, hasFocus)
-            }
-        }
     }
 
     companion object {

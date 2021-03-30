@@ -12,7 +12,7 @@ import com.highstreet.wallet.crypto.RSA
 
 @Entity
 class Password(
-    @PrimaryKey()
+    @PrimaryKey
     var id: Long,
     var resource: String,
     var spec: String,

@@ -16,8 +16,7 @@
             android:id="@+id/ivFingerprint"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginTop="32dp"
-            tools:src="@mipmap/fingerprint" />
+            android:layout_marginTop="32dp" />
 
         <TextView
             android:id="@+id/tvMsg"
@@ -60,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/passwordVerification"
+                android:text="@string/fd_passwordVerification"
                 android:textColor="@color/dialogConfirmBtn"
                 android:textSize="16sp" />
 
@@ -81,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="@string/inputPassword"
+            android:text="@string/fd_inputPassword"
             android:textColor="@color/dialogTitle"
             android:textSize="18sp" />
 

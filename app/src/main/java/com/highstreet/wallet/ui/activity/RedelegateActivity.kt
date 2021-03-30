@@ -4,15 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-import android.view.View
-import androidx.lifecycle.Observer
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityRedelegateBinding
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
@@ -20,8 +19,6 @@ import com.highstreet.wallet.model.res.DelegationInfo
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.ui.vm.RedelegateVM
 import com.highstreet.wallet.utils.AmountUtils
-import com.highstreet.wallet.utils.StringUtils
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -30,8 +27,7 @@ import com.highstreet.wallet.view.listener.RxView
  * 转委托
  */
 @AndroidEntryPoint
-class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>(),
-    View.OnClickListener, View.OnFocusChangeListener {
+class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>() {
 
     private var amount = "0"
 
@@ -39,18 +35,24 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
     private var validator: Validator? = null
 
     override fun initView() {
-        setTitle(R.string.redelegate)
+        setTitle(R.string.ra_redelegate)
         viewBinding {
-            etAmount.onFocusChangeListener = this@RedelegateActivity
-            etMemo.onFocusChangeListener = this@RedelegateActivity
+
+            etAmount.focusListener(amountLine.line)
+            etMemo.focusListener(memoLine.line)
 
             RxView.textChanges(etAmount) {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
             }
 
-            RxView.click(llAddress, this@RedelegateActivity)
-            RxView.click(tvAll, this@RedelegateActivity)
-            RxView.click(btnConfirm, this@RedelegateActivity)
+            RxView.click(llAddress, this@RedelegateActivity, ValidatorChooseActivity.start)
+            RxView.click(tvAll) {
+                etAmount.setText(amount)
+                etAmount.setSelection(etAmount.string().length)
+            }
+            RxView.click(btnConfirm) {
+                redelegate()
+            }
         }
     }
 
@@ -59,18 +61,17 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
         delegationInfo?.apply {
             amount = shares ?: "0"
             vb?.tvMaxAmount?.text =
-                "${getString(R.string.redelegateMaxAmount)} ${StringUtils.pdip2DIP(amount)}"
+                "${getString(R.string.ra_redelegateMaxAmount)} ${AmountUtils.pdip2DIP(amount)}"
         }
-        vm?.redelegateLD?.observe(this, Observer {
+        vm?.redelegateLD?.observe(this) {
             hideLoading()
+            toast(it.second)
             if (it.first) {
-                toast(R.string.succeed)
+
                 AppManager.instance().finishActivity(DelegationDetailActivity::class.java)
                 finish()
-            } else {
-                toast(R.string.failed)
             }
-        })
+        }
     }
 
     private fun redelegate() {
@@ -81,7 +82,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
         val address = vb?.etAddress?.string() ?: ""
 
         if (address.isEmpty()) {
-            toast(R.string.pleaseSelectvalidator)
+            toast(R.string.ra_pleaseSelectvalidator)
             return
         }
 
@@ -91,7 +92,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
             return
         }
         if (!AmountUtils.isEnough(amount, s)) {
-            toast(R.string.overMaxAmount)
+            toast(R.string.ra_overMaxAmount)
             return
         }
 
@@ -106,32 +107,6 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
         ).authenticate()
     }
 
-    override fun onClick(v: View?) {
-        viewBinding {
-            when (v) {
-                llAddress -> ValidatorChooseActivity.start(this@RedelegateActivity)
-                tvAll -> {
-                    etAmount.setText(amount)
-                    etAmount.setSelection(etAmount.string().length)
-                }
-                btnConfirm -> redelegate()
-            }
-        }
-    }
-
-    override fun onFocusChange(v: View, hasFocus: Boolean) {
-        viewBinding {
-            when (v) {
-                etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etMemo -> updateLineStyle(memoLine.line, hasFocus)
-            }
-        }
-    }
-
-    private fun updateLineStyle(view: View, hasFocus: Boolean) {
-        view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ValidatorChooseActivity.REQUEST_CODE_VALIDATOR_CHOOSE
@@ -140,7 +115,7 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
         ) {
             val validator = data.getSerializableExtra(ExtraKey.SERIALIZABLE) as Validator?
             if (delegationInfo != null && delegationInfo!!.validator_address == validator?.operator_address) {
-                toast(R.string.sameValidator)
+                toast(R.string.ra_sameValidator)
             } else {
                 this.validator = validator
                 this.validator?.apply {

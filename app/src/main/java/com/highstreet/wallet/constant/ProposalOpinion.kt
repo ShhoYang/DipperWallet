@@ -19,10 +19,10 @@ object ProposalOpinion {
 
     fun getOpinion(context: Context, s: String?): String {
         return when (s) {
-            YES -> context.getString(R.string.yes)
-            NO -> context.getString(R.string.no)
-            NO_WITH_VETO -> context.getString(R.string.noWithVote)
-            ABSTAIN -> context.getString(R.string.abstain)
+            YES -> context.getString(R.string.pda_yes)
+            NO -> context.getString(R.string.pda_no)
+            NO_WITH_VETO -> context.getString(R.string.pda_noWithVote)
+            ABSTAIN -> context.getString(R.string.pda_abstain)
             else -> ""
         }
     }

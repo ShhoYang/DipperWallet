@@ -38,11 +38,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:textColor="@color/textWhite"
                 android:id="@+id/tvDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp" />
+                android:layout_marginTop="6dp"
+                android:textColor="@color/textWhite" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -54,7 +54,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/activityPadding"
         android:gravity="center"
-        android:text="重启"
+        android:text="@string/ca_restart"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"

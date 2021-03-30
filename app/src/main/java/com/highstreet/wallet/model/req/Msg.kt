@@ -20,7 +20,9 @@ class MsgValue : Serializable {
     var proposal_id: String? = null
     var voter: String? = null
     var option: String? = null
+    var from: String? = null
     var to: String? = null
     var name: String? = null
     var type: String? = null
+    var payload: String? = null
 }

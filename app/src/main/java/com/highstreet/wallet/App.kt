@@ -1,8 +1,9 @@
 package com.highstreet.wallet
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.hao.library.HaoLibrary
+import com.hao.library.HaoLibraryConfig
 import com.hao.library.extensions.notNullSingleValue
 import com.hao.library.utils.L
 import com.highstreet.wallet.backup.BaseData
@@ -22,17 +23,17 @@ import com.tencent.smtt.sdk.QbSdk
  * 4》tokens
  */
 
-class App : MultiDexApplication() {
+class App : Application() {
 
     private var baseData: BaseData? = null
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        HaoLibrary.init(this, LibraryConfig())
+        HaoLibrary.init(libraryConfig())
         CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
         initX5()
-        CacheManager.instance().load()
+        CacheManager.load()
         CaocConfig.Builder
             .create()
             .errorActivity(CrashActivity::class.java)
@@ -61,15 +62,18 @@ class App : MultiDexApplication() {
         QbSdk.initX5Environment(this, callback)
     }
 
+    private fun libraryConfig(): HaoLibraryConfig {
+        return HaoLibraryConfig.Builder(this)
+            .setToolbarLayoutTheme(R.style.AppToolbarLayout)
+            .setEmptyViewTheme(R.style.AppEmptyView)
+            .setConfirmDialogTheme(R.style.AppConfirmDialog)
+            .setLoadingDialogTheme(R.style.AppLoadingDialog)
+            .setHttpConfig(MyHttpConfig())
+            .build()
+    }
+
     companion object {
         private const val TAG = "--App--"
         var instance by notNullSingleValue<App>()
     }
 }
-
-// orient, gloom, about, better,
-// trigger, beyond, visual, merit,
-// best, first, broom, opera,
-// color, boost, labor, piece,
-// jar, renew, cannon, horn,
-// slot, alone, stove, use

@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text="@string/myAddress"
+                        android:text="@string/wf_myAddress"
                         android:textColor="@color/textWhite"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@id/_ivKey"
@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/available"
+                            android:text="@string/wf_available"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -157,7 +157,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/delegate"
+                            android:text="@string/wf_delegate"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/unbonding"
+                            android:text="@string/wf_unbonding"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -203,7 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/reward"
+                            android:text="@string/wf_reward"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -242,7 +242,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="@string/delegate"
+                                android:text="@string/wf_delegate"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
@@ -267,7 +267,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="@string/vote"
+                                android:text="@string/wf_vote"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
@@ -293,7 +293,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/currentPrice"
+                            android:text="@string/wf_currentPrice"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -316,7 +316,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="@string/gecko"
+                            android:text="@string/wf_gecko"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -351,7 +351,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/inflation"
+                            android:text="@string/wf_inflation"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -376,7 +376,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/averageYield"
+                            android:text="@string/wf_averageYield"
                             android:textColor="@color/textGray"
                             android:textSize="12sp" />
 
@@ -421,7 +421,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
                             android:singleLine="true"
-                            android:text="@string/dipperNetwork"
+                            android:text="@string/wf_dipperNetwork"
                             android:textColor="@color/textWhite"
                             android:textSize="16sp"
                             app:layout_constraintStart_toEndOf="@id/_ivChainIcon"
@@ -433,7 +433,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:maxLines="2"
-                            android:text="@string/dipperNetworkDesc"
+                            android:text="@string/wf_dipperNetworkDesc"
                             android:textColor="@color/textGray"
                             android:textSize="12sp"
                             app:layout_constraintStart_toStartOf="@id/tvChainTitle"
@@ -455,7 +455,7 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/home"
+                            android:text="@string/wf_home"
                             android:textColor="@color/textDipperGreen"
                             android:textSize="14sp" />
 
@@ -466,7 +466,7 @@
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/medium"
+                            android:text="@string/wf_medium"
                             android:textColor="@color/textDipperGreen"
                             android:textSize="14sp" />
 
@@ -503,7 +503,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/send"
+                android:text="@string/wf_send"
                 android:textColor="@color/textWhite"
                 android:textSize="10sp" />
 

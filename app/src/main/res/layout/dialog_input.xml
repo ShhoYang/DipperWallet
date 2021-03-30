@@ -13,7 +13,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginRight="32dp"
         android:gravity="center"
-        android:text="@string/inputPassword"
+        android:text="@string/id_inputPassword"
         android:textColor="@color/dialogTitle"
         android:textSize="18sp" />
 

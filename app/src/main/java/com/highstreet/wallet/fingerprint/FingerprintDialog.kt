@@ -73,7 +73,7 @@ class FingerprintDialog(activity: Activity) :
 
     private fun reset() {
         viewBinding {
-            tvMsg.setText(R.string.verifyFingerprint)
+            tvMsg.setText(R.string.fd_verifyFingerprint)
             tvMsg.setTextColor(colorTip)
             ivFingerprint.setImageResource(R.mipmap.fingerprint)
             etPassword.setText("")
@@ -140,7 +140,7 @@ class FingerprintDialog(activity: Activity) :
                     if (true == fingerprintDialogListener?.usePassword(etPassword.string())) {
                         dismiss()
                     } else {
-                        etPassword.error = context.getString(R.string.wrongPassword)
+                        etPassword.error = context.getString(R.string.fd_wrongPassword)
                     }
                 }
             }

@@ -29,6 +29,21 @@ object MsgGeneratorUtils {
         return Msg(MsgType.SEND, msgValue)
     }
 
+    fun contract(
+        from: String,
+        to: String,
+        payload: String,
+        amount: Coin,
+        chain: String
+    ): Msg {
+        val msgValue = MsgValue()
+        msgValue.from = from
+        msgValue.to = to
+        msgValue.payload = payload
+        msgValue.amount = amount
+        return Msg(MsgType.CONTRACT, msgValue)
+    }
+
     fun delegateMsg(
         delegator_address: String,
         validator_address: String,
@@ -123,6 +138,6 @@ object MsgGeneratorUtils {
         val byteArray = ByteArray(64)
         System.arraycopy(HexUtils.integerToBytes(signature.r, 32), 0, byteArray, 0, 32)
         System.arraycopy(HexUtils.integerToBytes(signature.s, 32), 0, byteArray, 32, 32)
-        return Base64Utils.encodeToString(byteArray).replace("\n", "")
+        return Base64Utils.encode(byteArray).replace("\n", "")
     }
 }

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.WalletDetailActivity">
+
+    <include layout="@layout/include_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/activityPadding"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:padding="@dimen/blockPadding"
+        android:paddingTop="@dimen/activityPadding">
+
+        <ImageView
+            android:id="@+id/_ivKey"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_key"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/tda_myAddress"
+            android:textColor="@color/textWhite"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/_ivKey"
+            app:layout_constraintStart_toEndOf="@id/_ivKey"
+            app:layout_constraintTop_toTopOf="@id/_ivKey" />
+
+        <ImageView
+            android:id="@+id/ivWalletAddress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_qr"
+            app:layout_constraintBottom_toBottomOf="@id/_ivKey"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/_ivKey" />
+
+        <TextView
+            android:id="@+id/tvWalletAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textColor="@color/textWhite"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/_ivKey" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activityPadding"
+        android:layout_marginTop="@dimen/blockSpace"
+        android:layout_marginRight="@dimen/activityPadding"
+        android:background="@drawable/shape_block"
+        android:orientation="vertical"
+        android:padding="@dimen/blockPadding">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivChainIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/logo3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCoinUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/textDipperGreen"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/ivChainIcon"
+                app:layout_constraintStart_toEndOf="@id/ivChainIcon"
+                app:layout_constraintTop_toTopOf="@id/ivChainIcon" />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/ivChainIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivChainIcon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvAmountValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="right|center_vertical"
+            android:textColor="@color/textGray"
+            android:textSize="12sp" />
+
+        <include layout="@layout/include_block_line" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/blockPadding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tda_available"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tda_delegate"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDelagated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tda_unbonding"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvUnbondingDelegationAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/tda_reward"
+                android:textColor="@color/textGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:textColor="@color/textWhite"
+                android:textSize="12sp" />
+
+        </FrameLayout>
+
+        <com.hao.library.view.RoundTextView
+            android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/tda_send"
+            android:textSize="@dimen/buttonText"
+            app:roundTextViewBorderColor="@color/btnBorderColor"
+            app:roundTextViewBorderWidth="@dimen/buttonBorder"
+            app:roundTextViewNormalTextColor="@color/btnTextColor"
+            app:roundTextViewRadius="@dimen/buttonRadius" />
+
+    </LinearLayout>
+</LinearLayout>

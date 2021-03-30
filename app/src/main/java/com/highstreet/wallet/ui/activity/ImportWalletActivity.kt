@@ -1,29 +1,27 @@
 package com.highstreet.wallet.ui.activity
 
 import android.app.Activity
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.KeyEvent
-import android.view.View
 import android.widget.EditText
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
-import com.highstreet.wallet.R
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Chain
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.constant.ExtraKey
-import com.highstreet.wallet.model.WalletParams
-import com.highstreet.wallet.ui.vm.ImportWalletVM
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.databinding.ActivityImportWalletBinding
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isName
 import com.highstreet.wallet.extensions.string
-import com.highstreet.wallet.view.listener.RxView
+import com.highstreet.wallet.model.WalletParams
+import com.highstreet.wallet.ui.vm.ImportWalletVM
 
 /**
  * @author Yang Shihao
@@ -39,11 +37,10 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
     private val editTexts = ArrayList<EditText>(25)
 
     override fun initView() {
-        setTitle(R.string.importWallet)
+        setTitle(R.string.iwa_importWallet)
 
         viewBinding {
-            etName.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus -> nameLine.line.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur) }
+            etName.focusListener(nameLine.line)
 
             editTexts.clear()
             editTexts.add(etMnemonic01)
@@ -87,7 +84,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
 
     override fun initData() {
         chain = intent?.getStringExtra(ExtraKey.STRING) ?: Chain.DIP_TEST.chainName
-        vm?.resultLD?.observe(this, Observer {
+        vm?.resultLD?.observe(this) {
             hideLoading()
             if (true == it) {
                 AppManager.instance().finishActivity(InitWalletActivity::class.java)
@@ -98,19 +95,19 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
             } else {
                 toast(R.string.failed)
             }
-        })
+        }
     }
 
     private fun importWallet() {
         if (null == AccountManager.instance().password) {
-            toast(R.string.setPassword)
+            toast(R.string.iwa_setPassword)
             CreatePasswordActivity.start(this)
             return
         }
 
         editTexts.forEach {
             if (TextUtils.isEmpty(it.string())) {
-                toast(R.string.mnemonicNotCompleted)
+                toast(R.string.iwa_mnemonicNotCompleted)
                 return
             }
         }
@@ -118,7 +115,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
         val mnemonic = editTexts.map { it.string() } as ArrayList
 
         if (!isValidMnemonic(mnemonic)) {
-            toast(R.string.invalidMnemonic)
+            toast(R.string.iwa_invalidMnemonic)
             return
         }
 
@@ -126,7 +123,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
         val accounts = AccountManager.instance().accounts
         accounts.forEach { account ->
             if (account.address == walletParams.address) {
-                toast(R.string.addressAdded)
+                toast(R.string.iwa_addressAdded)
                 return
             }
         }
@@ -134,7 +131,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
         val name = vb?.etName?.string() ?: ""
 
         if (!name.isName()) {
-            toast(R.string.walletNameFormatError)
+            toast(R.string.iwa_walletNameFormatError)
             return
         }
         walletParams.nickName = name

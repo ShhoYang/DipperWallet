@@ -1,6 +1,5 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -8,35 +7,35 @@ import android.view.View
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityDelegateBinding
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isAmount
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.ui.vm.DelegateVM
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
  * @Date 2020/10/24
  */
 @AndroidEntryPoint
-class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>(),
-    View.OnFocusChangeListener {
+class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>() {
 
     private var amount = 0L
 
     private var validator: Validator? = null
 
     override fun initView() {
-        setTitle(R.string.delegation)
+        setTitle(R.string.da_delegation)
         viewBinding {
-            etAmount.onFocusChangeListener = this@DelegateActivity
-            etMemo.onFocusChangeListener = this@DelegateActivity
+            etAmount.focusListener(amountLine.line)
+            etMemo.focusListener(memoLine.line)
 
             RxView.textChanges(etAmount) {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
@@ -82,31 +81,22 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>(),
         }
 
         viewModel {
-            amountLD.observe(this@DelegateActivity, Observer {
+            amountLD.observe(this@DelegateActivity) {
                 it?.apply {
                     amount = getLongAmount()
                     vb!!.tvBalance.text =
-                        "${getString(R.string.availableBalance)}${getAmount()}"
+                        "${getString(R.string.da_availableBalance)}${getAmount()}"
                 }
-            })
-            resultLD.observe(this@DelegateActivity, Observer {
+            }
+            resultLD.observe(this@DelegateActivity) {
                 hideLoading()
                 toast(it.second)
                 if (it.first) {
                     AppManager.instance().finishActivity(DelegationDetailActivity::class.java)
                     finish()
                 }
-            })
-            getAccountInfo(AccountManager.instance().address)
-        }
-    }
-
-    override fun onFocusChange(v: View, hasFocus: Boolean) {
-        viewBinding {
-            when (v) {
-                etAmount -> updateLineStyle(amountLine.line, hasFocus)
-                etMemo -> updateLineStyle(memoLine.line, hasFocus)
             }
+            getAccountInfo(AccountManager.instance().address)
         }
     }
 

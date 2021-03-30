@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activityPadding"
+    android:layout_marginRight="@dimen/activityPadding"
+    android:layout_marginBottom="@dimen/blockSpace"
+    android:background="@drawable/shape_block"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/blockPadding">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/textPurple"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:singleLine="true"
+            android:textColor="@color/textGray"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:singleLine="true"
+            android:textColor="@color/textWhite"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvAmountValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:singleLine="true"
+            android:textColor="@color/textGray"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="6dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/ic_arrow_right" />
 
 </LinearLayout>

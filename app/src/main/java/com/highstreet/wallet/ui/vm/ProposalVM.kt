@@ -19,6 +19,5 @@ class ProposalVM : BaseListViewModel<Proposal>() {
         }, {
             onResponse(null)
         }).add()
-
     }
 }

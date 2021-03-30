@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/state"
+                android:text="@string/tda_state"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/blockHeight"
+                android:text="@string/tda_blockHeight"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/messageSize"
+                android:text="@string/tda_messageSize"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/blockPadding"
-            android:text="@string/transactionHash"
+            android:text="@string/tda_transactionHash"
             android:textColor="@color/textGray"
             android:textSize="12sp" />
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.TokenListActivity">
+    tools:context=".ui.activity.TokenActivity">
 
     <include layout="@layout/include_toolbar" />
 
@@ -40,7 +40,7 @@
         android:layout_height="@dimen/buttonHeight"
         android:layout_margin="@dimen/activityPadding"
         android:gravity="center"
-        android:text="@string/addToken"
+        android:text="@string/ta_addToken"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"

@@ -14,13 +14,9 @@ data class Menu(
 
     companion object {
         const val TYPE_NORMAL = 0
-        const val TYPE_WIDE_LINE = 1
-        const val TYPE_NARROW_LINE = 2
-        const val TYPE_GROUP = 3
-        const val TYPE_SPACE = 4
+        const val TYPE_GROUP = 2
+        const val TYPE_SPACE = 3
 
-        fun wide() = Menu(type = TYPE_WIDE_LINE)
-        fun narrow() = Menu(type = TYPE_NARROW_LINE)
         fun space() = Menu(type = TYPE_SPACE)
         fun group(name: String) = Menu(title = name, type = TYPE_GROUP)
     }

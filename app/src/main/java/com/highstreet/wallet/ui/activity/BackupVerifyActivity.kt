@@ -9,6 +9,7 @@ import com.hao.library.annotation.Inject
 import com.hao.library.extensions.init
 import com.hao.library.ui.BaseActivity
 import com.hao.library.utils.CoroutineUtils
+import com.hao.library.view.listener.RxView
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.R
 import com.highstreet.wallet.AccountManager
@@ -17,7 +18,6 @@ import com.highstreet.wallet.ui.adapter.MnemonicAdapter
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityBackupVerifyBinding
 import com.highstreet.wallet.db.Account
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -40,7 +40,7 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
     lateinit var bottomAdapter: MnemonicAdapter
 
     override fun initView() {
-        setTitle(R.string.backupMnemonic)
+        setTitle(R.string.bva_backupMnemonic)
         from = intent.getIntExtra(ExtraKey.INT, BackupActivity.FROM_CREATE)
         account = intent.getSerializableExtra(ExtraKey.SERIALIZABLE) as Account?
         val mnemonic = intent.getSerializableExtra(ExtraKey.SERIALIZABLE_2) as ArrayList<String>?
@@ -63,28 +63,23 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
 
                 checkCompleted()
             }
-        }
-        )
-        bottomAdapter.setOnItemClickListener(
-            object : OnItemClickListener<String> {
-                override fun itemClicked(view: View, item: String, position: Int) {
-                    bottomList.removeAt(position)
-                    bottomList.shuffle()
-                    bottomAdapter.resetData(bottomList)
+        })
+        bottomAdapter.setOnItemClickListener(object : OnItemClickListener<String> {
+            override fun itemClicked(view: View, item: String, position: Int) {
+                bottomList.removeAt(position)
+                bottomList.shuffle()
+                bottomAdapter.resetData(bottomList)
 
-                    topList.add(item)
-                    topAdapter.resetData(topList)
-                    checkCompleted()
-                }
+                topList.add(item)
+                topAdapter.resetData(topList)
+                checkCompleted()
             }
-        )
+        })
         viewBinding {
             rvTop.init(topAdapter, 4)
             rvBottom.init(bottomAdapter, 4)
 
-            RxView.click(btnConfirm) {
-                verify()
-            }
+            RxView.click(btnConfirm,verify)
         }
         topAdapter.resetData(topList)
         bottomAdapter.resetData(bottomList)
@@ -95,7 +90,7 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
         vb?.btnConfirm?.isEnabled = topList.size == Constant.MNEMONIC_SIZE
     }
 
-    private fun verify() {
+    private val verify = {
         if (mnemonicS == topList.joinToString()) {
             toast(R.string.succeed)
             CoroutineUtils.io2main({
@@ -108,7 +103,7 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
                 finish()
             })
         } else {
-            toast(R.string.invalidMnemonic)
+            toast(R.string.bva_invalidMnemonic)
         }
     }
 

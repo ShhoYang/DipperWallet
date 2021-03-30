@@ -1,10 +1,13 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy
 import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
@@ -61,18 +64,33 @@ class ProposalDetailVM : BaseViewModel() {
      * 投票
      */
     fun vote(proposalId: String, opinion: String) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            if (null == it) {
-                voteLD.value = Pair(false, "")
-            } else {
-                generateParams(it, proposalId, opinion)
-            }
-        }, {
-            voteLD.value = Pair(false, "")
-        }).add()
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(generateParams(it.result, proposalId, opinion))
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    proposalDetail(proposalId)
+                    votingRate(proposalId)
+                    proposalOpinion(proposalId)
+                    voteLD.value = Pair(true, App.instance.getString(R.string.succeed))
+                } else {
+                    voteLD.value = Pair(false, App.instance.getString(R.string.failed))
+                }
+            }, {
+                voteLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
-    private fun generateParams(accountInfo: AccountInfo, proposalId: String, opinion: String) {
+    @Throws(CustomException::class)
+    private fun generateParams(
+        accountInfo: AccountInfo?,
+        proposalId: String,
+        opinion: String
+    ): RequestBroadCast {
+        if (accountInfo == null) {
+            throw   CustomException(R.string.failed)
+        }
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
@@ -84,30 +102,12 @@ class ProposalDetailVM : BaseViewModel() {
             opinion,
             account.chain
         )
-        doVote(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                "",
-                deterministicKey
-            ), proposalId
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            "",
+            deterministicKey
         )
-    }
-
-    private fun doVote(reqBroadCast: RequestBroadCast, proposalId: String) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                proposalDetail(proposalId)
-                votingRate(proposalId)
-                proposalOpinion(proposalId)
-                voteLD.value = Pair(true, "")
-            } else {
-                voteLD.value = Pair(false, "")
-            }
-
-        }, {
-            voteLD.value = Pair(false, it.second)
-        }).add()
     }
 }

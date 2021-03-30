@@ -5,9 +5,9 @@ import android.os.Build
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.databinding.ActivityCarshBinding
-import com.highstreet.wallet.view.listener.RxView
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 /**

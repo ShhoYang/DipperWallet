@@ -5,10 +5,10 @@ package com.highstreet.wallet.constant
  *
  * 链名
  */
-enum class Chain(val chainName: String) {
-    ALL("ALL"),
-    DIP_TEST("dip-testnet"),
-    DIP_MAIN("dipperhub");
+enum class Chain(val chainName: String,val showName: String) {
+    ALL("ALL","ALL"),
+    DIP_TEST("dip-testnet","DIPPER TEST"),
+    DIP_MAIN("dipperhub","DIPPER HUB");
 
     companion object {
         fun getChain(chainName: String): Chain {

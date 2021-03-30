@@ -29,19 +29,19 @@ class DAppFragment : BaseFragment<FragmentListBinding, PlaceholderViewModel>(),
         list.add(
             Menu(
                 icon = R.mipmap.ic_app_launcher,
-                title = getString(R.string.dipsyn),
+                title = getString(R.string.df_dipsyn),
             )
         )
         list.add(
             Menu(
                 icon = R.mipmap.ic_app_launcher,
-                title = getString(R.string.dipdex),
+                title = getString(R.string.df_dipdex),
             )
         )
         list.add(
             Menu(
                 icon = R.mipmap.ic_app_launcher,
-                title = getString(R.string.dipbank),
+                title = getString(R.string.df_dipbank),
             )
         )
         adapter.setOnItemClickListener(this)

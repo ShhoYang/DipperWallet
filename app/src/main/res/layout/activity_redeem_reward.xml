@@ -12,7 +12,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="@dimen/activityPadding"
-        android:text="@string/validatorAddress" />
+        android:text="@string/rra_validatorAddress" />
 
     <EditText
         android:id="@+id/etValidatorAddress"
@@ -24,7 +24,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="@string/estimate" />
+        android:text="@string/rra_estimate" />
 
     <EditText
         android:id="@+id/etAmount"
@@ -37,12 +37,12 @@
 
     <TextView
         style="@style/InputViewTip"
-        android:text="@string/receiveRewardTip" />
+        android:text="@string/rra_receiveRewardTip" />
 
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="@string/receiveAddress" />
+        android:text="@string/rra_receiveAddress" />
 
     <EditText
         android:id="@+id/etReceiveAddress"

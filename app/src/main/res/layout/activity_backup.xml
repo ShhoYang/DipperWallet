@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
-        android:text="@string/backupTip1"
+        android:text="@string/ba_tip1"
         android:textColor="@color/textWhite"
         android:textSize="16sp" />
 
@@ -25,7 +25,7 @@
         android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
-        android:text="@string/backupTip2"
+        android:text="@string/ba_tip2"
         android:textColor="@color/textWhite"
         android:textSize="16sp" />
 
@@ -48,7 +48,7 @@
         android:layout_marginTop="48dp"
         android:layout_marginRight="@dimen/activityPadding"
         android:gravity="center"
-        android:text="@string/next"
+        android:text="@string/ba_next"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"

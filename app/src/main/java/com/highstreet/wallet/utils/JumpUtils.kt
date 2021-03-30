@@ -14,7 +14,15 @@ object JumpUtils {
     fun toDipperNetwork(context: Context) {
         WebActivity.start(
             context,
-            context.getString(R.string.dipperNetwork),
+            context.getString(R.string.sf_dipperNetwork),
+            Constant.DIPPER_NETWORK
+        )
+    }
+
+    val toDipperNetwork: (Context) -> Unit = {
+        WebActivity.start(
+            it,
+            it.getString(R.string.sf_dipperNetwork),
             Constant.DIPPER_NETWORK
         )
     }

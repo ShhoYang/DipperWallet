@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:textColor="@color/textPurple"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvWalletName"
             app:layout_constraintTop_toTopOf="parent" />

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hao.library.utils.DisplayUtils
 import com.hao.library.view.dialog.BaseDialog
-import com.highstreet.wallet.R
 import com.highstreet.wallet.databinding.DialogCenterMenuBinding
 
 /**

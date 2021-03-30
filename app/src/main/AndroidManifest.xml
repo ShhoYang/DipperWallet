@@ -64,11 +64,6 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.WalletTypeActivity"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-
-        <activity
             android:name=".ui.activity.CreatePasswordActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
@@ -130,12 +125,27 @@
             tools:replace="screenOrientation" />
 
         <activity
+            android:name=".ui.activity.TokenTransactionActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
             android:name=".ui.activity.ScanActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.TokenListActivity"
+            android:name=".ui.activity.TokenActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
+            android:name=".ui.activity.NativeTokenDetailActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <activity
+            android:name=".ui.activity.TokenDetailActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 
@@ -145,7 +155,7 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".ui.activity.ValidatorListActivity"
+            android:name=".ui.activity.ValidatorActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
 

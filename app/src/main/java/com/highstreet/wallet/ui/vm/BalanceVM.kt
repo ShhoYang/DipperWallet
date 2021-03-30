@@ -13,7 +13,7 @@ import com.highstreet.wallet.model.res.AccountInfo
 
 open class BalanceVM : BaseViewModel() {
 
-    val amountLD = MutableLiveData<AccountInfo>()
+    val amountLD = MutableLiveData<AccountInfo?>()
 
     fun getAccountInfo(address: String) {
         ApiService.getApi().account(address).subscribeBy({

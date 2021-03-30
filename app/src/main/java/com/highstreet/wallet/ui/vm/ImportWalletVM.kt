@@ -43,8 +43,9 @@ class ImportWalletVM : BaseViewModel() {
         val encR = AES.encrypt(
             walletParams.entropyAsHex,
             Constant.MNEMONIC_KEYSTORE_ALIAS + walletParams.uuid,
-
             )
+
+        val time = System.currentTimeMillis()
         return Account(
             id = null,
             uuid = walletParams.uuid,
@@ -69,8 +70,8 @@ class ImportWalletVM : BaseViewModel() {
             pushAlarm = false,
             fingerprint = false,
             isLast = true,
-            createTime = 0,
-            importTime = System.currentTimeMillis(),
+            createTime = time,
+            importTime = time,
             sort = 0,
             extension = ""
         )

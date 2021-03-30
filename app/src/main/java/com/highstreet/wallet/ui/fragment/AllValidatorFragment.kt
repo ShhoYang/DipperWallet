@@ -5,7 +5,7 @@ import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseListFragment
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.SortType
-import com.highstreet.wallet.databinding.FragmentAllValidatorListBinding
+import com.highstreet.wallet.databinding.FragmentAllValidatorBinding
 import com.highstreet.wallet.model.res.Validator
 import com.highstreet.wallet.ui.activity.ValidatorDetailActivity
 import com.highstreet.wallet.ui.adapter.ValidatorAdapter
@@ -16,9 +16,8 @@ import com.highstreet.wallet.ui.vm.AllValidatorVM
  * @Date 2020/10/24
  */
 @AndroidEntryPoint
-class AllValidatorListFragment :
-    BaseListFragment<FragmentAllValidatorListBinding, Validator, AllValidatorVM, ValidatorAdapter>(),
-    View.OnClickListener {
+class AllValidatorFragment :
+    BaseListFragment<FragmentAllValidatorBinding, Validator, AllValidatorVM, ValidatorAdapter>(){
 
     private var sortType = SortType.SHARES_DESC
     private var rateSort = SortType.RATE_DESC
@@ -28,23 +27,18 @@ class AllValidatorListFragment :
         super.initView()
         viewBinding {
             llShares.isSelected = true
-            llRate.setOnClickListener(this@AllValidatorListFragment)
-            llShares.setOnClickListener(this@AllValidatorListFragment)
+            llRate.setOnClickListener{
+                clickRate()
+            }
+            llShares.setOnClickListener{
+                clickShares()
+            }
         }
     }
 
     override fun itemClicked(view: View, item: Validator, position: Int) {
         act {
             ValidatorDetailActivity.start(it, item, false)
-        }
-    }
-
-    override fun onClick(v: View?) {
-        viewBinding {
-            when (v) {
-                llRate -> clickRate()
-                llShares -> clickShares()
-            }
         }
     }
 

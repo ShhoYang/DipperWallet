@@ -76,10 +76,9 @@ class ScanActivity : BaseActivity<ActivityScanBinding, PlaceholderViewModel>(), 
 
     companion object {
         const val REQUEST_CODE_SCAN = 102
-
-        fun start(context: Activity) {
-            context.startActivityForResult(
-                Intent(context, ScanActivity::class.java),
+        val start: (Activity) -> Unit = {
+            it.startActivityForResult(
+                Intent(it, ScanActivity::class.java),
                 REQUEST_CODE_SCAN
             )
         }

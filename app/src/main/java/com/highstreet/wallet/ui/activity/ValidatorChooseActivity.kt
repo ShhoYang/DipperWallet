@@ -19,8 +19,7 @@ import com.highstreet.wallet.ui.vm.AllValidatorVM
  */
 @AndroidEntryPoint
 class ValidatorChooseActivity :
-    BaseListActivity<ActivityValidatorChooseBinding, Validator, AllValidatorVM, ValidatorAdapter>(),
-    View.OnClickListener {
+    BaseListActivity<ActivityValidatorChooseBinding, Validator, AllValidatorVM, ValidatorAdapter>() {
 
     private var sortType = SortType.SHARES_DESC
     private var rateSort = SortType.RATE_DESC
@@ -30,8 +29,12 @@ class ValidatorChooseActivity :
         super.initView()
         viewBinding {
             llShares.isSelected = true
-            llRate.setOnClickListener(this@ValidatorChooseActivity)
-            llShares.setOnClickListener(this@ValidatorChooseActivity)
+            llRate.setOnClickListener {
+                clickRate()
+            }
+            llShares.setOnClickListener {
+                clickShares()
+            }
         }
     }
 
@@ -40,15 +43,6 @@ class ValidatorChooseActivity :
         intent.putExtra(ExtraKey.SERIALIZABLE, item)
         setResult(Activity.RESULT_OK, intent)
         finish()
-    }
-
-    override fun onClick(v: View?) {
-        viewBinding {
-            when (v) {
-                llRate -> clickRate()
-                llShares -> clickShares()
-            }
-        }
     }
 
     private fun clickRate() {
@@ -95,9 +89,11 @@ class ValidatorChooseActivity :
 
     companion object {
         const val REQUEST_CODE_VALIDATOR_CHOOSE = 302
-        fun start(context: Activity) {
-            val intent = Intent(context, ValidatorChooseActivity::class.java)
-            context.startActivityForResult(intent, REQUEST_CODE_VALIDATOR_CHOOSE)
+        val start: (Activity) -> Unit = {
+            it.startActivityForResult(
+                Intent(it, ValidatorChooseActivity::class.java),
+                REQUEST_CODE_VALIDATOR_CHOOSE
+            )
         }
     }
 }

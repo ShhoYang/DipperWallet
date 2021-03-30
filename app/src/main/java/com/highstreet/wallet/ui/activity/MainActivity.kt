@@ -4,15 +4,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
-import com.highstreet.wallet.cache.CoinPriceCache
+import com.highstreet.wallet.cache.CacheManager
 import com.highstreet.wallet.databinding.ActivityMainBinding
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.ui.adapter.FragmentAdapter
 import com.highstreet.wallet.ui.fragment.*
 import com.highstreet.wallet.ui.vm.NodeInfoVM
-import com.highstreet.wallet.view.listener.RxView
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
@@ -20,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
     override fun initView() {
         val fragments = arrayListOf<Pair<String, Fragment>>(
             Pair("", WalletFragment()),
-            Pair("", MyTokenFragment()),
+            Pair("", TokensFragment()),
             Pair("", HistoryFragment()),
 //            Pair("", DAppFragment()),
             Pair("", SettingFragment())
@@ -47,15 +47,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
                 true
             }
 
-            RxView.click(ivSwitchWallet) {
-                toA(WalletManageActivity::class.java)
-            }
+            RxView.click(ivSwitchWallet, WalletManageActivity::class.java, toActivity)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        CoinPriceCache.instance().load()
+        CacheManager.load()
     }
 
     override fun initData() {
@@ -71,7 +69,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
 
         viewModel {
             nodeInfoLD.observe(this@MainActivity) {
-                vb?.tvChainName?.text = "(${it?.node_info?.network})"
+                vb?.tvChainName?.text = it?.node_info?.network
             }
 
             getNodeInfo()

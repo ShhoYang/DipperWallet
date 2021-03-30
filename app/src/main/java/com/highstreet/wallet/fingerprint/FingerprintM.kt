@@ -44,8 +44,8 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
         if (null == context) {
             return
         }
-        verifySucceed = context.getString(R.string.authenticateSucceed)
-        verifyFailed = context.getString(R.string.authenticateFailed)
+        verifySucceed = context.getString(R.string.fd_authenticateSucceed)
+        verifyFailed = context.getString(R.string.fd_authenticateFailed)
         this.fingerprintCallback = fingerprintCallback
         this.useFingerprint = useFingerprint
         fingerprintManagerCompat = FingerprintManagerCompat.from(context)
@@ -106,12 +106,12 @@ class FingerprintM : FingerprintManagerCompat.AuthenticationCallback(), IFingerp
      */
     override fun onAuthenticationError(errMsgId: Int, errString: CharSequence) {
         super.onAuthenticationError(errMsgId, errString)
-        failed(errString?.toString())
+        failed(errString.toString())
     }
 
     override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence) {
         super.onAuthenticationHelp(helpMsgId, helpString)
-        failed(helpString?.toString())
+        failed(helpString.toString())
     }
 
     override fun onAuthenticationSucceeded(result: FingerprintManagerCompat.AuthenticationResult) {

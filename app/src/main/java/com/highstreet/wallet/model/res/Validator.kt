@@ -2,6 +2,7 @@ package com.highstreet.wallet.model.res
 
 import android.text.TextUtils
 import com.hao.library.adapter.PagedAdapterItem
+import com.highstreet.wallet.utils.AmountUtils
 import com.highstreet.wallet.utils.StringUtils
 import java.io.Serializable
 
@@ -32,34 +33,12 @@ data class Validator(
         return operator_address + consensus_pubkey
     }
 
-    private var firstLetterName: String? = null
-
-    fun getFirstLetterName(): String {
-
-        if (null == firstLetterName) {
-            val name = description?.moniker
-            if (name == null || name.isEmpty()) {
-                firstLetterName = ""
-            } else {
-                val l = name[0]
-
-                firstLetterName = if (l in 'a'..'z' || l in 'A'..'Z') {
-                    l.toString().toUpperCase()
-                } else {
-                    l.toString()
-                }
-            }
-        }
-
-        return firstLetterName!!
-    }
-
     fun getDelegatorShares(): String {
-        return StringUtils.pdip2DIP(delegator_shares)
+        return AmountUtils.pdip2DIP(delegator_shares)
     }
 
     fun getSelfDelegation(): String {
-        return StringUtils.pdip2DIP(self_delegation)
+        return AmountUtils.pdip2DIP(self_delegation)
     }
 
     fun getRate(): String {

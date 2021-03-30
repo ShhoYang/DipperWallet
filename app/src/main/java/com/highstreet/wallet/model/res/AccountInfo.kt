@@ -1,13 +1,9 @@
 package com.highstreet.wallet.model.res
 
 import android.text.TextUtils
-import com.highstreet.wallet.AccountManager
-import com.highstreet.wallet.cache.CoinPriceCache
-import com.highstreet.wallet.constant.Currency
 import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.PublicKey
-import com.highstreet.wallet.utils.StringUtils
-import java.math.BigDecimal
+import com.highstreet.wallet.utils.AmountUtils
 
 /**
  * @author Yang Shihao
@@ -18,9 +14,9 @@ data class AccountInfo(
     val value: AccountValue?
 ) {
     fun getAccountNumber(): Int {
-        val account_number = value?.account_number
-        if (account_number != null && TextUtils.isDigitsOnly(account_number)) {
-            return account_number.toInt()
+        val accountNumber = value?.account_number
+        if (accountNumber != null && TextUtils.isDigitsOnly(accountNumber)) {
+            return accountNumber.toInt()
         }
         return 0
     }
@@ -40,10 +36,8 @@ data class AccountInfo(
         } else {
             coins[0]
         }
-        return StringUtils.pdip2DIP(coin, false)
+        return AmountUtils.pdip2DIP(coin, false)
     }
-
-
 
     fun getLongAmount(): Long {
         val coins = value?.coins

@@ -1,7 +1,6 @@
 package com.highstreet.wallet.ui.activity
 
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.hao.library.adapter.listener.ItemDragListener
 import com.hao.library.adapter.listener.ItemTouchCallback
@@ -24,7 +23,7 @@ import com.highstreet.wallet.ui.adapter.WalletManageLeftAdapter
 import com.highstreet.wallet.ui.adapter.WalletManageRightAdapter
 import com.highstreet.wallet.ui.vm.WalletManageVM
 import com.highstreet.wallet.view.BottomMenuDialog
-import kotlin.collections.ArrayList
+import com.highstreet.wallet.view.OptionItem
 import kotlin.properties.Delegates
 
 /**
@@ -33,14 +32,16 @@ import kotlin.properties.Delegates
  */
 @AndroidEntryPoint
 class WalletManageActivity :
-    BaseActivity<ActivityWalletManageBinding, WalletManageVM>(), View.OnClickListener {
+    BaseActivity<ActivityWalletManageBinding, WalletManageVM>(){
 
     private var editable by Delegates.observable(false) { _, old, new ->
         if (new != old) {
             viewBinding {
                 if (new) {
                     ivEdit.visible()
-                    ivEdit.setOnClickListener(this@WalletManageActivity)
+                    ivEdit.setOnClickListener(){
+                        edit()
+                    }
                 } else {
                     ivEdit.gone()
                     ivEdit.setOnClickListener(null)
@@ -69,12 +70,12 @@ class WalletManageActivity :
     @Inject
     lateinit var rightAdapter: WalletManageRightAdapter
 
-    private var bottomMenuDialogAdapter: BottomMenuDialogAdapter? = null
+    private var bottomMenuDialogAdapter: BottomMenuDialogAdapter<OptionItem>? = null
 
     private var bottomMenuDialog: BottomMenuDialog? = null
 
     override fun initView() {
-        setTitle(R.string.walletManage)
+        setTitle(R.string.wma_walletManage)
         leftAdapter.setOnItemClickListener(object : OnItemClickListener<WalletType> {
             override fun itemClicked(view: View, item: WalletType, position: Int) {
                 leftAdapter.data.forEach {
@@ -112,10 +113,9 @@ class WalletManageActivity :
     }
 
     override fun initData() {
-        Db.instance().accountDao().queryAllAsLiveData()
-            .observe(this, Observer {
-                processData(it ?: ArrayList())
-            })
+        Db.instance().accountDao().queryAllAsLiveData().observe(this) {
+            processData(it ?: ArrayList())
+        }
     }
 
     private fun processData(accounts: List<Account>) {
@@ -142,8 +142,9 @@ class WalletManageActivity :
     private fun selectCreateOrImport(chain: String) {
         if (bottomMenuDialog == null) {
             bottomMenuDialogAdapter = BottomMenuDialogAdapter()
-            bottomMenuDialogAdapter!!.setOnItemClickListener(object : OnItemClickListener<String> {
-                override fun itemClicked(view: View, item: String, position: Int) {
+            bottomMenuDialogAdapter!!.setOnItemClickListener(object :
+                OnItemClickListener<OptionItem> {
+                override fun itemClicked(view: View, item: OptionItem, position: Int) {
                     when (position) {
                         0 -> CreateWalletActivity.start(this@WalletManageActivity, chain, true)
                         1 -> ImportWalletActivity.start(this@WalletManageActivity, chain, true)
@@ -152,8 +153,8 @@ class WalletManageActivity :
                 }
             })
             val optionList = arrayListOf(
-                getString(R.string.createWallet),
-                getString(R.string.importWallet),
+                OptionItem(getString(R.string.wma_createWallet)),
+                OptionItem(getString(R.string.wma_importWallet))
             )
             bottomMenuDialogAdapter!!.resetData(optionList)
             bottomMenuDialog = BottomMenuDialog(this).setAdapter(bottomMenuDialogAdapter!!)
@@ -178,12 +179,6 @@ class WalletManageActivity :
             isEdit = true
             rightAdapter.edit = editable && isEdit
             rightAdapter.notifyDataSetChanged()
-        }
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.ivEdit) {
-            edit()
         }
     }
 }

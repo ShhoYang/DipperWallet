@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.hao.library.view.RefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/baseRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +13,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activityPadding"
+            android:layout_marginLeft="@dimen/activityPadding"
+            android:layout_marginTop="@dimen/activityPadding"
+            android:layout_marginRight="@dimen/activityPadding"
             android:background="@drawable/shape_block"
             android:gravity="center"
             android:orientation="vertical"
@@ -23,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/total"
+                android:text="@string/tf_total"
                 android:textColor="@color/textGray"
                 android:textSize="14sp" />
 
@@ -50,17 +51,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DIP"
+                    android:text="@string/dip"
                     android:textColor="@color/textPurple"
                     android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activityPadding"
+            android:layout_marginTop="@dimen/blockSpace"
+            android:layout_marginRight="@dimen/activityPadding"
+            android:text="@string/tf_tokens"
+            android:textColor="@color/textWhite"
+            android:textSize="12sp" />
+
         <com.hao.library.view.EmptyView
             android:id="@id/baseEmptyView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@id/baseRecyclerView"

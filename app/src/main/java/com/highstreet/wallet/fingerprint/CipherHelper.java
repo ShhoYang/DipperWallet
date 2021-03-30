@@ -48,11 +48,6 @@ public class CipherHelper {
         return cipher;
     }
 
-    /**
-     * @param retry
-     * @return
-     * @throws Exception
-     */
     private Cipher createCipher(boolean retry) throws Exception {
         Key key = GetKey();
         Cipher cipher = Cipher.getInstance(TRANSFORMATION);

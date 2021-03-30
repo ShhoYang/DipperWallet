@@ -1,6 +1,7 @@
 package com.highstreet.wallet.http
 
 import com.highstreet.wallet.model.req.Coin
+import com.highstreet.wallet.model.req.EstimateGas
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.*
 import io.reactivex.Observable
@@ -185,6 +186,25 @@ interface DipApi {
         @Path("proposalId") proposalId: String,
         @Path("voter") voter: String
     ): Observable<BaseBean<ProposalOpinion>>
+
+    /**
+     * 合约代码
+     */
+    @GET("vm/code/{address}")
+    fun contractCode(@Path("address") address: String): Observable<BaseBean<String>>
+
+    /**
+     * 合约代码
+     */
+    @GET("vm/code/{address}")
+    fun tokenBalance(): Observable<BaseBean<String>>
+
+    /**
+     * 预估交易费用
+     */
+    @POST("vm/estimate_gas")
+    fun estimateGas(@Body estimateGas: EstimateGas): Observable<BaseBean<Gas>>
+
 }
 
 //https://rpc.testnet.dippernetwork.com/minting/inflation

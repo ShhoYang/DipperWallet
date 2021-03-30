@@ -5,6 +5,7 @@ import com.hao.library.utils.SPUtils
 import com.highstreet.wallet.App
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.model.res.CoinPrice
+import kotlin.collections.HashMap
 
 /**
  * @author Yang Shihao
@@ -32,7 +33,7 @@ class CoinPriceCache {
         map.clear()
         coinPrice.price.forEach { (k, v) ->
             map[k] = v
-            SPUtils.put(App.instance, k.toUpperCase(), v.toString())
+            SPUtils.put(App.instance, k.toUpperCase(), v)
         }
     }
 

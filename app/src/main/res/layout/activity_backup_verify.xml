@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
-        android:text="@string/verifyMnemonic"
+        android:text="@string/bva_verifyMnemonic"
         android:textColor="@color/textWhite"
         android:textSize="16sp" />
 
@@ -25,7 +25,7 @@
         android:layout_marginLeft="@dimen/activityPadding"
         android:layout_marginTop="@dimen/activityPadding"
         android:layout_marginRight="@dimen/activityPadding"
-        android:text="@string/clickMnemonic"
+        android:text="@string/bva_clickMnemonic"
         android:textColor="@color/textWhite"
         android:textSize="16sp" />
 

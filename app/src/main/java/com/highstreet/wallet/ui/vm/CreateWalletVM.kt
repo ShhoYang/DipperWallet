@@ -23,12 +23,13 @@ class CreateWalletVM : BaseViewModel() {
 
     val resultLD = MutableLiveData<Boolean>()
 
-    private var accountManager = AccountManager.instance()
+    private var address= ""
 
     fun createWallet(walletParams: WalletParams) {
+        address = walletParams.address
         Observable.create(ObservableOnSubscribe<Boolean> {
             val account = generateAccount(walletParams)
-            it.onNext(accountManager.addAccount(account))
+            it.onNext(AccountManager.instance().addAccount(account))
             it.onComplete()
         }).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +87,7 @@ class CreateWalletVM : BaseViewModel() {
      */
     private fun test() {
         ApiService.getApi()
-            .test("https://faucet.testnet.dippernetwork.com/get_token?" + accountManager.address)
+            .test("https://faucet.testnet.dippernetwork.com/get_token?$address")
             .subscribeBy2({
                 resultLD.value = true
             }, {

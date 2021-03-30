@@ -2,11 +2,10 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import androidx.lifecycle.Observer
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.utils.DateUtils
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Constant
@@ -19,7 +18,6 @@ import com.highstreet.wallet.ui.vm.WalletDetailVM
 import com.highstreet.wallet.view.InputDialog
 import com.highstreet.wallet.view.InputDialogListener
 import com.highstreet.wallet.view.QRDialog
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -27,7 +25,7 @@ import com.highstreet.wallet.view.listener.RxView
  */
 @AndroidEntryPoint
 class WalletDetailActivity :
-    BaseActivity<ActivityWalletDetailBinding, WalletDetailVM>(), View.OnClickListener {
+    BaseActivity<ActivityWalletDetailBinding, WalletDetailVM>() {
 
     private var tempNickname = ""
     private var account: Account? = null
@@ -35,12 +33,12 @@ class WalletDetailActivity :
     private var type = 0
 
     override fun initView() {
-        setTitle(R.string.walletManage)
+        setTitle(R.string.wda_walletManage)
         viewBinding {
-            RxView.click(ivEditName, this@WalletDetailActivity)
-            RxView.click(ivWalletAddress, this@WalletDetailActivity)
-            RxView.click(btnBackup, this@WalletDetailActivity)
-            RxView.click(btnDelete, this@WalletDetailActivity)
+            RxView.click(ivEditName, editName)
+            RxView.click(ivWalletAddress, showQr)
+            RxView.click(btnBackup, TYPE_BACKUP, fingerprint)
+            RxView.click(btnDelete, TYPE_DELETE, fingerprint)
         }
     }
 
@@ -61,47 +59,36 @@ class WalletDetailActivity :
             }
         }
         viewModel {
-            updateNameLD.observe(this@WalletDetailActivity, Observer {
+            updateNameLD.observe(this@WalletDetailActivity) {
                 hideLoading()
                 if (it) {
-                    toast(R.string.updateSucceed)
+                    toast(R.string.wda_updateSucceed)
                     account?.nickName = tempNickname
                     vb?.tvWalletName?.text = tempNickname
                 } else {
-                    toast(R.string.updateFailed)
+                    toast(R.string.wda_updateFailed)
                 }
-            })
-            deleteLD.observe(this@WalletDetailActivity, Observer {
+            }
+            deleteLD.observe(this@WalletDetailActivity) {
                 hideLoading()
                 if (it) {
-                    toast(R.string.deleteSucceed)
+                    toast(R.string.wda_deleteSucceed)
                     if (AccountManager.instance().accounts.isEmpty()) {
                         InitWalletActivity.start(this@WalletDetailActivity)
                     } else {
                         finish()
                     }
                 } else {
-                    toast(R.string.deleteFailed)
+                    toast(R.string.wda_deleteFailed)
                 }
-            })
-        }
-    }
-
-    override fun onClick(v: View?) {
-        viewBinding {
-            when (v) {
-                ivEditName -> editName()
-                ivWalletAddress -> showQr()
-                btnBackup -> fingerprint(TYPE_BACKUP)
-                btnDelete -> fingerprint(TYPE_DELETE)
             }
         }
     }
 
-    private fun editName() {
+    private val editName = {
         InputDialog(this)
-            .setTitle(getString(R.string.updateWalletName))
-            .setHint(getString(R.string.inputNewWalletName))
+            .setTitle(getString(R.string.wda_updateWalletName))
+            .setHint(getString(R.string.wda_inputNewWalletName))
             .setText(account!!.nickName)
             .setListener(object : InputDialogListener {
                 override fun confirm(content: String) {
@@ -111,14 +98,14 @@ class WalletDetailActivity :
             }).show()
     }
 
-    private fun showQr() {
+    private val showQr: () -> Unit = {
         account?.let {
             QRDialog(this).show(it.nickName, it.address)
         }
     }
 
-    private fun fingerprint(type: Int) {
-        this.type = type
+    private val fingerprint: (Int) -> Unit = {
+        this.type = it
         FingerprintUtils.getFingerprint(
             this,
             null,

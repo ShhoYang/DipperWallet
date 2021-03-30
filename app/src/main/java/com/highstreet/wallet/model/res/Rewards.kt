@@ -1,7 +1,7 @@
 package com.highstreet.wallet.model.res
 
 import com.highstreet.wallet.model.req.Coin
-import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.utils.AmountUtils
 import java.io.Serializable
 
 /**
@@ -18,7 +18,7 @@ data class Rewards(
         } else {
             total[0]
         }
-        return StringUtils.pdip2DIP(temp, false)
+        return AmountUtils.pdip2DIP(temp, false)
     }
 }
 
@@ -32,6 +32,6 @@ data class Reward(
         } else {
             reward[0]
         }
-        return StringUtils.pdip2DIP(temp, false)
+        return AmountUtils.pdip2DIP(temp, false)
     }
 }

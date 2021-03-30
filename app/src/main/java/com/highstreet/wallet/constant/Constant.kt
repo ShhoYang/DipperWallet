@@ -37,4 +37,7 @@ object Constant {
 
     const val WALLET_PATH = "m/44'/925'/0'/0/0"
 
+    const val CONTRACT_ADDRESS = "dip1sq3dxeanys0qvmgymtmqewkdpvfzxetdtfzt3r"
+    const val ME = "dip1v0xfchlcpuwaenlf03jj878njj2p8z4500038c"
+    const val ME2 = "dip1tualdmv4s56p0q0pc55gun7jrpa24svljr98dc"
 }

@@ -14,7 +14,7 @@ import com.highstreet.wallet.ui.vm.MyValidatorVM
  * @Date 2020/10/24
  */
 @AndroidEntryPoint
-class MyValidatorListFragment :
+class MyValidatorFragment :
     BaseListFragment<FragmentBaseListBinding, Validator, MyValidatorVM, MyValidatorAdapter>() {
 
     override fun itemClicked(view: View, item: Validator, position: Int) {

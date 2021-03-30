@@ -1,7 +1,6 @@
 package com.highstreet.wallet.model
 
 import com.google.gson.Gson
-import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.crypto.HexUtils
 import com.highstreet.wallet.crypto.KeyUtils

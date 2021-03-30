@@ -12,7 +12,7 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="16dp"
-        android:text="@string/walletAddress" />
+        android:text="@string/cwa_walletAddress" />
 
     <EditText
         android:id="@+id/etAddress"
@@ -24,13 +24,13 @@
     <TextView
         style="@style/InputViewName"
         android:layout_marginTop="32dp"
-        android:text="@string/walletName" />
+        android:text="@string/cwa_walletName" />
 
     <EditText
         android:id="@+id/etName"
         style="@style/InputViewContent"
         android:digits="@string/digits"
-        android:hint="@string/inputWalletName"
+        android:hint="@string/cwa_inputWalletName"
         android:inputType="text"
         android:maxLength="12"
         android:singleLine="true" />
@@ -41,7 +41,7 @@
 
     <TextView
         style="@style/InputViewTip"
-        android:text="@string/walletNameFormat" />
+        android:text="@string/cwa_walletNameFormat" />
 
     <com.hao.library.view.RoundTextView
         android:id="@+id/btnCreate"
@@ -52,7 +52,7 @@
         android:layout_marginRight="@dimen/activityPadding"
         android:enabled="false"
         android:gravity="center"
-        android:text="@string/createWallet"
+        android:text="@string/cwa_createWallet"
         android:textSize="@dimen/buttonText"
         app:roundTextViewBorderColor="@color/btnBorderColor"
         app:roundTextViewBorderWidth="@dimen/buttonBorder"

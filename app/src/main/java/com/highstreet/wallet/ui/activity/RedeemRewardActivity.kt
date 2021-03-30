@@ -3,18 +3,18 @@ package com.highstreet.wallet.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.Observer
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
 import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityRedeemRewardBinding
+import com.highstreet.wallet.extensions.focusListener
 import com.highstreet.wallet.extensions.isAddress
 import com.highstreet.wallet.extensions.string
 import com.highstreet.wallet.fingerprint.FingerprintUtils
 import com.highstreet.wallet.ui.vm.ReceiveRewardVM
-import com.highstreet.wallet.view.listener.RxView
 
 /**
  * @author Yang Shihao
@@ -23,14 +23,13 @@ import com.highstreet.wallet.view.listener.RxView
  * 领取奖励
  */
 @AndroidEntryPoint
-class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRewardVM>(),
-    View.OnFocusChangeListener {
+class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRewardVM>() {
 
 
     override fun initView() {
-        setTitle(R.string.receiveReward)
+        setTitle(R.string.rra_receiveReward)
         viewBinding {
-            etReceiveAddress.onFocusChangeListener = this@RedeemRewardActivity
+            etReceiveAddress.focusListener(receiveAddressLine.line)
             RxView.textChanges(etReceiveAddress) {
                 btnConfirm.isEnabled = etReceiveAddress.string().isNotEmpty()
             }
@@ -43,12 +42,12 @@ class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRe
     private fun receive() {
         val validatorAddress = vb?.etValidatorAddress?.string() ?: ""
         if (!validatorAddress.isAddress()) {
-            toast(R.string.invalidValidatorAddress)
+            toast(R.string.rra_invalidValidatorAddress)
             return
         }
         val receiveAddress = vb?.etReceiveAddress?.string() ?: ""
         if (!receiveAddress.isAddress()) {
-            toast(R.string.invalidReceiveAddress)
+            toast(R.string.rra_invalidReceiveAddress)
             return
         }
 
@@ -76,22 +75,11 @@ class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRe
                 etAmount.setText(data[2])
             }
         }
-        vm?.resultLD?.observe(this, Observer {
+        vm?.resultLD?.observe(this) {
             hideLoading()
-
+            toast(it.second)
             if (it.first) {
-                toast(R.string.succeed)
                 toA(MainActivity::class.java)
-            } else {
-                toast(R.string.failed)
-            }
-        })
-    }
-
-    override fun onFocusChange(v: View, hasFocus: Boolean) {
-        viewBinding {
-            when (v) {
-                etReceiveAddress -> updateLineStyle(receiveAddressLine.line, hasFocus)
             }
         }
     }

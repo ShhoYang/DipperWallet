@@ -1,22 +1,20 @@
 package com.highstreet.wallet.ui.activity
 
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.extensions.visibility
 import com.hao.library.ui.BaseActivity
 import com.hao.library.ui.UIParams
+import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
-import com.highstreet.wallet.utils.StringUtils
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.constant.ProposalOpinion
 import com.highstreet.wallet.databinding.ActivityProposalDetailBinding
 import com.highstreet.wallet.model.res.FinalTallyResult
 import com.highstreet.wallet.model.res.Proposal
 import com.highstreet.wallet.ui.vm.ProposalDetailVM
-import com.highstreet.wallet.view.listener.RxView
+import com.highstreet.wallet.utils.StringUtils
 import java.math.BigDecimal
 import java.text.NumberFormat
 
@@ -25,8 +23,7 @@ import java.text.NumberFormat
  * @Date 2020/10/28
  */
 @AndroidEntryPoint
-class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, ProposalDetailVM>(),
-    View.OnClickListener {
+class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, ProposalDetailVM>() {
 
     private var proposal: Proposal? = null
 
@@ -36,38 +33,34 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
     }
 
     override fun initView() {
-        setTitle(R.string.proposalDetail)
+        setTitle(R.string.pda_proposalDetail)
         setData(proposal)
         viewBinding {
-            RxView.click(btnYes, this@ProposalDetailActivity)
-            RxView.click(btnNo, this@ProposalDetailActivity)
-            RxView.click(btnNoWithVeto, this@ProposalDetailActivity)
-            RxView.click(btnAbstain, this@ProposalDetailActivity)
+            RxView.click(btnYes, ProposalOpinion.YES, vote)
+            RxView.click(btnNo, ProposalOpinion.NO, vote)
+            RxView.click(btnNoWithVeto, ProposalOpinion.NO_WITH_VETO, vote)
+            RxView.click(btnAbstain, ProposalOpinion.ABSTAIN, vote)
         }
     }
 
     override fun initData() {
         viewModel {
-            proposalLD.observe(this@ProposalDetailActivity, Observer {
+            proposalLD.observe(this@ProposalDetailActivity) {
                 setData(it)
-            })
+            }
 
-            rateLD.observe(this@ProposalDetailActivity, Observer {
+            rateLD.observe(this@ProposalDetailActivity) {
                 calculateRate(it)
-            })
+            }
 
-            opinionLD.observe(this@ProposalDetailActivity, Observer {
+            opinionLD.observe(this@ProposalDetailActivity) {
                 vb?.tvOpinion?.text = ProposalOpinion.getOpinion(this@ProposalDetailActivity, it)
-            })
+            }
 
-            voteLD.observe(this@ProposalDetailActivity, Observer {
+            voteLD.observe(this@ProposalDetailActivity) {
                 hideLoading()
-                if (it.first) {
-                    toast(R.string.succeed)
-                } else {
-                    toast(R.string.failed)
-                }
-            })
+                toast(it.second)
+            }
         }
 
         proposal?.apply {
@@ -100,7 +93,7 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
             val noWithVeto = BigDecimal(it.no_with_veto ?: "0")
             val no = BigDecimal(it.no ?: "0")
             val abstain = BigDecimal(it.abstain ?: "0")
-            var total = yes.add(noWithVeto).add(no).add(abstain)
+            val total = yes.add(noWithVeto).add(no).add(abstain)
             viewBinding {
                 if (total.compareTo(BigDecimal(0)) == 0) {
                     tvYes.text = "0%"
@@ -139,22 +132,10 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
         }
     }
 
-
-    override fun onClick(v: View?) {
-        viewBinding {
-            when (v) {
-                btnYes -> vote(ProposalOpinion.YES)
-                btnNo -> vote(ProposalOpinion.NO)
-                btnNoWithVeto -> vote(ProposalOpinion.NO_WITH_VETO)
-                btnAbstain -> vote(ProposalOpinion.ABSTAIN)
-            }
-        }
-    }
-
-    private fun vote(opinion: String) {
+    private val vote: (String) -> Unit = {
         proposal?.apply {
             showLoading()
-            vm?.vote(id, opinion)
+            vm?.vote(id, it)
         }
     }
 

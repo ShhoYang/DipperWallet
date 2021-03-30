@@ -1,43 +1,25 @@
 package com.highstreet.wallet.ui.activity
 
-import android.view.View
 import com.hao.library.ui.BaseActivity
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.databinding.ActivityAddTokenBinding
-import com.highstreet.wallet.utils.ViewUtils
-import com.highstreet.wallet.view.listener.RxView
+import com.highstreet.wallet.extensions.focusListener
 
 /**
  * @author Yang Shihao
  * @Date 3/10/21
  */
-class AddTokenActivity : BaseActivity<ActivityAddTokenBinding, PlaceholderViewModel>(),
-    View.OnFocusChangeListener {
-
+class AddTokenActivity : BaseActivity<ActivityAddTokenBinding, PlaceholderViewModel>() {
 
     override fun initView() {
 
         viewBinding {
-            etAddress.onFocusChangeListener = this@AddTokenActivity
-            etName.onFocusChangeListener = this@AddTokenActivity
-            etDecimalPlaces.onFocusChangeListener = this@AddTokenActivity
-
-            RxView.click(btnNext) {
-
-            }
+            etAddress.focusListener(addressLine.line)
+            etName.focusListener(nameLine.line)
+            etDecimalPlaces.focusListener(decimalPlacesLine.line)
         }
     }
 
     override fun initData() {
-    }
-
-    override fun onFocusChange(v: View, hasFocus: Boolean) {
-        viewBinding {
-            when (v) {
-                etAddress -> ViewUtils.updateLineStyle(addressLine.line, hasFocus)
-                etName -> ViewUtils.updateLineStyle(nameLine.line, hasFocus)
-                etDecimalPlaces -> ViewUtils.updateLineStyle(decimalPlacesLine.line, hasFocus)
-            }
-        }
     }
 }

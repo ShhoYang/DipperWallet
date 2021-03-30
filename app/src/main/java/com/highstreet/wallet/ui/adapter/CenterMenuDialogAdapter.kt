@@ -6,12 +6,14 @@ import com.hao.library.adapter.BaseNormalAdapter
 import com.hao.library.adapter.ViewHolder
 import com.hao.library.extensions.visibility
 import com.highstreet.wallet.databinding.DialogCenterMenuItemBinding
+import com.highstreet.wallet.view.IOptionItem
 
 /**
  * @author Yang Shihao
  * @Date 3/6/21
  */
-class CenterMenuDialogAdapter : BaseNormalAdapter<DialogCenterMenuItemBinding, String>() {
+class CenterMenuDialogAdapter<T : IOptionItem> :
+    BaseNormalAdapter<DialogCenterMenuItemBinding, T>() {
 
     override fun getViewBinding(
         layoutInflater: LayoutInflater,
@@ -20,13 +22,13 @@ class CenterMenuDialogAdapter : BaseNormalAdapter<DialogCenterMenuItemBinding, S
 
     override fun bindViewHolder(
         viewHolder: ViewHolder<DialogCenterMenuItemBinding>,
-        item: String,
+        item: T,
         position: Int,
         payloads: MutableList<Any>
     ) {
         viewHolder.viewBinding {
-            tvText.text = item
             line.visibility(position != 0)
+            tvText.text = item.getShowText()
         }
     }
 }

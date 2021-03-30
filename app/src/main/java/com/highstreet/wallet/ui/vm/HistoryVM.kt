@@ -4,7 +4,6 @@ import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseListViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.constant.Chain
-import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.http.ApiService
 import com.highstreet.wallet.model.res.Tx
 
@@ -22,6 +21,5 @@ class HistoryVM : BaseListViewModel<Tx>() {
             }, {
                 onResponse(null)
             }).add()
-
     }
 }

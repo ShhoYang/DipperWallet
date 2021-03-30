@@ -5,6 +5,7 @@ import com.hao.library.ui.BaseActivity
 import com.hao.library.utils.CoroutineUtils
 import com.hao.library.view.dialog.ConfirmDialog
 import com.hao.library.view.dialog.ConfirmDialogListener
+import com.hao.library.view.listener.RxView
 import com.hao.library.viewmodel.PlaceholderViewModel
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
@@ -12,7 +13,6 @@ import com.highstreet.wallet.constant.Constant
 import com.highstreet.wallet.databinding.ActivityLockBinding
 import com.highstreet.wallet.db.Db
 import com.highstreet.wallet.fingerprint.FingerprintUtils
-import com.highstreet.wallet.view.listener.RxView
 
 @AndroidEntryPoint(injectViewModel = false)
 class LockActivity : BaseActivity<ActivityLockBinding, PlaceholderViewModel>() {
@@ -20,27 +20,29 @@ class LockActivity : BaseActivity<ActivityLockBinding, PlaceholderViewModel>() {
     private var setFingerprint = false
 
     override fun initView() {
-        setTitle(R.string.fingerprint)
+        setTitle(R.string.la_fingerprint)
         viewBinding {
-            RxView.click(ivSwitch) {
-                if (setFingerprint) {
-                    ConfirmDialog.Builder(this@LockActivity)
-                        .setMessage(getString(R.string.cancelFingerprintVerification))
-                        .setListener(object : ConfirmDialogListener {
-                            override fun confirm() {
-                                authenticateFingerprint()
-                            }
+            RxView.click(ivSwitch, openOrClose)
+        }
+    }
 
-                            override fun cancel() {
-                            }
+    private val openOrClose = {
+        when {
+            setFingerprint -> {
+                ConfirmDialog.Builder(this@LockActivity)
+                    .setMessage(getString(R.string.la_cancelFingerprintVerification))
+                    .setListener(object : ConfirmDialogListener {
+                        override fun confirm() {
+                            authenticateFingerprint()
+                        }
 
-                        }).build().show()
-                } else if (FingerprintUtils.hasEnrolledFingerprints(this@LockActivity)) {
-                    authenticateFingerprint()
-                } else {
-                    toast(R.string.noFingerprint)
-                }
+                        override fun cancel() {
+                        }
+
+                    }).build().show()
             }
+            FingerprintUtils.hasEnrolledFingerprints(this@LockActivity) -> authenticateFingerprint()
+            else -> toast(R.string.la_noFingerprint)
         }
     }
 

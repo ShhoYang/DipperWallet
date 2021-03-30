@@ -30,7 +30,7 @@ object RSA {
             val signature = Signature.getInstance(ALGORITHM)
             signature.initSign(entry.privateKey)
             signature.update(data.toByteArray())
-            Base64Utils.encodeToString(signature.sign())
+            Base64Utils.encode(signature.sign())
         } catch (e: Exception) {
             return null
         }

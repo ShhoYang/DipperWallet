@@ -33,7 +33,7 @@ object AES {
             val cipher = Cipher.getInstance(TRANSFORMATION)
             cipher.init(Cipher.ENCRYPT_MODE, key)
             val end = cipher.doFinal(resource.toByteArray(Charsets.UTF_8))
-            Pair(Base64Utils.encodeToString(end), Base64Utils.encodeToString(cipher.iv))
+            Pair(Base64Utils.encode(end), Base64Utils.encode(cipher.iv))
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -100,5 +100,4 @@ object AES {
             false
         }
     }
-
 }

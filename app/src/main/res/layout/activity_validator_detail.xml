@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/selfShares"
+                android:text="@string/vda_selfShares"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -123,7 +123,7 @@
             android:layout_height="@dimen/buttonHeightS"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="@string/delegate"
+            android:text="@string/vda_delegate"
             android:textSize="@dimen/buttonText"
             app:roundTextViewBorderColor="@color/btnBorderColor"
             app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/delegate"
+                android:text="@string/vda_delegate"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -175,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/unbonding"
+                android:text="@string/vda_unbonding"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -203,7 +203,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/delegate"
+                android:text="@string/vda_delegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -218,7 +218,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/undelegate"
+                android:text="@string/vda_undelegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -232,7 +232,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/redelegate"
+                android:text="@string/vda_redelegate"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -252,7 +252,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/reward"
+                android:text="@string/vda_reward"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -280,7 +280,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/redeemReward"
+                android:text="@string/vda_redeemReward"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -294,7 +294,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/delegateReward"
+                android:text="@string/vda_delegateReward"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"

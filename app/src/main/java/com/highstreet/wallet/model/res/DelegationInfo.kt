@@ -2,7 +2,7 @@ package com.highstreet.wallet.model.res
 
 import com.hao.library.adapter.PagedAdapterItem
 import com.highstreet.wallet.model.req.Coin
-import com.highstreet.wallet.utils.StringUtils
+import com.highstreet.wallet.utils.AmountUtils
 import java.io.Serializable
 
 /**
@@ -25,21 +25,21 @@ data class DelegationInfo(
     }
 
     fun getBalance(unit: Boolean = false): String {
-        return StringUtils.pdip2DIP(balance, unit)
+        return AmountUtils.pdip2DIP(balance, unit)
     }
 
     fun getDelegationAmount(unit: Boolean = false): String {
-        return StringUtils.pdip2DIP(shares, unit)
+        return AmountUtils.pdip2DIP(shares, unit)
     }
 
     fun getUnbondingDelegationAmount(): String {
         var amount = 0L
 
         entries?.forEach { e ->
-            amount += e?.balance?.toDouble()?.toLong()
+            amount += e.balance.toDouble().toLong()
         }
 
-        return StringUtils.pdip2DIP(amount.toString(), false)
+        return AmountUtils.pdip2DIP(amount.toString(), false)
     }
 }
 

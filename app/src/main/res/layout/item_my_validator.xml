@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/delegate"
+                android:text="@string/mvf_delegate"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/unbonding"
+                android:text="@string/mvf_unbonding"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/reward"
+                android:text="@string/mvf_reward"
                 android:textColor="@color/textGray"
                 android:textSize="12sp" />
 

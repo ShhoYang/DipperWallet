@@ -2,17 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:layout_marginLeft="@dimen/activityPadding"
-    android:layout_marginTop="@dimen/blockSpace"
-    android:layout_marginRight="@dimen/activityPadding"
-    android:background="@drawable/shape_block"
-    android:padding="@dimen/blockPadding">
+    android:layout_height="48dp">
 
     <ImageView
         android:id="@+id/ivChainIcon"
-        android:layout_width="48dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,20 +18,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:textColor="@color/textWhite"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/textBlack"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivChainIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/_ivArrow"
-        android:layout_width="6dp"
-        android:layout_height="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_arrow_right"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="@color/dialogLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

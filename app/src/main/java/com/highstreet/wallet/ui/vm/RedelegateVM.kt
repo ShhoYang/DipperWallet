@@ -1,12 +1,15 @@
 package com.highstreet.wallet.ui.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.hao.library.http.subscribeBy
+import com.hao.library.http.CustomException
 import com.hao.library.http.subscribeBy2
 import com.hao.library.viewmodel.BaseViewModel
 import com.highstreet.wallet.AccountManager
+import com.highstreet.wallet.App
+import com.highstreet.wallet.R
 import com.highstreet.wallet.crypto.KeyUtils
 import com.highstreet.wallet.http.ApiService
+import com.highstreet.wallet.model.req.Coin
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.AccountInfo
 import com.highstreet.wallet.model.res.DelegationInfo
@@ -28,25 +31,41 @@ class RedelegateVM : BaseViewModel() {
         toValidatorAddress: String,
         memo: String
     ) {
-        ApiService.getApi().account(AccountManager.instance().address).subscribeBy({
-            if (it == null) {
-                redelegateLD.value = Pair(false, "")
-            } else {
-                generateParams(it, amount, delegationInfo, toValidatorAddress, memo)
-            }
-        }, {
-            redelegateLD.value = Pair(false, "")
-        }).add()
-
+        ApiService.getApi().account(AccountManager.instance().address)
+            .flatMap {
+                return@flatMap ApiService.getApi()
+                    .txs(
+                        generateParams(
+                            it.result,
+                            amount,
+                            delegationInfo,
+                            toValidatorAddress,
+                            memo
+                        )
+                    )
+            }.subscribeBy2({
+                if (true == it?.success()) {
+                    AccountManager.instance().refreshBalance()
+                    redelegateLD.value = Pair(true, App.instance.getString(R.string.succeed))
+                } else {
+                    redelegateLD.value = Pair(false, App.instance.getString(R.string.failed))
+                }
+            }, {
+                redelegateLD.value = Pair(false, it.errorMsg)
+            }).add()
     }
 
+    @Throws(CustomException::class)
     private fun generateParams(
-        accountInfo: AccountInfo,
+        accountInfo: AccountInfo?,
         amount: String,
         delegationInfo: DelegationInfo,
         toValidatorAddress: String,
         memo: String
-    ) {
+    ): RequestBroadCast {
+        if (accountInfo == null) {
+            throw   CustomException(R.string.failed)
+        }
         val account = AccountManager.instance().account!!
         account.accountNumber = accountInfo.getAccountNumber()
         account.sequenceNumber = accountInfo.getSequence()
@@ -56,31 +75,15 @@ class RedelegateVM : BaseViewModel() {
             account.address,
             delegationInfo.validator_address,
             toValidatorAddress,
-            AmountUtils.generateCoin(amount),
+            Coin.generateCoin(amount),
             account.chain
         )
-        doRedelegate(
-            MsgGeneratorUtils.getBroadCast(
-                account,
-                msg,
-                AmountUtils.generateFee(),
-                memo,
-                deterministicKey
-            )
+        return MsgGeneratorUtils.getBroadCast(
+            account,
+            msg,
+            AmountUtils.generateFee(),
+            memo,
+            deterministicKey
         )
-    }
-
-    private fun doRedelegate(reqBroadCast: RequestBroadCast) {
-        ApiService.getApi().txs(reqBroadCast).subscribeBy2({
-            if (true == it?.success()) {
-                AccountManager.instance().refreshBalance()
-                redelegateLD.value = Pair(true, "")
-            } else {
-                redelegateLD.value = Pair(false, "")
-            }
-
-        }, {
-            redelegateLD.value = Pair(false, it.second)
-        }).add()
     }
 }

@@ -26,11 +26,11 @@ class Proposal(
     fun getState(context: Context): String {
         return when (proposal_status) {
             "Nil" -> ""
-            "DepositPeriod" -> context.getString(R.string.proposalDepositPeriod)
-            "VotingPeriod" -> context.getString(R.string.proposalVotingPeriod)
-            "Passed" -> context.getString(R.string.proposalPassed)
-            "Rejected" -> context.getString(R.string.proposalRejected)
-            "Failed" -> context.getString(R.string.proposalFailed)
+            "DepositPeriod" -> context.getString(R.string.pa_proposalDepositPeriod)
+            "VotingPeriod" -> context.getString(R.string.pa_proposalVotingPeriod)
+            "Passed" -> context.getString(R.string.pa_proposalPassed)
+            "Rejected" -> context.getString(R.string.pa_proposalRejected)
+            "Failed" -> context.getString(R.string.pa_proposalFailed)
             else -> ""
         }
     }

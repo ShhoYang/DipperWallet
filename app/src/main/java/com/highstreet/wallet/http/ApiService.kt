@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
  */
 object ApiService {
 
-
     fun getApi(chain: Chain? = null): DipApi {
 
         return when (chain ?: Chain.getChain(AccountManager.instance().chain)) {
@@ -62,12 +61,7 @@ object ApiService {
     }
 
     private fun getOkHttp(): OkHttpClient {
-        val httpLoggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                L.json("json__", message)
-            }
-
-        })
+        val httpLoggingInterceptor = HttpLoggingInterceptor { message -> L.json("json__", message) }
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addNetworkInterceptor(NetInterceptor())

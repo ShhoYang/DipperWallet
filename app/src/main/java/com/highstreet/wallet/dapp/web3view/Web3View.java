@@ -229,7 +229,7 @@ public class Web3View extends WebView {
         }
     };
 
-    private class WrapWebViewClient extends WebViewClient {
+    private static class WrapWebViewClient extends WebViewClient {
         private final Web3ViewClient internalClient;
         private final WebViewClient externalClient;
         private final JsInjectorClient jsInjectorClient;
@@ -277,7 +277,7 @@ public class Web3View extends WebView {
         }
     }
 
-    private WebChromeClient chromeClient = new WebChromeClient() {
+    private final WebChromeClient chromeClient = new WebChromeClient() {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);

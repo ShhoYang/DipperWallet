@@ -65,25 +65,6 @@ data class Account(
         return entropy!!
     }
 
-
-    @Ignore
-    private var upperCaseChain: String? = null
-
-    /**
-     * 大写链名
-     */
-    fun getUpperCaseChainName(): String {
-        if (null == upperCaseChain) {
-            upperCaseChain = if (TextUtils.isEmpty(chain)) {
-                ""
-            } else {
-                chain.replace("-", " ").toUpperCase()
-            }
-        }
-
-        return upperCaseChain!!
-    }
-
     fun isMain(): Boolean {
         return Chain.DIP_MAIN.chainName == chain
     }
@@ -93,12 +74,10 @@ data class Account(
     }
 
     fun getIcon(): Int {
-        return if (isMain()) {
-            R.mipmap.dipper_hub
-        } else if (isTest()) {
-            R.mipmap.dipper_test
-        } else {
-            0
+        return when {
+            isMain() -> R.mipmap.dipper_hub
+            isTest() -> R.mipmap.dipper_test
+            else -> 0
         }
     }
 

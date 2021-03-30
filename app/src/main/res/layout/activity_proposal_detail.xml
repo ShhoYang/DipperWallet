@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/activityPadding">
 
@@ -65,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/proposer"
+                        android:text="@string/pda_proposer"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/proposalType"
+                        android:text="@string/pda_proposalType"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/voteStartTime"
+                        android:text="@string/pda_voteStartTime"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/voteEndTime"
+                        android:text="@string/pda_voteEndTime"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/myVote"
+                        android:text="@string/pda_myVote"
                         android:textColor="@color/textGray"
                         android:textSize="12sp" />
 
@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/description"
+                    android:text="@string/pda_description"
                     android:textColor="@color/textGray"
                     android:textSize="12sp" />
 
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/yes"
+                        android:text="@string/pda_yes"
                         android:textColor="@color/proposalYes"
                         android:textSize="12sp" />
 
@@ -259,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/no"
+                        android:text="@string/pda_no"
                         android:textColor="@color/proposalNo"
                         android:textSize="12sp" />
 
@@ -297,7 +297,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/noWithVote"
+                        android:text="@string/pda_noWithVote"
                         android:textColor="@color/proposalNoWithVeto"
                         android:textSize="12sp" />
 
@@ -334,7 +334,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/abstain"
+                        android:text="@string/pda_abstain"
                         android:textColor="@color/proposalAbstain"
                         android:textSize="12sp" />
 
@@ -382,7 +382,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/yes"
+                android:text="@string/pda_yes"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -397,7 +397,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/no"
+                android:text="@string/pda_no"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -419,7 +419,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@string/noWithVote"
+                android:text="@string/pda_noWithVote"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"
@@ -433,7 +433,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/abstain"
+                android:text="@string/pda_abstain"
                 android:textSize="12sp"
                 app:roundTextViewBorderColor="@color/btnBorderColor"
                 app:roundTextViewBorderWidth="@dimen/buttonBorder"

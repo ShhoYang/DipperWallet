@@ -3,14 +3,12 @@ package com.highstreet.wallet.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-import android.view.View
 import com.hao.library.AppManager
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.AccountManager
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityDelegateBinding
 import com.highstreet.wallet.extensions.focusListener
@@ -41,9 +39,7 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>() {
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
             }
 
-            RxView.click(btnConfirm) {
-                delegate()
-            }
+            RxView.click(btnConfirm, this@DelegateActivity::delegate)
         }
     }
 
@@ -68,10 +64,6 @@ class DelegateActivity : BaseActivity<ActivityDelegateBinding, DelegateVM>() {
                 vm!!.delegate(vb!!.etAddress.string(), s, vb!!.etMemo.string())
             }
         ).authenticate()
-    }
-
-    private fun updateLineStyle(view: View, hasFocus: Boolean) {
-        view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
     }
 
     override fun initData() {

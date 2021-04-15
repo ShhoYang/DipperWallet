@@ -5,6 +5,7 @@ import com.highstreet.wallet.model.req.EstimateGas
 import com.highstreet.wallet.model.req.RequestBroadCast
 import com.highstreet.wallet.model.res.*
 import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.http.*
 
 /**
@@ -88,6 +89,18 @@ interface DipApi {
      */
     @GET("minting/inflation")
     fun getInflation(): Observable<BaseBean<String>>
+
+    /**
+     * 查询staking pool
+     */
+    @GET("/staking/pool")
+    fun getStakingPool(): Observable<BaseBean<StakingPool>>
+
+    /**
+     * 查询年供应量
+     */
+    @GET("minting/annual-provisions")
+    fun getProvisions(): Observable<BaseBean<String>>
 
     /**
      * staking交易

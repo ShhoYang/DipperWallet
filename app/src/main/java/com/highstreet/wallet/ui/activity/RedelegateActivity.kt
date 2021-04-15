@@ -45,14 +45,12 @@ class RedelegateActivity : BaseActivity<ActivityRedelegateBinding, RedelegateVM>
                 btnConfirm.isEnabled = etAmount.string().isNotEmpty()
             }
 
-            RxView.click(llAddress, this@RedelegateActivity, ValidatorChooseActivity.start)
+            RxView.click(llAddress, this@RedelegateActivity, ValidatorChooseActivity::start)
             RxView.click(tvAll) {
                 etAmount.setText(amount)
                 etAmount.setSelection(etAmount.string().length)
             }
-            RxView.click(btnConfirm) {
-                redelegate()
-            }
+            RxView.click(btnConfirm, this@RedelegateActivity::redelegate)
         }
     }
 

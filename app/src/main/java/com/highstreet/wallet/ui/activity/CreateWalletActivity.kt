@@ -37,9 +37,7 @@ class CreateWalletActivity : BaseActivity<ActivityCreateWalletBinding, CreateWal
                 btnCreate.isEnabled = etName.string().isNotEmpty()
             }
 
-            RxView.click(btnCreate) {
-                createWallet()
-            }
+            RxView.click(btnCreate, this@CreateWalletActivity::createWallet)
         }
     }
 

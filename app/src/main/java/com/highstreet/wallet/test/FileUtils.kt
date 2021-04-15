@@ -7,6 +7,8 @@ import java.io.InputStreamReader
 /**
  * @author Yang Shihao
  * @Date 3/30/21
+ *
+ * 让国际化string和中文string排序保持一致
  */
 
 fun main() {

@@ -22,11 +22,11 @@ class LockActivity : BaseActivity<ActivityLockBinding, PlaceholderViewModel>() {
     override fun initView() {
         setTitle(R.string.la_fingerprint)
         viewBinding {
-            RxView.click(ivSwitch, openOrClose)
+            RxView.click(ivSwitch, this@LockActivity::openOrClose)
         }
     }
 
-    private val openOrClose = {
+    private fun openOrClose() {
         when {
             setFingerprint -> {
                 ConfirmDialog.Builder(this@LockActivity)

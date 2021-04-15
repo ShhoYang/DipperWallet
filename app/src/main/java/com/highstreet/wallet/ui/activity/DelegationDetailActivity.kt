@@ -41,10 +41,10 @@ class DelegationDetailActivity :
             } else {
                 llBtn.visible()
                 tvUnbondingDelegationAmount.gone()
-                RxView.click(btnRedelegate, toRedelegate)
-                RxView.click(btnUndelegate, toUndelegate)
-                RxView.click(btnRedeemReward, toRedeemReward)
-                RxView.click(btnDelegate, toDelegate)
+                RxView.click(btnRedelegate, this@DelegationDetailActivity::toRedelegate)
+                RxView.click(btnUndelegate, this@DelegationDetailActivity::toUndelegate)
+                RxView.click(btnRedeemReward, this@DelegationDetailActivity::toRedeemReward)
+                RxView.click(btnDelegate, this@DelegationDetailActivity::toDelegate)
             }
         }
         viewModel {
@@ -86,25 +86,25 @@ class DelegationDetailActivity :
         }
     }
 
-    private val toRedelegate = {
+    private fun toRedelegate() {
         if (null != delegationInfo) {
             RedelegateActivity.start(this, delegationInfo!!)
         }
     }
 
-    private val toUndelegate = {
+    private fun toUndelegate() {
         if (null != delegationInfo) {
             UndelegateActivity.start(this, delegationInfo!!)
         }
     }
 
-    private val toDelegate = {
+    private fun toDelegate() {
         if (null != validator) {
             DelegateActivity.start(this, validator!!)
         }
     }
 
-    private val toRedeemReward = {
+    private fun toRedeemReward() {
         if (TextUtils.isEmpty(reward) || "0" == reward || reward.toDouble() == 0.0) {
         } else {
             val validatorAddress = delegationInfo?.validator_address

@@ -1,6 +1,5 @@
 package com.highstreet.wallet
 
-import com.hao.library.HaoLibraryConfig
 import com.hao.library.HttpConfig
 import com.hao.library.http.HttpResponseModel
 

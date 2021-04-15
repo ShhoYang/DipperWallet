@@ -36,13 +36,12 @@ class TokenTransactionActivity : BaseActivity<ActivityTransactionBinding, TokenT
             etAmount.focusListener(amountLine.line)
             etMemo.focusListener(memoLine.line)
 
-            RxView.click(ivScan, this@TokenTransactionActivity, ScanActivity.start)
-            RxView.click(btnConfirm) {
-                transact()
-            }
+            RxView.click(ivScan, this@TokenTransactionActivity, ScanActivity::start)
             RxView.click(tvAll) {
                 etAmount.setText(amount)
+                etAmount.setSelection(etAmount.string().length)
             }
+            RxView.click(btnConfirm, this@TokenTransactionActivity::transact)
         }
     }
 
@@ -117,7 +116,7 @@ class TokenTransactionActivity : BaseActivity<ActivityTransactionBinding, TokenT
     }
 
     companion object {
-        val start: (Context, Token) -> Unit = { context, token ->
+        fun start(context: Context, token: Token) {
             val intent = Intent(context, TokenTransactionActivity::class.java)
             intent.putExtra(ExtraKey.SERIALIZABLE, token)
             context.startActivity(intent)

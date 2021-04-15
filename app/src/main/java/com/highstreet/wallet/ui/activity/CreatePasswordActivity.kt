@@ -2,14 +2,12 @@ package com.highstreet.wallet.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.view.dialog.ConfirmDialog
 import com.hao.library.view.dialog.ConfirmDialogListener
 import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.databinding.ActivityCreatePasswordBinding
 import com.highstreet.wallet.db.Password
 import com.highstreet.wallet.extensions.focusListener
@@ -37,14 +35,8 @@ class CreatePasswordActivity : BaseActivity<ActivityCreatePasswordBinding, Creat
                         && etConfirmPassword.string().isNotEmpty()
             }
 
-            RxView.click(btnCreate) {
-                createPassword()
-            }
+            RxView.click(btnCreate, this@CreatePasswordActivity::createPassword)
         }
-    }
-
-    private fun updateLineStyle(view: View, hasFocus: Boolean) {
-        view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
     }
 
     override fun initData() {

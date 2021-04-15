@@ -32,6 +32,7 @@ object RSA {
             signature.update(data.toByteArray())
             Base64Utils.encode(signature.sign())
         } catch (e: Exception) {
+            e.printStackTrace()
             return null
         }
     }

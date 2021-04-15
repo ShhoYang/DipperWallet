@@ -35,10 +35,10 @@ class WalletDetailActivity :
     override fun initView() {
         setTitle(R.string.wda_walletManage)
         viewBinding {
-            RxView.click(ivEditName, editName)
-            RxView.click(ivWalletAddress, showQr)
-            RxView.click(btnBackup, TYPE_BACKUP, fingerprint)
-            RxView.click(btnDelete, TYPE_DELETE, fingerprint)
+            RxView.click(ivEditName, this@WalletDetailActivity::editName)
+            RxView.click(ivWalletAddress, this@WalletDetailActivity::showQr)
+            RxView.click(btnBackup, TYPE_BACKUP, this@WalletDetailActivity::fingerprint)
+            RxView.click(btnDelete, TYPE_DELETE, this@WalletDetailActivity::fingerprint)
         }
     }
 
@@ -85,7 +85,7 @@ class WalletDetailActivity :
         }
     }
 
-    private val editName = {
+    private fun editName() {
         InputDialog(this)
             .setTitle(getString(R.string.wda_updateWalletName))
             .setHint(getString(R.string.wda_inputNewWalletName))
@@ -98,14 +98,14 @@ class WalletDetailActivity :
             }).show()
     }
 
-    private val showQr: () -> Unit = {
+    private fun showQr() {
         account?.let {
             QRDialog(this).show(it.nickName, it.address)
         }
     }
 
-    private val fingerprint: (Int) -> Unit = {
-        this.type = it
+    private fun fingerprint(type: Int) {
+        this.type = type
         FingerprintUtils.getFingerprint(
             this,
             null,

@@ -34,6 +34,7 @@ object StringUtils {
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             sdf.format(date)
         } catch (e: Exception) {
+            e.printStackTrace()
             ""
         }
     }
@@ -92,6 +93,7 @@ object StringUtils {
             sdf.timeZone = TimeZone.getTimeZone("UTC")
             sdf.parse(text)
         } catch (e: Exception) {
+            e.printStackTrace()
             null
         }
     }

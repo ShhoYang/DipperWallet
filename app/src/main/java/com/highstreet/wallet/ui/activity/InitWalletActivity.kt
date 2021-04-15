@@ -36,8 +36,8 @@ class InitWalletActivity : BaseActivity<ActivityInitWalletBinding, PlaceholderVi
             showBack(false)
         }
         viewBinding {
-            RxView.click(btnCreate, TO_CREATE, showChain)
-            RxView.click(btnImport, TO_IMPORT, showChain)
+            RxView.click(btnCreate, TO_CREATE, this@InitWalletActivity::showChain)
+            RxView.click(btnImport, TO_IMPORT, this@InitWalletActivity::showChain)
         }
     }
 
@@ -47,8 +47,8 @@ class InitWalletActivity : BaseActivity<ActivityInitWalletBinding, PlaceholderVi
         }
     }
 
-    private val showChain: (Int) -> Unit = {
-        action = it
+    private fun showChain(action: Int) {
+        this.action = action
         if (centerMenuDialog == null) {
             centerMenuDialogAdapter = CenterMenuDialogAdapter2()
             centerMenuDialogAdapter!!.setOnItemClickListener(object :

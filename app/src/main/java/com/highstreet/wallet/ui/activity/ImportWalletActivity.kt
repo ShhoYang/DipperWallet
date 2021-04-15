@@ -76,9 +76,7 @@ class ImportWalletActivity : BaseActivity<ActivityImportWalletBinding, ImportWal
                 }
             }
 
-            RxView.click(btnImport) {
-                importWallet()
-            }
+            RxView.click(btnImport, this@ImportWalletActivity::importWallet)
         }
     }
 

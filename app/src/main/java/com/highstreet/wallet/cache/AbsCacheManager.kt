@@ -37,6 +37,7 @@ abstract class AbsCacheManager<T> {
             list.addAll(data)
             cacheCallback?.response(list)
         }
+        cacheCallback = null
         loading = false
     }
 

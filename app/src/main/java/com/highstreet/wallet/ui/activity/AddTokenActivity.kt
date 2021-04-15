@@ -12,7 +12,6 @@ import com.highstreet.wallet.extensions.focusListener
 class AddTokenActivity : BaseActivity<ActivityAddTokenBinding, PlaceholderViewModel>() {
 
     override fun initView() {
-
         viewBinding {
             etAddress.focusListener(addressLine.line)
             etName.focusListener(nameLine.line)

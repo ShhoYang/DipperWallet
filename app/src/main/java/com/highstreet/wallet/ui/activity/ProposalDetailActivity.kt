@@ -36,10 +36,14 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
         setTitle(R.string.pda_proposalDetail)
         setData(proposal)
         viewBinding {
-            RxView.click(btnYes, ProposalOpinion.YES, vote)
-            RxView.click(btnNo, ProposalOpinion.NO, vote)
-            RxView.click(btnNoWithVeto, ProposalOpinion.NO_WITH_VETO, vote)
-            RxView.click(btnAbstain, ProposalOpinion.ABSTAIN, vote)
+            RxView.click(btnYes, ProposalOpinion.YES, this@ProposalDetailActivity::vote)
+            RxView.click(btnNo, ProposalOpinion.NO, this@ProposalDetailActivity::vote)
+            RxView.click(
+                btnNoWithVeto,
+                ProposalOpinion.NO_WITH_VETO,
+                this@ProposalDetailActivity::vote
+            )
+            RxView.click(btnAbstain, ProposalOpinion.ABSTAIN, this@ProposalDetailActivity::vote)
         }
     }
 
@@ -132,10 +136,10 @@ class ProposalDetailActivity : BaseActivity<ActivityProposalDetailBinding, Propo
         }
     }
 
-    private val vote: (String) -> Unit = {
+    private fun vote(type: String) {
         proposal?.apply {
             showLoading()
-            vm?.vote(id, it)
+            vm?.vote(id, type)
         }
     }
 

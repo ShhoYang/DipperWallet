@@ -28,15 +28,12 @@
 
     <color name="btnTextColor">@color/textDipperGreen</color>
     <color name="btnBorderColor">@color/white</color>
-    <color name="btnDisableColor">@color/lightGray</color>
-    <color name="btnDisableTextColor">@color/textBlack</color>
 
     <color name="textPrimary">@color/colorPrimary</color>
     <color name="textWhite">#FFFFFF</color>
     <color name="textBlack">#333333</color>
     <color name="textGray">#7A7f88</color>
     <color name="textDipperGreen">@color/dipperGreen</color>
-    <color name="textOrange">#FF8C00</color>
     <color name="textPurple">@color/purple</color>
     <color name="textRed">@color/red</color>
 

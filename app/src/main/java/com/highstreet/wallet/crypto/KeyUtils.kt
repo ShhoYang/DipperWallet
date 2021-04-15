@@ -70,6 +70,7 @@ object KeyUtils {
             val hexString = HexUtils.bytesToHexString(mnemonic2Seed(mnemonic))
             return null != hexString && isMnemonicWords(mnemonic)
         } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }

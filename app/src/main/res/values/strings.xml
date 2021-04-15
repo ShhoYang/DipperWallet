@@ -39,7 +39,6 @@
     <string name="sf_open">开</string>
     <string name="sf_close">关</string>
     <string name="sf_currency">货币</string>
-    <string name="sf_cny">人民币</string>
     <string name="sf_basePrice">基本价格</string>
     <string name="sf_gecko">(CoinGecko)</string>
     <string name="sf_support">支持</string>
@@ -205,7 +204,6 @@
     <string name="wda_inputNewWalletName">请输入新的钱包名称</string>
     <string name="wda_updateSucceed">修改成功</string>
     <string name="wda_updateFailed">修改失败</string>
-    <string name="wda_confirmDeleteWallet">确认删除钱包</string>
     <string name="wda_deleteSucceed">删除成功</string>
     <string name="wda_deleteFailed">删除失败</string>
 
@@ -236,11 +234,6 @@
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
-    <string name="emptyLoading">加载中…</string>
-    <string name="emptyNoData">暂无数据</string>
-    <string name="emptyLoadFailed">加载失败</string>
-    <string name="emptyNetworkUnavailable">网络异常</string>
-
     <string name="day">天</string>
     <string name="hour">小时</string>
     <string name="minute">分</string>
@@ -262,7 +255,6 @@
     <string name="rate">佣金率</string>
     <string name="memo">备注</string>
     <string name="detail">详情</string>
-    <string name="about">关于</string>
     <string name="scan">扫码</string>
     <string name="dip">DIP</string>
 </resources>

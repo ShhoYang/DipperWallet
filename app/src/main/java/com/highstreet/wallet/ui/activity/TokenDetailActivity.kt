@@ -35,8 +35,8 @@ class TokenDetailActivity :
             return
         }
         viewBinding {
-            RxView.click(ivWalletAddress, showQr)
-            RxView.click(btnSend, this@TokenDetailActivity, token!!, TokenTransactionActivity.start)
+            RxView.click(ivWalletAddress, this@TokenDetailActivity::showQr)
+            RxView.click(btnSend, this@TokenDetailActivity, token!!, TokenTransactionActivity::start)
         }
         viewModel {
             amountLD.observe(this@TokenDetailActivity) {
@@ -56,7 +56,7 @@ class TokenDetailActivity :
         }
     }
 
-    private val showQr: () -> Unit = {
+    private fun showQr() {
         token?.let {
             QRDialog(this).show(it.name, it.address)
         }

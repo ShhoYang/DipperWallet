@@ -33,13 +33,12 @@ class TransactionActivity : BaseActivity<ActivityTransactionBinding, Transaction
             etAmount.focusListener(amountLine.line)
             etMemo.focusListener(memoLine.line)
 
-            RxView.click(ivScan, this@TransactionActivity, ScanActivity.start)
+            RxView.click(ivScan, this@TransactionActivity, ScanActivity::start)
             RxView.click(tvAll) {
                 etAmount.setText(amount)
+                etAmount.setSelection(etAmount.string().length)
             }
-            RxView.click(btnConfirm) {
-                transact()
-            }
+            RxView.click(btnConfirm, this@TransactionActivity::transact)
         }
     }
 

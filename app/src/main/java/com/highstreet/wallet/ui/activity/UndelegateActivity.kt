@@ -44,9 +44,7 @@ class UndelegateActivity : BaseActivity<ActivityUndelegateBinding, UndelegateVM>
                 etAmount.setSelection(etAmount.string().length)
             }
 
-            RxView.click(btnConfirm) {
-                unDelegate()
-            }
+            RxView.click(btnConfirm, this@UndelegateActivity::unDelegate)
         }
     }
 

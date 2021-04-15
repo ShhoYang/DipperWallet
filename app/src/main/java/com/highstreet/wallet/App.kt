@@ -2,7 +2,6 @@ package com.highstreet.wallet
 
 import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
-import com.hao.library.HaoLibrary
 import com.hao.library.HaoLibraryConfig
 import com.hao.library.extensions.notNullSingleValue
 import com.hao.library.utils.L
@@ -30,7 +29,13 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        HaoLibrary.init(libraryConfig())
+        HaoLibraryConfig.Builder(this)
+            .setToolbarLayoutTheme(R.style.AppToolbarLayout)
+            .setEmptyViewTheme(R.style.AppEmptyView)
+            .setConfirmDialogTheme(R.style.AppConfirmDialog)
+            .setLoadingDialogTheme(R.style.AppLoadingDialog)
+            .setHttpConfig(MyHttpConfig())
+            .apply()
         CrashReport.initCrashReport(applicationContext, "88dfb47f91", false)
         initX5()
         CacheManager.load()
@@ -39,6 +44,7 @@ class App : Application() {
             .errorActivity(CrashActivity::class.java)
             .restartActivity(WelcomeActivity::class.java)
             .apply()
+
     }
 
     fun getOldDB(): BaseData {
@@ -60,16 +66,6 @@ class App : Application() {
         }
         QbSdk.setDownloadWithoutWifi(true)
         QbSdk.initX5Environment(this, callback)
-    }
-
-    private fun libraryConfig(): HaoLibraryConfig {
-        return HaoLibraryConfig.Builder(this)
-            .setToolbarLayoutTheme(R.style.AppToolbarLayout)
-            .setEmptyViewTheme(R.style.AppEmptyView)
-            .setConfirmDialogTheme(R.style.AppConfirmDialog)
-            .setLoadingDialogTheme(R.style.AppLoadingDialog)
-            .setHttpConfig(MyHttpConfig())
-            .build()
     }
 
     companion object {

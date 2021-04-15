@@ -47,7 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, NodeInfoVM>() {
                 true
             }
 
-            RxView.click(ivSwitchWallet, WalletManageActivity::class.java, toActivity)
+            RxView.click(ivSwitchWallet, WalletManageActivity::class.java, this@MainActivity::toA)
         }
     }
 

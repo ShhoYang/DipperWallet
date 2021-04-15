@@ -24,8 +24,8 @@ class ScanActivity : BaseActivity<ActivityScanBinding, PlaceholderViewModel>(), 
 
     override fun initView() {
         toolbarLayout {
+            setTitleText(R.string.scan)
             setIconColor(Color.WHITE)
-            setTitle(R.string.scan)
         }
     }
 
@@ -76,9 +76,9 @@ class ScanActivity : BaseActivity<ActivityScanBinding, PlaceholderViewModel>(), 
 
     companion object {
         const val REQUEST_CODE_SCAN = 102
-        val start: (Activity) -> Unit = {
-            it.startActivityForResult(
-                Intent(it, ScanActivity::class.java),
+        fun start(activity: Activity) {
+            activity.startActivityForResult(
+                Intent(activity, ScanActivity::class.java),
                 REQUEST_CODE_SCAN
             )
         }

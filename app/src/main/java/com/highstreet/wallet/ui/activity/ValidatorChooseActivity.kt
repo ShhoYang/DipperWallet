@@ -1,6 +1,7 @@
 package com.highstreet.wallet.ui.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
@@ -89,9 +90,16 @@ class ValidatorChooseActivity :
 
     companion object {
         const val REQUEST_CODE_VALIDATOR_CHOOSE = 302
-        val start: (Activity) -> Unit = {
-            it.startActivityForResult(
-                Intent(it, ValidatorChooseActivity::class.java),
+
+        //        val start: (Activity) -> Unit = {
+//            it.startActivityForResult(
+//                Intent(it, ValidatorChooseActivity::class.java),
+//                REQUEST_CODE_VALIDATOR_CHOOSE
+//            )
+//        }
+        fun start(activity: Activity) {
+            activity.startActivityForResult(
+                Intent(activity, ValidatorChooseActivity::class.java),
                 REQUEST_CODE_VALIDATOR_CHOOSE
             )
         }

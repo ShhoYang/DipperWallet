@@ -22,6 +22,7 @@ public class Hex {
         try {
             return Integer.decode(input);
         } catch (NumberFormatException ex) {
+            ex.printStackTrace();
             return null;
         }
     }

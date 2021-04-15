@@ -15,7 +15,7 @@ open class NativeTokenDetailVM : BalanceVM() {
 
     val delegationAmountLD = MutableLiveData<String>()
     val unbondingDelegationAmountLD = MutableLiveData<String>()
-    val rewardD: MutableLiveData<String> = MutableLiveData()
+    val rewardLD: MutableLiveData<String> = MutableLiveData()
 
     open fun loadData(address: String) {
         getAccountInfo(address)
@@ -46,9 +46,9 @@ open class NativeTokenDetailVM : BalanceVM() {
 
     private fun getRewards(address: String) {
         ApiService.getApi().rewards(address).subscribeBy({
-            rewardD.value = it?.getTotalReward() ?: AmountUtils.ZERO
+            rewardLD.value = it?.getTotalReward() ?: AmountUtils.ZERO
         }, {
-            rewardD.value = AmountUtils.ZERO
+            rewardLD.value = AmountUtils.ZERO
         }).add()
     }
 }

@@ -185,7 +185,7 @@ object AmountUtils {
             return bigDecimal.divide(BigDecimal(DIP_RATE)).setScale(6, RoundingMode.DOWN)
                 .toPlainString()
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
         return amount
     }

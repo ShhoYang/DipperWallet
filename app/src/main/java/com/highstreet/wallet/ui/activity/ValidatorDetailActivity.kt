@@ -20,7 +20,7 @@ import com.highstreet.wallet.model.res.Validator
  */
 @AndroidEntryPoint(injectViewModel = false)
 class ValidatorDetailActivity :
-    BaseActivity<ActivityValidatorDetailBinding, PlaceholderViewModel>(){
+    BaseActivity<ActivityValidatorDetailBinding, PlaceholderViewModel>() {
 
     private var validator: Validator? = null
 
@@ -35,12 +35,11 @@ class ValidatorDetailActivity :
                 llDelegation.gone()
             }
 
-            RxView.click(btnDelegate2, toDelegate)
-            RxView.click(btnDelegate, toDelegate)
-            RxView.click(btnUndelegate, toUndelegate)
-            RxView.click(btnRedelegate, toRedelegate)
-            RxView.click(btnRedeemReward, toRedeemReward)
-//            RxView.click(btnDelegateReward, toRedeemReward)
+            RxView.click(btnDelegate2, this@ValidatorDetailActivity::toDelegate)
+            RxView.click(btnDelegate, this@ValidatorDetailActivity::toDelegate)
+            RxView.click(btnUndelegate, this@ValidatorDetailActivity::toUndelegate)
+            RxView.click(btnRedelegate, this@ValidatorDetailActivity::toRedelegate)
+            RxView.click(btnRedeemReward, this@ValidatorDetailActivity::toRedeemReward)
         }
     }
 
@@ -56,22 +55,13 @@ class ValidatorDetailActivity :
         }
     }
 
-    companion object {
-        fun start(context: Context, validator: Validator, showDelegation: Boolean = false) {
-            val intent = Intent(context, ValidatorDetailActivity::class.java)
-            intent.putExtra(ExtraKey.SERIALIZABLE, validator)
-            intent.putExtra(ExtraKey.BOOLEAN, showDelegation)
-            context.startActivity(intent)
-        }
-    }
-
-    val toDelegate = {
+    private fun toDelegate() {
         if (validator != null) {
             DelegateActivity.start(this, validator!!)
         }
     }
 
-    val toUndelegate = {
+    private fun toUndelegate() {
         val delegationInfo = validator?.delegationInfo
         if (delegationInfo != null) {
             UndelegateActivity.start(
@@ -81,7 +71,7 @@ class ValidatorDetailActivity :
         }
     }
 
-    val toRedelegate = {
+    private fun toRedelegate() {
         val delegationInfo = validator?.delegationInfo
         if (delegationInfo != null) {
             RedelegateActivity.start(
@@ -91,7 +81,7 @@ class ValidatorDetailActivity :
         }
     }
 
-    val toRedeemReward = {
+    private fun toRedeemReward() {
         val validatorAddress = validator?.delegationInfo?.validator_address
         val delegatorAddress = validator?.delegationInfo?.delegator_address
         val reward = validator?.reward?.getReward()
@@ -105,6 +95,15 @@ class ValidatorDetailActivity :
                 delegatorAddress!!,
                 reward + "DIP"
             )
+        }
+    }
+
+    companion object {
+        fun start(context: Context, validator: Validator, showDelegation: Boolean = false) {
+            val intent = Intent(context, ValidatorDetailActivity::class.java)
+            intent.putExtra(ExtraKey.SERIALIZABLE, validator)
+            intent.putExtra(ExtraKey.BOOLEAN, showDelegation)
+            context.startActivity(intent)
         }
     }
 }

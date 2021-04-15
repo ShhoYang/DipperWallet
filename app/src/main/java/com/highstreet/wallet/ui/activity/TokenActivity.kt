@@ -17,7 +17,7 @@ class TokenActivity :
     override fun initView() {
         super.initView()
         viewBinding {
-            RxView.click(btnAdd, AddTokenActivity::class.java, toActivity)
+            RxView.click(btnAdd, AddTokenActivity::class.java, this@TokenActivity::toA)
         }
     }
 

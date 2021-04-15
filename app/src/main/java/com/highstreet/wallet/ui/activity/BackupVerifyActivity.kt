@@ -79,7 +79,7 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
             rvTop.init(topAdapter, 4)
             rvBottom.init(bottomAdapter, 4)
 
-            RxView.click(btnConfirm,verify)
+            RxView.click(btnConfirm, this@BackupVerifyActivity::verify)
         }
         topAdapter.resetData(topList)
         bottomAdapter.resetData(bottomList)
@@ -90,7 +90,7 @@ class BackupVerifyActivity : BaseActivity<ActivityBackupVerifyBinding, Placehold
         vb?.btnConfirm?.isEnabled = topList.size == Constant.MNEMONIC_SIZE
     }
 
-    private val verify = {
+    private fun verify() {
         if (mnemonicS == topList.joinToString()) {
             toast(R.string.succeed)
             CoroutineUtils.io2main({

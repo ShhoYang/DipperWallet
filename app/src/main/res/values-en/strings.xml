@@ -39,7 +39,6 @@
     <string name="sf_open">Open</string>
     <string name="sf_close">Close</string>
     <string name="sf_currency">Currency</string>
-    <string name="sf_cny">CNY</string>
     <string name="sf_basePrice">Base Price</string>
     <string name="sf_gecko">(CoinGecko)</string>
     <string name="sf_support">Support</string>
@@ -205,7 +204,6 @@
     <string name="wda_inputNewWalletName">Please input new wallet name</string>
     <string name="wda_updateSucceed">Update succeed</string>
     <string name="wda_updateFailed">Update failed</string>
-    <string name="wda_confirmDeleteWallet">Confirm delete wallet </string>
     <string name="wda_deleteSucceed">Delete succeed</string>
     <string name="wda_deleteFailed">Delete failed</string>
 
@@ -236,11 +234,6 @@
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="digits2">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
-    <string name="emptyLoading">Loading...</string>
-    <string name="emptyNoData">No data</string>
-    <string name="emptyLoadFailed">Load failed</string>
-    <string name="emptyNetworkUnavailable">Network error</string>
-
     <string name="day">Day</string>
     <string name="hour">Hour</string>
     <string name="minute">Minute</string>
@@ -262,7 +255,6 @@
     <string name="rate">Rate</string>
     <string name="memo">Memo</string>
     <string name="detail">Detail</string>
-    <string name="about">About</string>
     <string name="scan">Scan</string>
     <string name="dip">DIP</string>
 </resources>

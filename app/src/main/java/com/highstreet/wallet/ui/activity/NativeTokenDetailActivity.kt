@@ -28,8 +28,12 @@ class NativeTokenDetailActivity :
     override fun initView() {
         setTitle(R.string.detail)
         viewBinding {
-            RxView.click(ivWalletAddress, showQr)
-            RxView.click(btnSend, TransactionActivity::class.java, toActivity)
+            RxView.click(ivWalletAddress, this@NativeTokenDetailActivity::showQr)
+            RxView.click(
+                btnSend,
+                TransactionActivity::class.java,
+                this@NativeTokenDetailActivity::toA
+            )
         }
     }
 
@@ -51,7 +55,7 @@ class NativeTokenDetailActivity :
             unbondingDelegationAmountLD.observe(this@NativeTokenDetailActivity) {
                 vb?.tvUnbondingDelegationAmount?.text = it
             }
-            rewardD.observe(this@NativeTokenDetailActivity) {
+            rewardLD.observe(this@NativeTokenDetailActivity) {
                 vb?.tvReward?.text = it
             }
 
@@ -68,7 +72,7 @@ class NativeTokenDetailActivity :
         }
     }
 
-    private val showQr: () -> Unit = {
+    private fun showQr() {
         token?.let {
             QRDialog(this).show(it.name, it.address)
         }

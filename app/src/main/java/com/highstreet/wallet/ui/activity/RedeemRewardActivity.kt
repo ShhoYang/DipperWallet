@@ -2,12 +2,10 @@ package com.highstreet.wallet.ui.activity
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import com.hao.library.annotation.AndroidEntryPoint
 import com.hao.library.ui.BaseActivity
 import com.hao.library.view.listener.RxView
 import com.highstreet.wallet.R
-import com.highstreet.wallet.constant.Colors
 import com.highstreet.wallet.constant.ExtraKey
 import com.highstreet.wallet.databinding.ActivityRedeemRewardBinding
 import com.highstreet.wallet.extensions.focusListener
@@ -33,9 +31,7 @@ class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRe
             RxView.textChanges(etReceiveAddress) {
                 btnConfirm.isEnabled = etReceiveAddress.string().isNotEmpty()
             }
-            RxView.click(btnConfirm) {
-                receive()
-            }
+            RxView.click(btnConfirm, this@RedeemRewardActivity::receive)
         }
     }
 
@@ -60,10 +56,6 @@ class RedeemRewardActivity : BaseActivity<ActivityRedeemRewardBinding, ReceiveRe
                 vm?.receiveReward(validatorAddress, receiveAddress)
             },
         ).authenticate()
-    }
-
-    private fun updateLineStyle(view: View, hasFocus: Boolean) {
-        view.setBackgroundColor(if (hasFocus) Colors.editLineFocus else Colors.editLineBlur)
     }
 
     override fun initData() {

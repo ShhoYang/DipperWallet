@@ -28,15 +28,14 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>() {
 
     override fun initView() {
         viewBinding {
-            RxView.click(ivWalletAddress, showQr)
-            RxView.click(llDelegate, ValidatorActivity::class.java, toActivity)
-            RxView.click(llVote, ProposalActivity::class.java, toActivity)
-            RxView.click(tvHome, toDip)
-            RxView.click(tvMedium, toDip)
-            RxView.click(cvTransaction, TransactionActivity::class.java, toActivity)
+            RxView.click(ivWalletAddress, ::showQr)
+            RxView.click(llDelegate, ValidatorActivity::class.java, this@WalletFragment::toA)
+            RxView.click(llVote, ProposalActivity::class.java, this@WalletFragment::toA)
+            RxView.click(tvHome, this@WalletFragment::toDip)
+            RxView.click(tvMedium, this@WalletFragment::toDip)
+            RxView.click(llTransaction, TransactionActivity::class.java, this@WalletFragment::toA)
             baseRefreshLayout.isRefreshing = true
             tvCoinUnit.text = "DIP"
-            tvAverageYield.text = "95.29%"
             baseRefreshLayout.setOnRefreshListener {
                 loadData()
             }
@@ -69,12 +68,16 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>() {
                 vb?.tvUnbondingDelegationAmount?.text = it
                 stopRefresh()
             }
-            rewardD.observe(this@WalletFragment) {
+            rewardLD.observe(this@WalletFragment) {
                 vb?.tvReward?.text = it
                 stopRefresh()
             }
-            inflationD.observe(this@WalletFragment) {
+            inflationLD.observe(this@WalletFragment) {
                 vb?.tvInflation?.text = it
+                stopRefresh()
+            }
+            averageYieldLD.observe(this@WalletFragment) {
+                vb?.tvAverageYield?.text = it
                 stopRefresh()
             }
         }
@@ -99,7 +102,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>() {
         }
     }
 
-    private val showQr = {
+    private fun showQr() {
         act { activity ->
             account?.let {
                 QRDialog(activity).show(it.nickName, it.address)
@@ -107,7 +110,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding, WalletVM>() {
         }
     }
 
-    private val toDip = {
+    private fun toDip() {
         act {
             JumpUtils.toDipperNetwork(it)
         }
